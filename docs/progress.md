@@ -2,8 +2,7 @@
 
 - **Date:** 2026-08-29
 - **Milestone 4:** Direct-Prompt Baseline
-- **Status:** In progress; ten-case baseline candidate completed, scoring
-  correction implemented, and corrected local rescoring pending
+- **Status:** Complete; Baseline V1 curated
 
 ## Completed
 
@@ -66,7 +65,14 @@
   contradiction cases use expected `conflicting_evidence_ids`, while other
   classes use accepted supporting evidence
 - The candidate's raw predictions and original pre-audit scores remain
-  byte-for-byte unchanged; corrected local rescoring is pending
+  byte-for-byte unchanged
+- Corrected scores were independently reproduced from the copied predictions
+  using scoring commit `6d80f84af9bf003b06f54c64d6cc6a0c78e45611`
+- Baseline V1 was curated with 10 successful requests, 0 technical failures,
+  and two strict failures (CR-004 and CR-007)
+- The curated result preserves the original generation manifest, raw responses,
+  predictions, pre-audit scores, corrected scores, rescore provenance, and error
+  analysis
 
 ## Milestone 2 benchmark files
 
@@ -78,7 +84,7 @@
 Several controlled CR-001 smoke tests were used to repair diagnostics and
 provider-schema compatibility. The final smoke test and subsequent ten-case
 candidate completed with `gemini-3.6-flash`. All smoke and candidate results
-remain explicitly non-official pending human review.
+remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Milestone 3 files
 
@@ -93,9 +99,8 @@ remain explicitly non-official pending human review.
 - Advanced agent
 - Streamlit interface
 - Retrieval, persistent ledger, verification pass, or agent tooling in the baseline
-- Curated or official benchmark results
 
 ## Next step
 
-Commit the approved scoring correction, then rescore copied predictions into a
-separate curated working directory without changing the original candidate.
+Begin Failure-Informed Advanced Agent Design using the preserved Baseline V1
+failures and limitations. No advanced-agent result exists yet.

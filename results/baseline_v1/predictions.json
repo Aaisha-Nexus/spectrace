@@ -1,0 +1,174 @@
+[
+  {
+    "request_id": "CR-001",
+    "classification": "IN_SCOPE",
+    "supporting_evidence_ids": [
+      "SOW-SCP-003"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "Displaying accessibility notes alongside scheduled session times on studio pages is explicitly covered under SOW-SCP-003.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-002",
+    "classification": "IN_SCOPE",
+    "supporting_evidence_ids": [
+      "SOW-SCP-007",
+      "SOW-SCP-012",
+      "DEC-004"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "Restoring session capacity and sending a transactional confirmation email following a valid member cancellation are explicitly approved features under SOW-SCP-012, SOW-SCP-007, and DEC-004.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-003",
+    "classification": "AMBIGUOUS",
+    "supporting_evidence_ids": [
+      "SOW-QUE-003"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": true,
+    "clarification_questions": [
+      "Please clarify whether 'helper' refers to an existing role (such as studio coordinator or schedule administrator) or a new restricted role, and what specific booking management permissions are requested."
+    ],
+    "dependencies": [],
+    "reasoning_summary": "The request mentions allowing 'helpers' to manage bookings, but the term 'helper' is not an approved user role and SOW-QUE-003 explicitly flags the definition and scope of a helper role as an unresolved question.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-004",
+    "classification": "POTENTIAL_SCOPE_CHANGE",
+    "supporting_evidence_ids": [
+      "SOW-QUE-002"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "The request asks for instant availability updates whenever a reservation or cancellation occurs. The target refresh or response time for availability updates remains an unresolved question (SOW-QUE-002) and is not an approved capability in the current scope or approved decisions. Defining instant updates requires formal scope review.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-005",
+    "classification": "OUT_OF_SCOPE",
+    "supporting_evidence_ids": [
+      "SOW-EXC-001"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "The request for native iPhone and Android applications is explicitly excluded from the project scope under SOW-EXC-001.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-006",
+    "classification": "POTENTIAL_SCOPE_CHANGE",
+    "supporting_evidence_ids": [
+      "SOW-CON-001",
+      "SOW-CON-002"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "Requesting an email notification when a full session becomes available represents an availability subscription. Under SOW-CON-002, post-full-session capabilities like availability subscriptions are neither approved nor explicitly excluded, so this request is a potential scope change requiring formal review.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-007",
+    "classification": "POTENTIAL_SCOPE_CHANGE",
+    "supporting_evidence_ids": [
+      "DEC-005",
+      "SOW-CON-002"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "The request introduces queue-ordered priority notifications for full sessions. DEC-005 approved basic availability alerts but explicitly left queue ordering unapproved and unrejected, making this a potential scope change requiring formal review.",
+    "cumulative_drift_detected": true,
+    "cumulative_related_request_ids": [
+      "CR-006"
+    ],
+    "cumulative_related_decision_ids": [
+      "DEC-005"
+    ]
+  },
+  {
+    "request_id": "CR-008",
+    "classification": "CONTRADICTS_APPROVED_DECISION",
+    "supporting_evidence_ids": [],
+    "conflicting_evidence_ids": [
+      "DEC-003"
+    ],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "The request asks to automatically confirm ceramic-kiln reservations instead of sending them to a coordinator, directly contradicting approved decision DEC-003, which requires manual review by a studio coordinator and explicitly rejects automatic confirmation for ceramic-kiln reservations.",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-009",
+    "classification": "CONTRADICTS_APPROVED_DECISION",
+    "supporting_evidence_ids": [],
+    "conflicting_evidence_ids": [
+      "DEC-002",
+      "SOW-EXC-003"
+    ],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [],
+    "reasoning_summary": "CR-009 requests that confirmed reservations appear in members' external calendars. This directly contradicts DEC-002 (which explicitly approved the rejection of external-calendar synchronization) and SOW-EXC-003 (which excludes external calendars).",
+    "cumulative_drift_detected": false,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": []
+  },
+  {
+    "request_id": "CR-010",
+    "classification": "POTENTIAL_SCOPE_CHANGE",
+    "supporting_evidence_ids": [
+      "DEC-006",
+      "DEC-005",
+      "SOW-CON-002"
+    ],
+    "conflicting_evidence_ids": [],
+    "requires_clarification": false,
+    "clarification_questions": [],
+    "dependencies": [
+      "DEC-006"
+    ],
+    "reasoning_summary": "The request asks to automatically allocate a place and create a reservation for the next queued member upon cancellation. DEC-006 approved ordered notifications but explicitly noted that automatic promotion and creating reservations without member action are neither approved nor rejected, requiring formal scope review.",
+    "cumulative_drift_detected": true,
+    "cumulative_related_request_ids": [
+      "CR-006",
+      "CR-007",
+      "CR-010"
+    ],
+    "cumulative_related_decision_ids": [
+      "DEC-005",
+      "DEC-006"
+    ]
+  }
+]

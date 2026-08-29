@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-08-29T17:47:21.614604+00:00",
+  "git_commit": "550997316c59f91d3ef11e1e6b429b17111dd16d",
+  "dataset_identity": "data/synthetic/demo_project",
+  "dataset_hash": "4e060fa08f08be87151735ada77f9a3bf7876d6832e425173d5776ecb77a3585",
+  "prompt_hash": "369b16540e18ac3592867bdcde4a9d37e156ef8ee726371e1782380edb48a687",
+  "assembled_prompt_hashes": {
+    "CR-001": "6767d51829b96c526c93ce58df465317b758eefec165e9e57840cd4b29ba0df7",
+    "CR-002": "27e8189f71282b2112a894c37d371ec9789824141047873c9d408ea4d4db0287",
+    "CR-003": "1232b1bf3765b8cf8d60bdf30ad06cdb1e271d9ed2e354d2f7d987f47aeaa502",
+    "CR-004": "5871d32387c64a4ebf19e01fd0f852ec477e82eb3aa514732ec7a4291f259e78",
+    "CR-005": "c29944ed3cdec80679f5c04c3c9f36aacd13ea824c14d5192f320142267d21db",
+    "CR-006": "1450f829da4f5a40a06ce8a7fea2d1dafc374a51831a0ef1a9cfbb25e59a8dc3",
+    "CR-007": "2dbee7f26f221fd538e2eaf56be4753d4d14cb96944c77c959c06f6b6a475a21",
+    "CR-008": "791e451da2007683ab98b39ce3d4acd469e87733bbf19cf14c7ed028fb3595b5",
+    "CR-009": "473029bd6e5c78dd664378e90853da7c278362ddc271bc83f6f2c46403da0e4e",
+    "CR-010": "4cb3a7eec7c59f31711787d1d9047b9466c70d217e85b5ea29bbd3798990deff"
+  },
+  "provider": "google",
+  "model": "gemini-3.6-flash",
+  "temperature": 0.0,
+  "seed": null,
+  "max_output_tokens": 2048,
+  "request_count": 10,
+  "successful_request_count": 10,
+  "failed_request_count": 0,
+  "run_status": "COMPLETE",
+  "runtime_seconds": 100.99846979999711,
+  "token_usage": {
+    "candidates_token_count": 1793,
+    "prompt_token_count": 38062,
+    "thoughts_token_count": 10711,
+    "total_token_count": 50566
+  },
+  "approximate_api_cost": null
+}

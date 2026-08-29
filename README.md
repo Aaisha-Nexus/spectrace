@@ -8,8 +8,8 @@ contradictions and cumulative scope drift, and keep a human reviewer in control.
 > Project status: the wholly synthetic StudioLane benchmark and its predetermined,
 > frozen ground truth now exist. Dataset validation, strict schemas, an API-free
 > deterministic scorer, and the direct-prompt baseline runner are implemented.
-> The baseline has only been validated offline; no model or API has been run.
-> The advanced agent and user interface remain unimplemented.
+> Baseline V1 is curated from a completed ten-request Gemini run. The advanced
+> agent and user interface remain unimplemented.
 
 ## Development principles
 
@@ -108,6 +108,25 @@ occur. Temporary runs are ignored by Git; a reviewed curated run can later be
 force-added deliberately. No result directory is created by configuration
 validation or dry-run commands.
 
+## Baseline V1
+
+[Baseline V1](results/baseline_v1/) is the curated direct-prompt result for the
+ten-case StudioLane benchmark using provider `google` and model
+`gemini-3.6-flash`. Generation used commit
+`550997316c59f91d3ef11e1e6b429b17111dd16d`; corrected deterministic scoring used
+commit `6d80f84af9bf003b06f54c64d6cc6a0c78e45611`.
+
+- Classification accuracy: **0.90**
+- Macro F1: **0.9048**
+- Classification-appropriate evidence hit rate: **1.00**
+- Clarification recall: **0.50**
+- Cumulative-drift accuracy: **0.90**
+- Evidence-Grounded Scope Accuracy: **0.80**
+
+CR-004 and CR-007 are the two strict failures. The preserved
+`error_analysis.md` separates those model failures from scorer and engineering
+defects. No advanced-agent result or improvement comparison exists yet.
+
 ## Deterministic metric definitions
 
 All divisions use zero when their denominator is zero, except vacuous data-quality
@@ -147,7 +166,7 @@ labels.
 - **Related request/decision ID accuracy:** expected cumulative cases with an
   exact set match for the corresponding related IDs / all expected cumulative
   cases. Ordering does not affect the match; extra and missing IDs do.
-- **Provisional Evidence-Grounded Scope Accuracy:** strict passing cases / all
+- **Evidence-Grounded Scope Accuracy:** strict passing cases / all
   cases. A case passes only when classification is correct, the required
   clarification decision is correct, at least one expected evidence ID is cited
   in the classification-appropriate field when evidence is expected, every

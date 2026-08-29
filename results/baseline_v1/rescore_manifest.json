@@ -1,0 +1,16 @@
+{
+  "source_candidate_directory": "results/20260829T174721.614620Z",
+  "generation_commit": "550997316c59f91d3ef11e1e6b429b17111dd16d",
+  "scoring_commit": "6d80f84af9bf003b06f54c64d6cc6a0c78e45611",
+  "prompt_hash": "369b16540e18ac3592867bdcde4a9d37e156ef8ee726371e1782380edb48a687",
+  "dataset_hash": "4e060fa08f08be87151735ada77f9a3bf7876d6832e425173d5776ecb77a3585",
+  "rescore_timestamp": "2026-08-29T18:41:20.319753+00:00",
+  "reason_for_rescoring": "Correct a generic scorer-semantics defect so expected evidence is checked in the classification-appropriate prediction field.",
+  "model_call_performed": false,
+  "no_model_call_confirmation": "No model or provider API call occurred during this local rescore.",
+  "official_benchmark_result": false,
+  "copied_artifact_sha256": {
+    "predictions.json": "2b8a6d359b50273251aa4dad6804a396f4f77f3a0a088b6d5d72a930d8bd5058",
+    "raw_predictions.jsonl": "52e570c6869e232eb15242ac576872c16945a0694b5daf1385a73a56b05d7d80"
+  }
+}

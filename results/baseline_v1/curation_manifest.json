@@ -1,0 +1,34 @@
+{
+  "result_id": "baseline_v1",
+  "status": "CURATED_BASELINE",
+  "official_benchmark_result": true,
+  "source_candidate_directory": "results/20260829T174721.614620Z",
+  "curation_timestamp": "2026-08-29T18:50:59.1098687+00:00",
+  "generation_commit": "550997316c59f91d3ef11e1e6b429b17111dd16d",
+  "scoring_commit": "6d80f84af9bf003b06f54c64d6cc6a0c78e45611",
+  "prompt_hash": "369b16540e18ac3592867bdcde4a9d37e156ef8ee726371e1782380edb48a687",
+  "dataset_hash": "4e060fa08f08be87151735ada77f9a3bf7876d6832e425173d5776ecb77a3585",
+  "prediction_sha256": "2b8a6d359b50273251aa4dad6804a396f4f77f3a0a088b6d5d72a930d8bd5058",
+  "raw_prediction_sha256": "52e570c6869e232eb15242ac576872c16945a0694b5daf1385a73a56b05d7d80",
+  "successful_requests": 10,
+  "failed_requests": 0,
+  "model_rerun_statement": "The model was not rerun during rescoring or curation; predictions and raw responses are byte-for-byte copies of the source candidate.",
+  "final_key_metrics": {
+    "strict_passed_cases": 8,
+    "total_cases": 10,
+    "classification_accuracy": 0.9,
+    "macro_f1": 0.9047619047619048,
+    "classification_appropriate_evidence_hit_rate": 1.0,
+    "clarification_recall": 0.5,
+    "cumulative_drift_detection_accuracy": 0.9,
+    "evidence_grounded_scope_accuracy": 0.8
+  },
+  "known_limitations": [
+    "The benchmark contains ten requests from one wholly synthetic project.",
+    "This is one run from one provider and model configuration and provides no confidence interval.",
+    "Temperature zero does not establish universal determinism.",
+    "Citation checks do not establish complete automated semantic entailment.",
+    "Human review remains required for consequential scope decisions.",
+    "No advanced-agent result or improvement comparison exists yet."
+  ]
+}
