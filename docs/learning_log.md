@@ -15,3 +15,7 @@
 - "Not approved" is different from "explicitly rejected."
 - Classification ambiguity is different from missing implementation acceptance details.
 - Cumulative drift should be evaluated separately from the request's primary classification.
+- A citation can reference a real project ID and still be temporally invalid if that evidence was unavailable at the request cutoff.
+- Cumulative-drift false positives must be penalized, not only missed true drift.
+- Constructed perfect test fixtures are verification tools, not measured model results.
+- Structural citation validity does not by itself prove semantic support.

@@ -8,7 +8,14 @@ version = "0.1.0"
 description = "Requirements and scope intelligence agent"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
-dependencies = []
+dependencies = [
+    "pydantic>=2.11,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4,<9",
+]
 
 [tool.setuptools.packages.find]
 include = ["spectrace*"]
