@@ -49,9 +49,12 @@ def score_predictions(
 
     Evidence-Grounded Scope Accuracy is the fraction of strict passing cases. A
     case passes only when its classification and clarification decision are
-    correct, at least one expected supporting ID is cited when expected, every
-    cited ID exists and was available at the request cutoff, and cumulative
-    drift detection exactly matches ground truth for every request.
+    correct, at least one expected citation is placed in the classification-
+    appropriate evidence field when expected, every cited ID exists and was
+    available at the request cutoff, and cumulative drift detection exactly
+    matches ground truth for every request. Contradiction cases use expected
+    conflicting evidence; all other classifications use expected supporting
+    evidence.
     """
 
     prediction_by_id = _index_unique(predictions, "prediction")
@@ -73,8 +76,8 @@ def score_predictions(
     cases: list[PerCaseResult] = []
     valid_citation_count = 0
     total_citation_count = 0
-    evidence_hit_count = 0
-    evidence_expected_count = 0
+    appropriate_evidence_hit_count = 0
+    appropriate_evidence_expected_count = 0
     clarification_tp = 0
     clarification_fp = 0
     clarification_fn = 0
@@ -104,18 +107,28 @@ def score_predictions(
         valid_citation_count += sum(citation in available_evidence_ids for citation in cited_ids)
         total_citation_count += len(cited_ids)
 
-        evidence_expected = bool(truth.valid_supporting_evidence_ids)
-        expected_evidence_hit = (
-            bool(
-                set(prediction.supporting_evidence_ids)
-                & set(truth.valid_supporting_evidence_ids)
-            )
+        expected_contradiction = (
+            truth.expected_classification
+            == Classification.CONTRADICTS_APPROVED_DECISION
+        )
+        if expected_contradiction:
+            expected_evidence_ids = truth.conflicting_evidence_ids
+            predicted_evidence_ids = prediction.conflicting_evidence_ids
+            evidence_field = "conflicting_evidence_ids"
+        else:
+            expected_evidence_ids = truth.valid_supporting_evidence_ids
+            predicted_evidence_ids = prediction.supporting_evidence_ids
+            evidence_field = "supporting_evidence_ids"
+
+        evidence_expected = bool(expected_evidence_ids)
+        classification_appropriate_evidence_hit = (
+            bool(set(predicted_evidence_ids) & set(expected_evidence_ids))
             if evidence_expected
             else True
         )
         if evidence_expected:
-            evidence_expected_count += 1
-            evidence_hit_count += expected_evidence_hit
+            appropriate_evidence_expected_count += 1
+            appropriate_evidence_hit_count += classification_appropriate_evidence_hit
 
         clarification_correct = (
             prediction.requires_clarification == truth.required_clarification
@@ -124,9 +137,6 @@ def score_predictions(
         clarification_fp += prediction.requires_clarification and not truth.required_clarification
         clarification_fn += not prediction.requires_clarification and truth.required_clarification
 
-        expected_contradiction = (
-            truth.expected_classification == Classification.CONTRADICTS_APPROVED_DECISION
-        )
         detected_contradiction = (
             prediction.classification == Classification.CONTRADICTS_APPROVED_DECISION
         )
@@ -163,8 +173,10 @@ def score_predictions(
                 f"requires_clarification {prediction.requires_clarification} != "
                 f"{truth.required_clarification}"
             )
-        if not expected_evidence_hit:
-            failure_reasons.append("no expected supporting evidence ID was cited")
+        if not classification_appropriate_evidence_hit:
+            failure_reasons.append(
+                f"no expected evidence ID was cited in {evidence_field}"
+            )
         if invalid_ids:
             if nonexistent_ids:
                 failure_reasons.append(f"nonexistent cited evidence IDs: {nonexistent_ids}")
@@ -184,7 +196,7 @@ def score_predictions(
         strict_pass = (
             classification_correct
             and clarification_correct
-            and expected_evidence_hit
+            and classification_appropriate_evidence_hit
             and citation_references_valid
             and cumulative_correct
         )
@@ -196,7 +208,9 @@ def score_predictions(
                 invalid_citation_ids=invalid_ids,
                 nonexistent_citation_ids=nonexistent_ids,
                 unavailable_citation_ids=unavailable_ids,
-                expected_evidence_hit=expected_evidence_hit,
+                classification_appropriate_evidence_hit=(
+                    classification_appropriate_evidence_hit
+                ),
                 clarification_decision_correct=clarification_correct,
                 contradiction_detected=detected_contradiction,
                 cumulative_drift_correct=cumulative_correct,
@@ -251,8 +265,10 @@ def score_predictions(
         citation_reference_validity_rate=_safe_divide(
             valid_citation_count, total_citation_count, empty=1.0
         ),
-        expected_evidence_hit_rate=_safe_divide(
-            evidence_hit_count, evidence_expected_count, empty=1.0
+        classification_appropriate_evidence_hit_rate=_safe_divide(
+            appropriate_evidence_hit_count,
+            appropriate_evidence_expected_count,
+            empty=1.0,
         ),
         clarification_decision_accuracy=_safe_divide(
             correct_clarifications, total, empty=1.0

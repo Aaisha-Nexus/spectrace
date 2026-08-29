@@ -218,7 +218,7 @@ class PerCaseResult(StrictModel):
     invalid_citation_ids: list[str]
     nonexistent_citation_ids: list[str]
     unavailable_citation_ids: list[str]
-    expected_evidence_hit: bool
+    classification_appropriate_evidence_hit: bool
     clarification_decision_correct: bool
     contradiction_detected: bool
     cumulative_drift_correct: bool
@@ -245,7 +245,7 @@ class AggregateEvaluationResult(StrictModel):
     macro_f1: float
     per_label: dict[Classification, LabelMetrics]
     citation_reference_validity_rate: float
-    expected_evidence_hit_rate: float
+    classification_appropriate_evidence_hit_rate: float
     clarification_decision_accuracy: float
     clarification_precision: float
     clarification_recall: float

@@ -30,8 +30,18 @@ def _perfect_predictions(truth: list[GroundTruthRecord]) -> list[ModelPrediction
         ModelPrediction(
             request_id=record.request_id,
             classification=record.expected_classification,
-            supporting_evidence_ids=[record.valid_supporting_evidence_ids[0]],
-            conflicting_evidence_ids=record.conflicting_evidence_ids,
+            supporting_evidence_ids=(
+                []
+                if record.expected_classification
+                == Classification.CONTRADICTS_APPROVED_DECISION
+                else [record.valid_supporting_evidence_ids[0]]
+            ),
+            conflicting_evidence_ids=(
+                [record.conflicting_evidence_ids[0]]
+                if record.expected_classification
+                == Classification.CONTRADICTS_APPROVED_DECISION
+                else []
+            ),
             requires_clarification=record.required_clarification,
             clarification_questions=(
                 [record.expected_clarification_points[0]]
@@ -68,7 +78,7 @@ def test_perfect_predictions_have_perfect_deterministic_scores(benchmark) -> Non
     assert result.macro_recall == 1.0
     assert result.macro_f1 == 1.0
     assert result.citation_reference_validity_rate == 1.0
-    assert result.expected_evidence_hit_rate == 1.0
+    assert result.classification_appropriate_evidence_hit_rate == 1.0
     assert result.clarification_decision_accuracy == 1.0
     assert result.clarification_precision == 1.0
     assert result.clarification_recall == 1.0
@@ -126,14 +136,62 @@ def test_decision_is_valid_after_it_becomes_available(benchmark) -> None:
     assert case.strict_pass
 
 
-def test_missing_expected_citation_fails_strict_case(benchmark) -> None:
+def test_ordinary_case_requires_expected_supporting_citation(benchmark) -> None:
     predictions = _perfect_predictions(benchmark[0])
     predictions[0].supporting_evidence_ids = []
     result = _score(predictions, benchmark)
     case = result.cases[0]
-    assert not case.expected_evidence_hit
+    assert not case.classification_appropriate_evidence_hit
     assert not case.strict_pass
-    assert result.expected_evidence_hit_rate == 0.9
+    assert result.classification_appropriate_evidence_hit_rate == 0.9
+
+
+def test_contradiction_evidence_passes_without_supporting_duplication(benchmark) -> None:
+    predictions = _perfect_predictions(benchmark[0])
+    cr008 = predictions[7]
+    assert cr008.supporting_evidence_ids == []
+    assert cr008.conflicting_evidence_ids == ["DEC-003"]
+
+    result = _score(predictions, benchmark)
+    case = result.cases[7]
+    assert case.classification_appropriate_evidence_hit
+    assert case.citation_references_valid
+    assert case.strict_pass
+
+
+def test_missing_contradiction_evidence_fails(benchmark) -> None:
+    predictions = _perfect_predictions(benchmark[0])
+    predictions[7].conflicting_evidence_ids = []
+
+    result = _score(predictions, benchmark)
+    case = result.cases[7]
+    assert not case.classification_appropriate_evidence_hit
+    assert not case.strict_pass
+
+
+def test_contradiction_evidence_in_supporting_field_is_incorrectly_placed(
+    benchmark,
+) -> None:
+    predictions = _perfect_predictions(benchmark[0])
+    predictions[7].supporting_evidence_ids = ["DEC-003"]
+    predictions[7].conflicting_evidence_ids = []
+
+    result = _score(predictions, benchmark)
+    case = result.cases[7]
+    assert not case.classification_appropriate_evidence_hit
+    assert case.citation_references_valid
+    assert not case.strict_pass
+
+
+def test_incorrect_conflict_evidence_fails_placement_check(benchmark) -> None:
+    predictions = _perfect_predictions(benchmark[0])
+    predictions[7].conflicting_evidence_ids = ["SOW-SCP-006"]
+
+    result = _score(predictions, benchmark)
+    case = result.cases[7]
+    assert not case.classification_appropriate_evidence_hit
+    assert case.citation_references_valid
+    assert not case.strict_pass
 
 
 def test_incorrect_clarification_behavior_is_detected(benchmark) -> None:

@@ -2,7 +2,8 @@
 
 - **Date:** 2026-08-29
 - **Milestone 4:** Direct-Prompt Baseline
-- **Status:** In progress; offline implementation and dry-run validation completed
+- **Status:** In progress; ten-case baseline candidate completed, scoring
+  correction implemented, and corrected local rescoring pending
 
 ## Completed
 
@@ -50,6 +51,22 @@
 - Gemini structured output now uses an explicit provider-compatible JSON schema
   with unsupported metadata removed recursively, while returned JSON still
   undergoes the original strict `ModelPrediction` Pydantic validation
+- A later CR-001 smoke test established that `gemini-2.5-flash` was unavailable
+  to this new-user account; the provider directed the account to
+  `gemini-3.6-flash`
+- A controlled CR-001 smoke test then parsed successfully with
+  `gemini-3.6-flash`
+- The ten-case direct-prompt baseline candidate completed successfully with ten
+  independent calls using `gemini-3.6-flash`; it remains uncurated and
+  explicitly non-official
+- A scorer-semantics defect was identified before curation: contradiction cases
+  were incorrectly required to duplicate expected conflict evidence into
+  `supporting_evidence_ids`
+- Classification-appropriate evidence placement is now implemented and tested;
+  contradiction cases use expected `conflicting_evidence_ids`, while other
+  classes use accepted supporting evidence
+- The candidate's raw predictions and original pre-audit scores remain
+  byte-for-byte unchanged; corrected local rescoring is pending
 
 ## Milestone 2 benchmark files
 
@@ -58,8 +75,10 @@
 - `data/synthetic/demo_project/requests.json`
 - `data/synthetic/demo_project/ground_truth.json`
 
-One CR-001 smoke-test API call was attempted and failed before returning a
-prediction. No official benchmark run or result exists.
+Several controlled CR-001 smoke tests were used to repair diagnostics and
+provider-schema compatibility. The final smoke test and subsequent ten-case
+candidate completed with `gemini-3.6-flash`. All smoke and candidate results
+remain explicitly non-official pending human review.
 
 ## Milestone 3 files
 
@@ -74,9 +93,9 @@ prediction. No official benchmark run or result exists.
 - Advanced agent
 - Streamlit interface
 - Retrieval, persistent ledger, verification pass, or agent tooling in the baseline
-- Real model predictions or measured baseline performance
+- Curated or official benchmark results
 
 ## Next step
 
-Review the offline Gemini schema-compatibility repair before authorizing a third
-CR-001 smoke test. Do not consider a full ten-request run yet.
+Commit the approved scoring correction, then rescore copied predictions into a
+separate curated working directory without changing the original candidate.

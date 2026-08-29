@@ -125,8 +125,12 @@ labels.
   both exist and were available at that request's explicit evidence cutoff / all
   cited IDs. Per-case citation validity requires every cited ID to satisfy both
   conditions; a real but future decision ID is invalid for that request.
-- **Expected-evidence hit rate:** cases citing at least one supporting ID from
-  `valid_supporting_evidence_ids` / cases where that list is nonempty.
+- **Classification-appropriate evidence hit rate:** cases citing at least one
+  expected ID in the semantically appropriate field / cases where such evidence
+  is expected. `CONTRADICTS_APPROVED_DECISION` cases must cite an expected
+  `conflicting_evidence_id` in `conflicting_evidence_ids`; every other class must
+  cite an accepted `valid_supporting_evidence_id` in `supporting_evidence_ids`.
+  The same ID need not be duplicated across both prediction fields.
 - **Clarification decision accuracy:** cases whose `requires_clarification`
   boolean matches ground truth / all cases.
 - **Clarification precision:** correctly requested clarifications / all requested
@@ -145,11 +149,11 @@ labels.
   cases. Ordering does not affect the match; extra and missing IDs do.
 - **Provisional Evidence-Grounded Scope Accuracy:** strict passing cases / all
   cases. A case passes only when classification is correct, the required
-  clarification decision is correct, at least one expected supporting evidence
-  ID is cited when evidence is expected, every cited evidence ID exists and was
-  available at the request cutoff, and cumulative-drift detection exactly
-  matches ground truth for every request. This penalizes both false negatives
-  and false positives.
+  clarification decision is correct, at least one expected evidence ID is cited
+  in the classification-appropriate field when evidence is expected, every
+  cited evidence ID exists and was available at the request cutoff, and
+  cumulative-drift detection exactly matches ground truth for every request.
+  This penalizes both false negatives and false positives.
 
 Evidence-ID validity is structural: it does not prove that every cited item
 semantically supports every natural-language claim. SpecTrace does not yet claim

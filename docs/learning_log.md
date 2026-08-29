@@ -38,3 +38,9 @@
   Pydantic JSON Schema.
 - Provider-side schema compatibility and strict local validation should remain
   separate layers.
+- Evidence supporting a contradiction classification may logically belong in
+  `conflicting_evidence_ids`.
+- Evaluation schemas must distinguish evidence validity from
+  classification-appropriate evidence placement.
+- Scorer defects must be separated from model failures before comparison claims
+  are made.
