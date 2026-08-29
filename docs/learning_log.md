@@ -34,3 +34,7 @@
   reflect failures.
 - Partial or failed runs must never be presented as official benchmark results.
 - Retry decisions should depend on categorized failure type.
+- Provider structured-output schemas may support a smaller subset than local
+  Pydantic JSON Schema.
+- Provider-side schema compatibility and strict local validation should remain
+  separate layers.

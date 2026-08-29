@@ -44,6 +44,12 @@
   and retryability
 - CLI exit codes now report failure when any explicitly requested case fails
 - Incomplete and uncurated score artifacts are explicitly marked non-official
+- The second CR-001 smoke test produced a diagnosable HTTP 400
+  `INVALID_ARGUMENT`: Gemini rejected the SDK-converted Pydantic schema field
+  `additional_properties`; no prediction or official result was produced
+- Gemini structured output now uses an explicit provider-compatible JSON schema
+  with unsupported metadata removed recursively, while returned JSON still
+  undergoes the original strict `ModelPrediction` Pydantic validation
 
 ## Milestone 2 benchmark files
 
@@ -72,5 +78,5 @@ prediction. No official benchmark run or result exists.
 
 ## Next step
 
-Commit and verify the offline diagnostic repair, then perform the explicitly
-approved second CR-001 smoke test before considering any full ten-request run.
+Review the offline Gemini schema-compatibility repair before authorizing a third
+CR-001 smoke test. Do not consider a full ten-request run yet.

@@ -13,6 +13,72 @@ from spectrace.config import LLMSettings
 from spectrace.models import ModelPrediction
 
 
+_GEMINI_JSON_SCHEMA_KEYWORDS = frozenset(
+    {
+        "$id",
+        "$defs",
+        "$ref",
+        "$anchor",
+        "type",
+        "format",
+        "title",
+        "description",
+        "enum",
+        "items",
+        "prefixItems",
+        "minItems",
+        "maxItems",
+        "minimum",
+        "maximum",
+        "anyOf",
+        "oneOf",
+        "properties",
+        "required",
+        "propertyOrdering",
+    }
+)
+
+
+def sanitize_gemini_json_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Return the subset accepted by Gemini's explicit JSON-schema field.
+
+    Property and definition names are data, not schema keywords, so they are
+    retained while their nested schemas are sanitized recursively. In
+    particular, ``additionalProperties`` is deliberately omitted because the
+    Gemini endpoint rejected its SDK-converted ``additional_properties`` form.
+    Strict extra-field rejection remains a local ModelPrediction concern.
+    """
+
+    sanitized: dict[str, Any] = {}
+    for key, value in schema.items():
+        if key not in _GEMINI_JSON_SCHEMA_KEYWORDS:
+            continue
+        if key in {"properties", "$defs"} and isinstance(value, dict):
+            sanitized[key] = {
+                name: sanitize_gemini_json_schema(nested)
+                for name, nested in value.items()
+                if isinstance(nested, dict)
+            }
+        elif isinstance(value, dict):
+            sanitized[key] = sanitize_gemini_json_schema(value)
+        elif isinstance(value, list):
+            sanitized[key] = [
+                sanitize_gemini_json_schema(item)
+                if isinstance(item, dict)
+                else item
+                for item in value
+            ]
+        else:
+            sanitized[key] = value
+    return sanitized
+
+
+def gemini_model_prediction_schema() -> dict[str, Any]:
+    """Build the explicit provider schema from the strict local model."""
+
+    return sanitize_gemini_json_schema(ModelPrediction.model_json_schema())
+
+
 @dataclass(frozen=True)
 class RawGeneration:
     text: str
@@ -269,7 +335,7 @@ class GoogleGenAIClient:
             seed=self._seed,
             max_output_tokens=self._max_output_tokens,
             response_mime_type="application/json",
-            response_schema=ModelPrediction,
+            response_json_schema=gemini_model_prediction_schema(),
         )
         try:
             response = self._client.models.generate_content(
