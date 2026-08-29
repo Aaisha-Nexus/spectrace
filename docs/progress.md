@@ -1,8 +1,8 @@
 # Project Progress
 
 - **Date:** 2026-08-29
-- **Milestone 3:** Dataset Validation, Schemas, and Scoring
-- **Status:** Completed
+- **Milestone 4:** Direct-Prompt Baseline
+- **Status:** In progress; offline implementation and dry-run validation completed
 
 ## Completed
 
@@ -26,6 +26,15 @@
   citation, and cumulative-drift metrics implemented without an API
 - Strict Evidence-Grounded Scope Accuracy defined and tested
 - Constructed-fixture dataset and scoring tests passing on Python 3.13
+- Provider-aware Google GenAI configuration and structured-output adapter added
+- Fixed direct-prompt instructions and SHA-256 prompt hashing added
+- Per-request temporal prompt reconstruction implemented without future evidence
+- Independent, stateless request calls and bounded structured-output retries implemented
+- Raw responses, parsing failures, run metadata, and per-request assembled-input
+  hashes can be preserved during a future approved run
+- Configuration validation completed without displaying the API key
+- Offline dry-run validation completed for CR-001, CR-007, and CR-010
+- No Gemini/model API call has been made and no baseline result exists yet
 
 ## Milestone 2 benchmark files
 
@@ -46,12 +55,12 @@ No model or API has been run against the benchmark.
 
 ## Deliberately not implemented
 
-- Model provider
-- Baseline runner
-- Scoring
 - Advanced agent
 - Streamlit interface
+- Retrieval, persistent ledger, verification pass, or agent tooling in the baseline
+- Real model predictions or measured baseline performance
 
-## Next milestone
+## Next step
 
-Direct-Prompt Baseline
+Review the offline baseline, then perform one explicitly approved smoke-test API
+call before any full ten-request run.

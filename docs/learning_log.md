@@ -19,3 +19,10 @@
 - Cumulative-drift false positives must be penalized, not only missed true drift.
 - Constructed perfect test fixtures are verification tools, not measured model results.
 - Structural citation validity does not by itself prove semantic support.
+- A fair temporal baseline must reconstruct only evidence available at each
+  request cutoff.
+- Independent calls prevent hidden conversational memory from helping the
+  baseline.
+- Prompt and assembled-input hashes allow later runs to be traced to exact
+  inputs.
+- Offline fixture tests are not real model performance.

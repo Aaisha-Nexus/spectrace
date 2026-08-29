@@ -42,6 +42,10 @@ artifacts/
 logs/
 *.log
 
+# Model/evaluation runs are ignored by default. A reviewed, curated run may be
+# preserved later with an explicit `git add -f results/<run-id>`.
+results/
+
 # IDE and editor files
 .idea/
 .vscode/
@@ -56,4 +60,3 @@ logs/
 .DS_Store
 Thumbs.db
 Desktop.ini
-

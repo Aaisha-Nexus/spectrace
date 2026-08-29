@@ -6,9 +6,10 @@ compare incoming requests with approved scope and decision history, surface
 contradictions and cumulative scope drift, and keep a human reviewer in control.
 
 > Project status: the wholly synthetic StudioLane benchmark and its predetermined,
-> frozen ground truth now exist. Dataset validation, strict schemas, and an
-> API-free deterministic scorer are implemented. The model runner, advanced
-> agent, and user interface remain unimplemented, and no model or API has been run.
+> frozen ground truth now exist. Dataset validation, strict schemas, an API-free
+> deterministic scorer, and the direct-prompt baseline runner are implemented.
+> The baseline has only been validated offline; no model or API has been run.
+> The advanced agent and user interface remain unimplemented.
 
 ## Development principles
 
@@ -52,6 +53,14 @@ Install the package and development dependencies into the environment:
 python -m pip install -e ".[dev]"
 ```
 
+Copy `.env.example` to `.env` and set the following local values before a model
+run. `.env` is ignored and must never be committed.
+
+- `LLM_PROVIDER=google` (required for the current implementation)
+- `LLM_MODEL` (required)
+- `LLM_API_KEY` (required and never displayed by validation)
+- `LLM_BASE_URL` (optional; normally empty)
+
 Validate the frozen synthetic pack and run the tests:
 
 ```powershell
@@ -62,6 +71,42 @@ pytest
 Validation failures return a nonzero process status and identify the violated
 schema or benchmark invariant. Scoring is available through
 `spectrace.scoring.score_predictions`; it performs no API calls.
+
+## Direct-prompt baseline
+
+The fixed instructions are stored in `prompts/baseline.md`. Each request is sent
+in a fresh call with the complete SOW, only decisions available at its explicit
+evidence cutoff, and only request messages through the current request. Ground
+truth and future evidence are never included. Temperature is fixed at zero; an
+optional seed is recorded as a best-effort reproducibility setting, not a claim
+of complete determinism.
+
+Validate local configuration without revealing the key:
+
+```powershell
+python -m spectrace.baseline validate-config
+```
+
+Render one offline prompt, or report its inclusion assertions and hashes:
+
+```powershell
+python -m spectrace.baseline dry-run --request-id CR-001
+python -m spectrace.baseline dry-run --request-id CR-007 --summary
+```
+
+The following commands can contact Gemini and therefore require the explicit
+confirmation flag. Do not run them until the benchmark dry run has been reviewed:
+
+```powershell
+python -m spectrace.baseline run --request-id CR-001 --confirm-api-call
+python -m spectrace.baseline run-all --confirm-api-call
+```
+
+An actual confirmed run writes `results/<run-id>/manifest.json`, raw JSONL,
+validated predictions, deterministic scores, and an error JSONL when failures
+occur. Temporary runs are ignored by Git; a reviewed curated run can later be
+force-added deliberately. No result directory is created by configuration
+validation or dry-run commands.
 
 ## Deterministic metric definitions
 
