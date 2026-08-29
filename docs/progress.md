@@ -34,7 +34,16 @@
   hashes can be preserved during a future approved run
 - Configuration validation completed without displaying the API key
 - Offline dry-run validation completed for CR-001, CR-007, and CR-010
-- No Gemini/model API call has been made and no baseline result exists yet
+- The first real CR-001 smoke test failed with a `ClientError`; the original
+  provider cause is unrecoverable because the stored message was excessively
+  sanitized and retained no safe status or category context
+- No parsed prediction or official benchmark result was produced by that failed
+  smoke test
+- Secret-safe structured provider diagnostics now retain exception type, safe
+  status, normalized category, sanitized message, request ID, attempt number,
+  and retryability
+- CLI exit codes now report failure when any explicitly requested case fails
+- Incomplete and uncurated score artifacts are explicitly marked non-official
 
 ## Milestone 2 benchmark files
 
@@ -43,7 +52,8 @@
 - `data/synthetic/demo_project/requests.json`
 - `data/synthetic/demo_project/ground_truth.json`
 
-No model or API has been run against the benchmark.
+One CR-001 smoke-test API call was attempted and failed before returning a
+prediction. No official benchmark run or result exists.
 
 ## Milestone 3 files
 
@@ -62,5 +72,5 @@ No model or API has been run against the benchmark.
 
 ## Next step
 
-Review the offline baseline, then perform one explicitly approved smoke-test API
-call before any full ten-request run.
+Commit and verify the offline diagnostic repair, then perform the explicitly
+approved second CR-001 smoke test before considering any full ten-request run.

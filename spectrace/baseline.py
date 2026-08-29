@@ -249,6 +249,10 @@ def run_baseline(
                     "raw_response": result.raw_response,
                     "raw_responses": list(result.raw_responses),
                     "attempt_errors": list(result.attempt_errors),
+                    "provider_errors": [
+                        diagnostic.as_dict()
+                        for diagnostic in result.provider_errors
+                    ],
                     "usage": result.usage,
                 }
             )
@@ -262,7 +266,13 @@ def run_baseline(
                     "request_id": request_id,
                     "assembled_prompt_hash": assembled_hash,
                     "error": str(exc),
+                    "attempt_count": exc.attempt_count,
+                    "retry_exhausted": exc.retry_exhausted,
                     "attempt_errors": exc.errors,
+                    "provider_errors": [
+                        diagnostic.as_dict()
+                        for diagnostic in exc.provider_errors
+                    ],
                     "raw_responses": exc.raw_responses,
                 }
             )
@@ -272,7 +282,10 @@ def run_baseline(
                     "request_id": request_id,
                     "assembled_prompt_hash": assembled_hash,
                     "error": str(exc),
+                    "attempt_count": 1,
+                    "retry_exhausted": False,
                     "attempt_errors": [str(exc)],
+                    "provider_errors": [],
                     "raw_responses": [],
                 }
             )
@@ -295,7 +308,8 @@ def run_baseline(
             encoding="utf-8",
         )
 
-    if predictions:
+    complete = len(predictions) == len(ordered_ids) and not error_records
+    if complete:
         truth_by_id = {record.request_id: record for record in pack.ground_truth}
         scores = score_predictions(
             predictions,
@@ -303,9 +317,24 @@ def run_baseline(
             pack.evidence_ids,
             pack.available_evidence_ids_by_request,
         )
-        score_payload: Any = scores.model_dump(mode="json")
+        score_payload: Any = {
+            "status": "COMPLETE_UNCURATED",
+            "official_benchmark_result": False,
+            "requested_case_count": len(ordered_ids),
+            "successful_case_count": len(predictions),
+            "failed_case_count": 0,
+            "metrics": scores.model_dump(mode="json"),
+        }
     else:
-        score_payload = {"status": "unavailable", "reason": "no valid predictions"}
+        score_payload = {
+            "status": "INCOMPLETE_NOT_OFFICIAL",
+            "official_benchmark_result": False,
+            "requested_case_count": len(ordered_ids),
+            "successful_case_count": len(predictions),
+            "failed_case_count": len(error_records),
+            "metrics": None,
+            "reason": "one or more requested cases failed; metrics were not calculated",
+        }
     _write_json(run_directory / "scores.json", score_payload)
 
     runtime = time.perf_counter() - started_clock
@@ -324,12 +353,31 @@ def run_baseline(
         "request_count": len(ordered_ids),
         "successful_request_count": len(predictions),
         "failed_request_count": len(error_records),
+        "run_status": "COMPLETE" if complete else "INCOMPLETE",
         "runtime_seconds": runtime,
         "token_usage": total_usage or None,
         "approximate_api_cost": None,
     }
     _write_json(run_directory / "manifest.json", manifest)
     return run_directory
+
+
+def run_completed_successfully(run_directory: str | Path) -> bool:
+    """Return true only when every explicitly requested case succeeded."""
+
+    manifest = json.loads(
+        (Path(run_directory) / "manifest.json").read_text(encoding="utf-8")
+    )
+    requested = manifest.get("request_count")
+    successful = manifest.get("successful_request_count")
+    failed = manifest.get("failed_request_count")
+    return (
+        isinstance(requested, int)
+        and requested > 0
+        and successful == requested
+        and failed == 0
+        and manifest.get("run_status") == "COMPLETE"
+    )
 
 
 def _dry_summary(rendered: RenderedPrompt) -> dict[str, Any]:
@@ -412,8 +460,14 @@ def main(argv: list[str] | None = None) -> int:
             max_attempts=args.max_attempts,
             results_root=args.results_root,
         )
-        print(f"Baseline run preserved at {run_directory}")
-        return 0
+        if run_completed_successfully(run_directory):
+            print(f"Baseline run completed and preserved at {run_directory}")
+            return 0
+        print(
+            f"Baseline run incomplete; failures preserved at {run_directory}",
+            file=sys.stderr,
+        )
+        return 1
     except (BaselineError, ConfigurationError, ValueError) as exc:
         print(f"Baseline error: {exc}", file=sys.stderr)
         return 1

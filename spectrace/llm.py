@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+import re
+from dataclasses import dataclass, field, replace
+from enum import Enum
 from typing import Any, Protocol
 
 from pydantic import ValidationError
@@ -28,7 +30,64 @@ class LLMError(RuntimeError):
     """Base error for a failed model call."""
 
 
-class TransientLLMError(LLMError):
+class ProviderErrorCategory(str, Enum):
+    """Stable provider-error categories safe to persist in run artifacts."""
+
+    AUTHENTICATION = "AUTHENTICATION"
+    PERMISSION = "PERMISSION"
+    QUOTA_OR_RATE_LIMIT = "QUOTA_OR_RATE_LIMIT"
+    MODEL_NOT_FOUND = "MODEL_NOT_FOUND"
+    INVALID_REQUEST_OR_SCHEMA = "INVALID_REQUEST_OR_SCHEMA"
+    TRANSIENT_PROVIDER_ERROR = "TRANSIENT_PROVIDER_ERROR"
+    UNKNOWN_PROVIDER_ERROR = "UNKNOWN_PROVIDER_ERROR"
+
+
+@dataclass(frozen=True)
+class ProviderErrorDiagnostic:
+    provider: str
+    exception_type: str
+    status_code: int | None
+    provider_status: str | None
+    category: ProviderErrorCategory
+    sanitized_provider_message: str
+    retryable: bool
+    request_id: str | None = None
+    attempt_number: int | None = None
+
+    def with_attempt(
+        self, *, request_id: str | None, attempt_number: int
+    ) -> ProviderErrorDiagnostic:
+        return replace(
+            self,
+            request_id=request_id,
+            attempt_number=attempt_number,
+        )
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "provider": self.provider,
+            "exception_type": self.exception_type,
+            "status_code": self.status_code,
+            "provider_status": self.provider_status,
+            "category": self.category.value,
+            "sanitized_provider_message": self.sanitized_provider_message,
+            "request_id": self.request_id,
+            "attempt_number": self.attempt_number,
+            "retryable": self.retryable,
+        }
+
+
+class ProviderLLMError(LLMError):
+    """A provider failure carrying secret-safe structured diagnostics."""
+
+    def __init__(self, diagnostic: ProviderErrorDiagnostic) -> None:
+        self.diagnostic = diagnostic
+        super().__init__(
+            f"{diagnostic.category.value}: {diagnostic.sanitized_provider_message}"
+        )
+
+
+class TransientLLMError(ProviderLLMError):
     """A provider failure that may succeed on a bounded retry."""
 
 
@@ -46,6 +105,7 @@ class PredictionAttempt:
     raw_response: str
     raw_responses: tuple[str, ...]
     attempt_errors: tuple[str, ...]
+    provider_errors: tuple[ProviderErrorDiagnostic, ...]
     usage: dict[str, Any] | None
     attempt_count: int
 
@@ -56,9 +116,44 @@ class RetryExhaustedError(LLMError):
 
     errors: list[str] = field(default_factory=list)
     raw_responses: list[str] = field(default_factory=list)
+    provider_errors: list[ProviderErrorDiagnostic] = field(default_factory=list)
+    attempt_count: int = 0
+    retry_exhausted: bool = True
 
     def __str__(self) -> str:
-        return f"structured generation failed after {len(self.errors)} attempts: {self.errors[-1]}"
+        disposition = "exhausted retries" if self.retry_exhausted else "stopped"
+        return (
+            f"structured generation {disposition} after {self.attempt_count} "
+            f"attempts: {self.errors[-1]}"
+        )
+
+
+_QUERY_CREDENTIAL_RE = re.compile(
+    r"(?i)([?&](?:key|api[_-]?key|access[_-]?token|token)=)[^&#\s]+"
+)
+_HEADER_CREDENTIAL_RE = re.compile(
+    r"(?i)((?:authorization|x-goog-api-key)\s*:\s*)(?:bearer\s+)?[^\s,;]+"
+)
+_ASSIGNED_CREDENTIAL_RE = re.compile(
+    r"(?i)([\"']?(?:api[_-]?key|access[_-]?token|token)[\"']?\s*[:=]\s*[\"']?)"
+    r"[^\"',}\s;&]+"
+)
+_GOOGLE_KEY_RE = re.compile(r"AIza[0-9A-Za-z_-]{20,}")
+_BEARER_RE = re.compile(r"(?i)bearer\s+[A-Za-z0-9._~+/-]+")
+
+
+def sanitize_provider_message(message: object, *, api_key: str | None = None) -> str:
+    """Redact known secrets and credential-like parameters from provider text."""
+
+    text = str(message) if message is not None else "No provider message supplied"
+    if api_key:
+        text = text.replace(api_key, "[REDACTED]")
+    text = _QUERY_CREDENTIAL_RE.sub(r"\1[REDACTED]", text)
+    text = _HEADER_CREDENTIAL_RE.sub(r"\1[REDACTED]", text)
+    text = _ASSIGNED_CREDENTIAL_RE.sub(r"\1[REDACTED]", text)
+    text = _GOOGLE_KEY_RE.sub("[REDACTED]", text)
+    text = _BEARER_RE.sub("Bearer [REDACTED]", text)
+    return text[:2000]
 
 
 def _status_code(exc: Exception) -> int | None:
@@ -67,6 +162,70 @@ def _status_code(exc: Exception) -> int | None:
         if isinstance(value, int):
             return value
     return None
+
+
+def _provider_status(exc: Exception) -> str | None:
+    value = getattr(exc, "status", None)
+    return str(value) if value else None
+
+
+def _provider_category(
+    status_code: int | None,
+    provider_status: str | None,
+    provider_message: object,
+) -> ProviderErrorCategory:
+    normalized_status = (provider_status or "").upper()
+    normalized_message = str(provider_message or "").lower()
+    invalid_credential_message = any(
+        marker in normalized_message
+        for marker in (
+            "api key not valid",
+            "invalid api key",
+            "authentication credential",
+        )
+    )
+    if (
+        status_code == 401
+        or normalized_status == "UNAUTHENTICATED"
+        or invalid_credential_message
+    ):
+        return ProviderErrorCategory.AUTHENTICATION
+    if status_code == 429 or normalized_status == "RESOURCE_EXHAUSTED":
+        return ProviderErrorCategory.QUOTA_OR_RATE_LIMIT
+    if status_code == 403 or normalized_status == "PERMISSION_DENIED":
+        return ProviderErrorCategory.PERMISSION
+    if status_code == 404 or normalized_status == "NOT_FOUND":
+        return ProviderErrorCategory.MODEL_NOT_FOUND
+    if status_code == 400 or normalized_status == "INVALID_ARGUMENT":
+        return ProviderErrorCategory.INVALID_REQUEST_OR_SCHEMA
+    if status_code in {408, 500, 502, 503, 504}:
+        return ProviderErrorCategory.TRANSIENT_PROVIDER_ERROR
+    return ProviderErrorCategory.UNKNOWN_PROVIDER_ERROR
+
+
+def provider_error_diagnostic(
+    exc: Exception,
+    *,
+    provider: str,
+    api_key: str | None = None,
+) -> ProviderErrorDiagnostic:
+    """Extract only diagnostic fields that are safe and useful to persist."""
+
+    status_code = _status_code(exc)
+    provider_status = _provider_status(exc)
+    provider_message = getattr(exc, "message", None) or str(exc)
+    category = _provider_category(status_code, provider_status, provider_message)
+    return ProviderErrorDiagnostic(
+        provider=provider,
+        exception_type=type(exc).__name__,
+        status_code=status_code,
+        provider_status=provider_status,
+        category=category,
+        sanitized_provider_message=sanitize_provider_message(
+            provider_message, api_key=api_key
+        ),
+        retryable=category == ProviderErrorCategory.TRANSIENT_PROVIDER_ERROR,
+    )
 
 
 def _usage_dict(response: Any) -> dict[str, Any] | None:
@@ -119,17 +278,22 @@ class GoogleGenAIClient:
                 config=config,
             )
         except Exception as exc:
-            if _status_code(exc) in {408, 429, 500, 502, 503, 504}:
-                raise TransientLLMError(
-                    f"transient provider error ({_status_code(exc)})"
-                ) from exc
-            raise LLMError(f"provider request failed: {type(exc).__name__}") from exc
+            diagnostic = provider_error_diagnostic(
+                exc,
+                provider=self._settings.provider,
+                api_key=self._settings.api_key,
+            )
+            error_type = TransientLLMError if diagnostic.retryable else ProviderLLMError
+            raise error_type(diagnostic) from exc
         try:
             text = response.text
         except Exception as exc:
-            raise LLMError(
-                f"provider response text unavailable: {type(exc).__name__}"
-            ) from exc
+            diagnostic = provider_error_diagnostic(
+                exc,
+                provider=self._settings.provider,
+                api_key=self._settings.api_key,
+            )
+            raise ProviderLLMError(diagnostic) from exc
         if not isinstance(text, str) or not text.strip():
             raise StructuredOutputError(
                 "provider returned no structured response text", raw_response=""
@@ -150,6 +314,7 @@ def generate_prediction_with_retry(
         raise ValueError("max_attempts must be at least 1")
     errors: list[str] = []
     raw_responses: list[str] = []
+    provider_errors: list[ProviderErrorDiagnostic] = []
     for attempt in range(1, max_attempts + 1):
         try:
             raw = client.generate(prompt)
@@ -174,13 +339,35 @@ def generate_prediction_with_retry(
                 raw_response=raw.text,
                 raw_responses=tuple(raw_responses),
                 attempt_errors=tuple(errors),
+                provider_errors=tuple(provider_errors),
                 usage=raw.usage,
                 attempt_count=attempt,
             )
-        except (TransientLLMError, StructuredOutputError) as exc:
+        except ProviderLLMError as exc:
+            diagnostic = exc.diagnostic.with_attempt(
+                request_id=expected_request_id,
+                attempt_number=attempt,
+            )
+            provider_errors.append(diagnostic)
+            errors.append(str(exc))
+            if not diagnostic.retryable:
+                raise RetryExhaustedError(
+                    errors=errors,
+                    raw_responses=raw_responses,
+                    provider_errors=provider_errors,
+                    attempt_count=attempt,
+                    retry_exhausted=False,
+                ) from exc
+        except StructuredOutputError as exc:
             errors.append(str(exc))
             if isinstance(exc, StructuredOutputError) and (
                 not raw_responses or raw_responses[-1] != exc.raw_response
             ):
                 raw_responses.append(exc.raw_response)
-    raise RetryExhaustedError(errors=errors, raw_responses=raw_responses)
+    raise RetryExhaustedError(
+        errors=errors,
+        raw_responses=raw_responses,
+        provider_errors=provider_errors,
+        attempt_count=max_attempts,
+        retry_exhausted=True,
+    )

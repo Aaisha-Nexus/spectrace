@@ -26,3 +26,11 @@
 - Prompt and assembled-input hashes allow later runs to be traced to exact
   inputs.
 - Offline fixture tests are not real model performance.
+- Excessive sanitization can preserve privacy while destroying diagnostic
+  usefulness.
+- Secure provider errors must retain safe status and category context while
+  redacting credentials.
+- Process completion and successful execution are different; exit codes must
+  reflect failures.
+- Partial or failed runs must never be presented as official benchmark results.
+- Retry decisions should depend on categorized failure type.
