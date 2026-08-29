@@ -1,0 +1,82 @@
+[
+  {
+    "request_id": "CR-001",
+    "date": "2026-05-15",
+    "source": "client_message",
+    "message": "Could you make sure every studio page shows its accessibility notes alongside the session times?",
+    "evidence_available_through": "DEC-004",
+    "chronological_order": 1
+  },
+  {
+    "request_id": "CR-002",
+    "date": "2026-05-16",
+    "source": "client_message",
+    "message": "When a member makes a valid cancellation, please put the place back into availability and email them to confirm the cancellation.",
+    "evidence_available_through": "CR-001",
+    "chronological_order": 2
+  },
+  {
+    "request_id": "CR-003",
+    "date": "2026-05-17",
+    "source": "client_message",
+    "message": "On busy days, can we let helpers manage bookings so the coordinators are not doing everything themselves?",
+    "evidence_available_through": "CR-002",
+    "chronological_order": 3
+  },
+  {
+    "request_id": "CR-004",
+    "date": "2026-05-18",
+    "source": "client_message",
+    "message": "Can you make the availability update instantly whenever somebody books or cancels?",
+    "evidence_available_through": "CR-003",
+    "chronological_order": 4
+  },
+  {
+    "request_id": "CR-005",
+    "date": "2026-05-19",
+    "source": "client_message",
+    "message": "We would also like native iPhone and Android apps so members can make their bookings from either phone platform.",
+    "evidence_available_through": "CR-004",
+    "chronological_order": 5
+  },
+  {
+    "request_id": "CR-006",
+    "date": "2026-05-20",
+    "source": "client_message",
+    "message": "If a session is full, could a member ask to receive an email when a place becomes available?",
+    "evidence_available_through": "CR-005",
+    "chronological_order": 6
+  },
+  {
+    "request_id": "CR-007",
+    "date": "2026-05-22",
+    "source": "client_message",
+    "message": "For full sessions, could members join a queue where the person who joined first is the first person notified when space opens?",
+    "evidence_available_through": "DEC-005",
+    "chronological_order": 7
+  },
+  {
+    "request_id": "CR-008",
+    "date": "2026-05-24",
+    "source": "client_message",
+    "message": "Please make ceramic-kiln reservations confirm automatically like the other studios instead of sending them to a coordinator.",
+    "evidence_available_through": "DEC-006",
+    "chronological_order": 8
+  },
+  {
+    "request_id": "CR-009",
+    "date": "2026-05-25",
+    "source": "client_message",
+    "message": "Can we revisit the calendar sync and have confirmed StudioLane reservations appear in members' external calendars?",
+    "evidence_available_through": "CR-008",
+    "chronological_order": 9
+  },
+  {
+    "request_id": "CR-010",
+    "date": "2026-05-26",
+    "source": "client_message",
+    "message": "When somebody cancels a full session, can StudioLane give that place automatically to the next member in the queue and email them the confirmation?",
+    "evidence_available_through": "CR-009",
+    "chronological_order": 10
+  }
+]

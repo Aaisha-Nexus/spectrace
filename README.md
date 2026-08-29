@@ -5,8 +5,9 @@ Project Managers, freelancers, and small software agencies. It is designed to
 compare incoming requests with approved scope and decision history, surface
 contradictions and cumulative scope drift, and keep a human reviewer in control.
 
-> Project status: control skeleton only. No benchmark dataset, model runner,
-> evaluation result, advanced agent, or user interface has been implemented.
+> Project status: the wholly synthetic StudioLane benchmark and its predetermined,
+> frozen ground truth now exist. The model runner, scorer, advanced agent, and
+> user interface remain unimplemented, and no model or API has been run.
 
 ## Development principles
 

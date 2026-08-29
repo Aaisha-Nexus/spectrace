@@ -1,0 +1,400 @@
+[
+  {
+    "request_id": "CR-001",
+    "expected_classification": "IN_SCOPE",
+    "evidence_available_through": "DEC-004",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-003",
+      "SOW-SCP-010"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-003",
+      "SOW-SCP-010"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "Existing studio-listing data",
+      "Schedule-administrator listing controls"
+    ],
+    "expected_reasoning_summary": "Accessibility notes are explicitly approved listing content and are already maintained by the schedule administrator. No later decision supersedes that capability.",
+    "expected_human_action": "CONFIRM_IN_SCOPE",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "A new user role is required",
+      "Accessibility compliance has been legally certified",
+      "A mobile application is required"
+    ]
+  },
+  {
+    "request_id": "CR-002",
+    "expected_classification": "IN_SCOPE",
+    "evidence_available_through": "CR-001",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-008",
+      "SOW-SCP-012",
+      "DEC-004"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-008",
+      "SOW-SCP-012",
+      "SOW-QUE-001",
+      "DEC-004"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "The cancellation has already been determined valid",
+      "Session-capacity update",
+      "Transactional email service"
+    ],
+    "expected_reasoning_summary": "The request is limited to the effects of a valid cancellation, which DEC-004 directly approves: record it, restore one place, and send a cancellation email. The unresolved cutoff does not prevent classification of those stated effects.",
+    "expected_human_action": "CONFIRM_IN_SCOPE",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "The cancellation cutoff is already defined",
+      "Every cancellation is valid",
+      "A refund is required"
+    ]
+  },
+  {
+    "request_id": "CR-003",
+    "expected_classification": "AMBIGUOUS",
+    "evidence_available_through": "CR-002",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-009",
+      "SOW-SCP-010",
+      "SOW-QUE-003"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-002",
+      "SOW-SCP-009",
+      "SOW-SCP-010",
+      "SOW-QUE-003"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": true,
+    "expected_clarification_points": [
+      "Whether a helper is an existing coordinator, an administrator, or a new role",
+      "Which booking actions helpers may perform",
+      "Which sessions or circumstances helpers may access"
+    ],
+    "expected_dependencies": [
+      "Role definition",
+      "Authorization boundaries",
+      "Booking-action permissions"
+    ],
+    "expected_reasoning_summary": "The SOW defines coordinator and administrator permissions but no helper role. The request also leaves 'manage bookings' undefined, so its intended capability and scope effect cannot be determined.",
+    "expected_human_action": "REQUEST_CLARIFICATION",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "Helper is an approved role",
+      "Helpers have coordinator permissions",
+      "A new permission model has been approved"
+    ]
+  },
+  {
+    "request_id": "CR-004",
+    "expected_classification": "AMBIGUOUS",
+    "evidence_available_through": "CR-003",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-003",
+      "SOW-SCP-005",
+      "SOW-QUE-002"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-003",
+      "SOW-SCP-005",
+      "SOW-QUE-002"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": true,
+    "expected_clarification_points": [
+      "Which screens must update without user action",
+      "The measurable refresh or response target",
+      "Expected behavior when members act on the same remaining place concurrently"
+    ],
+    "expected_dependencies": [
+      "Availability-refresh behavior",
+      "A measurable performance target",
+      "Concurrent reservation handling"
+    ],
+    "expected_reasoning_summary": "Availability display and reservation validation are approved, but 'instantly' does not identify a measurable behavior. It could mean a normal refresh after a transaction or a materially different live-update capability.",
+    "expected_human_action": "REQUEST_CLARIFICATION",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "Real-time streaming is approved",
+      "A refresh latency target has been agreed",
+      "A specific technical transport is required"
+    ]
+  },
+  {
+    "request_id": "CR-005",
+    "expected_classification": "OUT_OF_SCOPE",
+    "evidence_available_through": "CR-004",
+    "valid_supporting_evidence_ids": [
+      "SOW-EXC-001"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-001",
+      "SOW-EXC-001"
+    ],
+    "conflicting_evidence_ids": [
+      "SOW-EXC-001"
+    ],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "Native mobile delivery channels"
+    ],
+    "expected_reasoning_summary": "The request clearly asks for native iOS and Android applications, which SOW-EXC-001 directly excludes. No more specific approved-decision contradiction applies.",
+    "expected_human_action": "UPHOLD_EXPLICIT_EXCLUSION",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "The browser portal is a native application",
+      "Mobile applications were previously approved",
+      "The exclusion has been superseded"
+    ]
+  },
+  {
+    "request_id": "CR-006",
+    "expected_classification": "POTENTIAL_SCOPE_CHANGE",
+    "evidence_available_through": "CR-005",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-007",
+      "SOW-CON-001",
+      "SOW-CON-002"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-007",
+      "SOW-CON-001",
+      "SOW-CON-002",
+      "SOW-ASM-003",
+      "SOW-QUE-005"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "Persistent member-to-session alert subscriptions",
+      "A full-to-available capacity-change event",
+      "Transactional email delivery",
+      "Subscription lifecycle rules before implementation"
+    ],
+    "expected_reasoning_summary": "The requested availability alert is identifiable, but the initial SOW approves only unavailable display and reservation blocking after capacity is exhausted. Alerts are neither approved nor explicitly excluded, so formal scope review is required. Later acceptance details do not make the classification ambiguous.",
+    "expected_human_action": "APPROVE_LIMITED_SCOPE_CHANGE",
+    "resulting_decision_id": "DEC-005",
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "Availability alerts were already approved",
+      "A queue is part of CR-006",
+      "CR-006 itself updates approved scope",
+      "Automatic reservation is requested"
+    ]
+  },
+  {
+    "request_id": "CR-007",
+    "expected_classification": "POTENTIAL_SCOPE_CHANGE",
+    "evidence_available_through": "DEC-005",
+    "valid_supporting_evidence_ids": [
+      "SOW-CON-001",
+      "SOW-CON-002",
+      "DEC-005"
+    ],
+    "relevant_scope_ids": [
+      "SOW-CON-001",
+      "SOW-CON-002",
+      "DEC-005"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "Persistent queue membership",
+      "First-joined ordering",
+      "Withdrawal behavior",
+      "Queue notification rules before implementation"
+    ],
+    "expected_reasoning_summary": "DEC-005 approves only unordered opt-in alerts and expressly does not approve queue ordering or priority. The requested ordered queue is a clear material expansion that is not explicitly excluded, so it requires formal scope review.",
+    "expected_human_action": "APPROVE_LIMITED_SCOPE_CHANGE",
+    "resulting_decision_id": "DEC-006",
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "CR-006 approved a queue",
+      "Raw CR-006 is approved evidence",
+      "Automatic promotion is part of CR-007",
+      "A queued member is guaranteed a place"
+    ]
+  },
+  {
+    "request_id": "CR-008",
+    "expected_classification": "CONTRADICTS_APPROVED_DECISION",
+    "evidence_available_through": "DEC-006",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-006",
+      "SOW-SCP-009",
+      "DEC-003"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-006",
+      "SOW-SCP-009",
+      "DEC-003"
+    ],
+    "conflicting_evidence_ids": [
+      "DEC-003"
+    ],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "Ceramic-kiln reservation routing",
+      "Coordinator review status",
+      "Approval or decline notification"
+    ],
+    "expected_reasoning_summary": "DEC-003 specifically supersedes automatic confirmation for ceramic-kiln sessions and requires coordinator review. CR-008 directly asks for the superseded behavior, so the specific-decision contradiction takes precedence.",
+    "expected_human_action": "UPHOLD_APPROVED_DECISION",
+    "resulting_decision_id": null,
+    "planted_conflict": true,
+    "supersession_expected": true,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "DEC-003 has been superseded",
+      "Kiln reservations are currently automatic",
+      "All studio reservations follow the same current path"
+    ]
+  },
+  {
+    "request_id": "CR-009",
+    "expected_classification": "CONTRADICTS_APPROVED_DECISION",
+    "evidence_available_through": "CR-008",
+    "valid_supporting_evidence_ids": [
+      "SOW-EXC-003",
+      "DEC-002"
+    ],
+    "relevant_scope_ids": [
+      "SOW-EXC-003",
+      "DEC-002"
+    ],
+    "conflicting_evidence_ids": [
+      "DEC-002"
+    ],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "External calendar-provider integration",
+      "External event synchronization"
+    ],
+    "expected_reasoning_summary": "External-calendar synchronization is excluded, and DEC-002 is the more specific current decision that records its rejection. Because CR-009 directly reopens that rejected capability, contradiction precedence applies over generic out-of-scope classification.",
+    "expected_human_action": "UPHOLD_APPROVED_REJECTION",
+    "resulting_decision_id": null,
+    "planted_conflict": true,
+    "supersession_expected": false,
+    "cumulative_drift_expected": false,
+    "cumulative_pattern_id": null,
+    "cumulative_related_request_ids": [],
+    "cumulative_related_decision_ids": [],
+    "unsupported_claims_forbidden": [
+      "Calendar synchronization was approved",
+      "DEC-002 is no longer active",
+      "The request is merely a duplicate with no decision conflict"
+    ]
+  },
+  {
+    "request_id": "CR-010",
+    "expected_classification": "POTENTIAL_SCOPE_CHANGE",
+    "evidence_available_through": "CR-009",
+    "valid_supporting_evidence_ids": [
+      "SOW-SCP-012",
+      "SOW-CON-001",
+      "SOW-CON-002",
+      "DEC-005",
+      "DEC-006"
+    ],
+    "relevant_scope_ids": [
+      "SOW-SCP-012",
+      "SOW-CON-001",
+      "SOW-CON-002",
+      "DEC-005",
+      "DEC-006"
+    ],
+    "conflicting_evidence_ids": [],
+    "required_clarification": false,
+    "expected_clarification_points": [],
+    "expected_dependencies": [
+      "An approved persistent ordered queue",
+      "Cancellation-driven capacity events",
+      "Atomic capacity allocation",
+      "Automatic reservation creation",
+      "Member eligibility and conflict revalidation",
+      "Promotion, expiry, skip, and failure rules before implementation",
+      "Transactional email delivery"
+    ],
+    "expected_reasoning_summary": "DEC-005 and DEC-006 approve alerts and an ordered queue but explicitly stop short of holding capacity or creating a reservation automatically. CR-010 clearly adds automatic promotion and allocation, which is neither approved nor explicitly excluded. The approved incremental changes and this proposal collectively reveal a new full-session lifecycle subsystem.",
+    "expected_human_action": "DEFER_FOR_FORMAL_SCOPE_REVIEW",
+    "resulting_decision_id": null,
+    "planted_conflict": false,
+    "supersession_expected": false,
+    "cumulative_drift_expected": true,
+    "cumulative_pattern_id": "CUM-FULL-SESSION-001",
+    "cumulative_related_request_ids": [
+      "CR-006",
+      "CR-007",
+      "CR-010"
+    ],
+    "cumulative_related_decision_ids": [
+      "DEC-005",
+      "DEC-006"
+    ],
+    "unsupported_claims_forbidden": [
+      "CR-006 or CR-007 alone changed approved scope",
+      "DEC-006 approves automatic promotion",
+      "A queued member is already guaranteed a reservation",
+      "CR-010 has been approved",
+      "Implementation details such as offer expiry are already decided"
+    ]
+  }
+]

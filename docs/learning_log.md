@@ -9,3 +9,9 @@
 - Python 3.13 is retained provisionally; later retrieval dependencies must be compatibility-tested.
 - Repository structure should grow by implemented milestone rather than speculative empty architecture.
 - Privacy and reproducibility rules should be established before dataset creation.
+- Explicit exclusion and potential scope change require operationally distinct definitions.
+- Raw client requests do not update approved scope; only recorded human decisions do.
+- Evidence cutoffs prevent future-information leakage.
+- "Not approved" is different from "explicitly rejected."
+- Classification ambiguity is different from missing implementation acceptance details.
+- Cumulative drift should be evaluated separately from the request's primary classification.
