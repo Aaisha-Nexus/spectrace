@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spectrace"
+version = "0.1.0"
+description = "Requirements and scope intelligence agent"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["spectrace*"]
