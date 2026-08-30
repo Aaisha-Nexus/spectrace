@@ -72,3 +72,10 @@
 - A retry that ultimately succeeds must still preserve the failed attempt's
   timestamped, secret-safe diagnostic; call counts alone cannot recover why the
   earlier attempt failed.
+- The combined advanced system fixed both observed baseline failures on the
+  frozen benchmark: CR-004 ambiguity and CR-007 drift over-detection.
+- Reliability gains came with materially higher token use and runtime.
+- A perfect result on a small single-project benchmark is not evidence of
+  general perfection.
+- Improvement attribution belongs to the combined retrieval, deterministic
+  gates, approved memory, verification, and human-state pipeline, not RAG alone.

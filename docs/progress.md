@@ -2,7 +2,7 @@
 
 - **Date:** 2026-08-30
 - **Milestone 5/6:** Failure-Informed Advanced Agent
-- **Status:** Advanced Evaluation Runner checkpoint complete; verified offline replay
+- **Status:** Advanced V1 curated; failure-informed comparison complete
 
 ## Completed
 
@@ -143,6 +143,27 @@
 - Final Checkpoint 3 verification passed 144 tests on Python 3.13, including
   explicit ground-truth isolation, complete replay, ordering, fresh-database,
   incomplete-run, no-network, and frozen-baseline regressions
+- The real Advanced V1 evaluation completed CR-001 through CR-010 in order with
+  ten successful assessments, zero technical request failures, one bounded
+  provider retry, zero verification repairs, and ten explicit human reviews
+- Advanced V1 is curated from the immutable source candidate with all 42 source
+  artifacts copied byte-for-byte, including raw responses, predictions, scores,
+  trajectories, retrieval bundles, paused states, review events, snapshots, and
+  the SQLite database and sidecars
+- Advanced V1 passed all ten strict cases; it corrected Baseline V1's CR-004
+  ambiguity/clarification miss and CR-007 drift false positive while retaining
+  complete citation validity and contradiction recall
+- The failure-informed comparison records every aggregate metric and request,
+  with Advanced V1 Evidence-Grounded Scope Accuracy 1.00 versus Baseline V1 0.80
+- Advanced reliability required 118,053 total tokens and 216.59 seconds versus
+  50,566 tokens and 101.00 seconds for the baseline; no cost is claimed without
+  explicit pricing input
+- The recovered CR-007 retry exposed an unrecoverable missing first-attempt
+  diagnostic in the generation artifact; future runs now preserve append-only,
+  timestamped, secret-safe attempt records without altering Advanced V1
+- Final retry-repair verification passed 146 tests with dataset, scope-anchor,
+  retrieval, ground-truth isolation, baseline-hash, diff, secret, and privacy
+  audits passing
 
 ## Milestone 2 benchmark files
 
@@ -166,13 +187,12 @@ remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Deliberately not implemented
 
-- Model-backed advanced-agent run or advanced result artifacts
 - Streamlit interface
-- Workflow generation beyond the reviewed change-impact package
+- Workflow export beyond the reviewed change-impact package
 - Any retrieval, persistent ledger, verification pass, or agent tooling in the baseline
 
 ## Next step
 
-Run the Advanced V1 real smoke test and evaluation only after explicit review and
-authorization. The complete fake replay validates orchestration but is not
-measured model performance, and no advanced provider result exists yet.
+Begin the Streamlit Product Experience and Workflow Export phase. Preserve the
+curated Baseline V1, Advanced V1, and comparison artifacts unchanged while the
+interface and export workflow are developed.

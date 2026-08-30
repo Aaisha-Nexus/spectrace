@@ -1,0 +1,1822 @@
+[
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [],
+        "actors": [],
+        "dependency_terms": [],
+        "domain_terms": [
+          "accessibility",
+          "alongside",
+          "every",
+          "make",
+          "note",
+          "page",
+          "session",
+          "show",
+          "studio",
+          "sure",
+          "time"
+        ],
+        "evidence_ids": [
+          "SOW-SCP-003",
+          "SOW-SCP-010"
+        ],
+        "facets": [],
+        "heuristic": true,
+        "objects": [
+          "accessibility",
+          "alongside",
+          "every",
+          "make",
+          "note",
+          "page",
+          "session",
+          "show",
+          "studio",
+          "sure",
+          "time"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-001"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "IN_SCOPE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "IN_SCOPE",
+      "rationale": "The requested capability to display accessibility notes alongside session times on studio pages is directly supported by current approved scope in SOW-SCP-003, which covers member viewing of studio descriptions, accessibility notes, scheduled sessions, and remaining capacity.",
+      "request_id": "CR-001",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "SOW-SCP-003",
+        "SOW-SCP-010"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "IN_SCOPE",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "IN_SCOPE",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-001",
+      "review_id": "HR-EVAL-CR-001",
+      "source_hashes": [
+        "36d0047d475f901a2b080c7908402e533746bc78fb708f522a8168e77b99761c",
+        "4bfb51d3616e86eb26da2784daa3286ba79fb76b9b18da432a61021fdf20ec57"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-SCP-003",
+        "SOW-SCP-010"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [
+        "SOW-SCP-003",
+        "SOW-SCP-010"
+      ],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "IN_SCOPE",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "SOW-SCP-003",
+        "SOW-SCP-010"
+      ],
+      "request_id": "CR-001",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-001",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "confirm",
+          "email"
+        ],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [],
+        "domain_terms": [
+          "availability",
+          "back",
+          "cancellation",
+          "confirm",
+          "email",
+          "into",
+          "make",
+          "member",
+          "place",
+          "put",
+          "valid"
+        ],
+        "evidence_ids": [
+          "DEC-004",
+          "SOW-SCP-012"
+        ],
+        "facets": [
+          "capacity",
+          "notification",
+          "performance",
+          "workflow"
+        ],
+        "heuristic": true,
+        "objects": [
+          "availability",
+          "back",
+          "cancellation",
+          "into",
+          "make",
+          "place",
+          "put",
+          "valid"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-002"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "IN_SCOPE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "IN_SCOPE",
+      "rationale": "The request to restore place availability and email the member upon a valid cancellation is explicitly supported by current approved evidence DEC-004 and SOW-SCP-012.",
+      "request_id": "CR-002",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "DEC-004",
+        "SOW-SCP-012"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "IN_SCOPE",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "IN_SCOPE",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-002",
+      "review_id": "HR-EVAL-CR-002",
+      "source_hashes": [
+        "5eb867f374b53a4761be5fa88fe365f268928296d46b27344b27034266405cd8",
+        "de464ce2919e53ead001935302262f782d36eca13294381421c9d083b043dcab"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "DEC-004",
+        "SOW-SCP-012"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [
+        "DEC-004",
+        "SOW-SCP-012"
+      ],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [
+        {
+          "active": true,
+          "description": "A current decision approves the matching capability facet.",
+          "evidence_id": "DEC-004",
+          "facet_terms": [
+            "capacity",
+            "notification",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "APPROVES",
+          "specific": true
+        }
+      ],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "capacity",
+        "notification",
+        "performance",
+        "workflow"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "IN_SCOPE",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "DEC-004",
+        "SOW-SCP-012"
+      ],
+      "request_id": "CR-002",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-002",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-002"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "manage"
+        ],
+        "actors": [],
+        "dependency_terms": [],
+        "domain_terms": [
+          "booking",
+          "busy",
+          "coordinator",
+          "days",
+          "doing",
+          "everything",
+          "helper",
+          "let",
+          "manage",
+          "not",
+          "themselve"
+        ],
+        "evidence_ids": [
+          "SOW-QUE-003"
+        ],
+        "facets": [],
+        "heuristic": true,
+        "objects": [
+          "booking",
+          "busy",
+          "coordinator",
+          "days",
+          "doing",
+          "everything",
+          "helper",
+          "let",
+          "not",
+          "themselve"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-003"
+        ]
+      },
+      "clarification_questions": [
+        "Which approved role, or what new role and permission boundary, does 'helper' mean?"
+      ],
+      "classification": "AMBIGUOUS",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "AMBIGUOUS",
+      "rationale": "The request asks to allow 'helpers' to manage bookings, but 'helper' is an undefined role in the current approved scope as highlighted in SOW-QUE-003, making the capability underspecified.",
+      "request_id": "CR-003",
+      "requires_clarification": true,
+      "supporting_evidence_ids": [
+        "SOW-QUE-003"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "AMBIGUOUS",
+      "approval_state": "NEEDS_CLARIFICATION",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "AMBIGUOUS",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [
+        "Which approved role, or what new role and permission boundary, does 'helper' mean?"
+      ],
+      "request_id": "CR-003",
+      "review_id": "HR-EVAL-CR-003",
+      "source_hashes": [
+        "0877499c6ed1351cc1039dd32af02867ee84075fc59e733753a050f596b4748b"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-QUE-003"
+      ],
+      "unknowns": [
+        "Which approved role, or what new role and permission boundary, does 'helper' mean?"
+      ],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "NEEDS_CLARIFICATION",
+      "clarification_questions": [
+        "Which approved role, or what new role and permission boundary, does 'helper' mean?"
+      ],
+      "classification": "AMBIGUOUS",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "SOW-QUE-003"
+      ],
+      "request_id": "CR-003",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-003",
+    "sufficiency": {
+      "clarification_questions": [
+        "Which approved role, or what new role and permission boundary, does 'helper' mean?"
+      ],
+      "findings": [
+        {
+          "blocking": true,
+          "clarification_question": "Which approved role, or what new role and permission boundary, does 'helper' mean?",
+          "description": "The actor or role 'helper' is not defined by approved role evidence.",
+          "evidence_ids": [
+            "SOW-QUE-003",
+            "SOW-QUE-005"
+          ],
+          "heuristic": false,
+          "kind": "UNDEFINED_ACTOR"
+        }
+      ],
+      "rationale": "Classification is blocked by undefined or unmeasured request behavior.",
+      "sufficient_for_classification": false
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "book",
+          "cancel",
+          "update"
+        ],
+        "actors": [],
+        "dependency_terms": [],
+        "domain_terms": [
+          "availability",
+          "book",
+          "cancel",
+          "instantly",
+          "make",
+          "somebody",
+          "update",
+          "whenever"
+        ],
+        "evidence_ids": [
+          "SOW-QUE-002",
+          "SOW-SCP-012"
+        ],
+        "facets": [
+          "capacity",
+          "performance"
+        ],
+        "heuristic": true,
+        "objects": [
+          "availability",
+          "instantly",
+          "make",
+          "somebody",
+          "whenever"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-004"
+        ]
+      },
+      "clarification_questions": [
+        "What observable behavior and measurable target must the requested change meet?"
+      ],
+      "classification": "AMBIGUOUS",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "AMBIGUOUS",
+      "rationale": "The request asks to update availability 'instantly' whenever someone books or cancels, which relies on an underspecified qualitative target. SOW-QUE-002 identifies that the target response/refresh time for availability changes remains unresolved, making the request too ambiguous to classify without concrete performance criteria.",
+      "request_id": "CR-004",
+      "requires_clarification": true,
+      "supporting_evidence_ids": [
+        "SOW-QUE-002",
+        "SOW-SCP-012"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "AMBIGUOUS",
+      "approval_state": "NEEDS_CLARIFICATION",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "AMBIGUOUS",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [
+        "What observable behavior and measurable target must the requested change meet?"
+      ],
+      "request_id": "CR-004",
+      "review_id": "HR-EVAL-CR-004",
+      "source_hashes": [
+        "70b414bb9e56e6d84b8f6ee9863e978836e307b571371bb223ba5736489b48e0",
+        "de464ce2919e53ead001935302262f782d36eca13294381421c9d083b043dcab"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-QUE-002",
+        "SOW-SCP-012"
+      ],
+      "unknowns": [
+        "What observable behavior and measurable target must the requested change meet?"
+      ],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "capacity",
+        "performance"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "NEEDS_CLARIFICATION",
+      "clarification_questions": [
+        "What observable behavior and measurable target must the requested change meet?"
+      ],
+      "classification": "AMBIGUOUS",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "SOW-QUE-002",
+        "SOW-SCP-012"
+      ],
+      "request_id": "CR-004",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-004",
+    "sufficiency": {
+      "clarification_questions": [
+        "What observable behavior and measurable target must the requested change meet?"
+      ],
+      "findings": [
+        {
+          "blocking": true,
+          "clarification_question": "What observable behavior and measurable target must the requested change meet?",
+          "description": "The qualitative target 'instant' has no measurable or observable boundary.",
+          "evidence_ids": [
+            "SOW-QUE-001",
+            "SOW-QUE-002"
+          ],
+          "heuristic": false,
+          "kind": "VAGUE_QUALITATIVE_TARGET"
+        }
+      ],
+      "rationale": "Classification is blocked by undefined or unmeasured request behavior.",
+      "sufficient_for_classification": false
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [],
+        "domain_terms": [
+          "also",
+          "android",
+          "apps",
+          "booking",
+          "either",
+          "iphone",
+          "like",
+          "make",
+          "member",
+          "native",
+          "phone",
+          "platform"
+        ],
+        "evidence_ids": [
+          "SOW-EXC-001"
+        ],
+        "facets": [
+          "mobile"
+        ],
+        "heuristic": true,
+        "objects": [
+          "also",
+          "android",
+          "apps",
+          "booking",
+          "either",
+          "iphone",
+          "like",
+          "make",
+          "native",
+          "phone",
+          "platform"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-005"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "OUT_OF_SCOPE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "OUT_OF_SCOPE",
+      "rationale": "The request asks for native iPhone and Android applications so members can make bookings. SOW-EXC-001 explicitly excludes native iOS and Android applications, making this request out of scope under current project exclusions.",
+      "request_id": "CR-005",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "SOW-EXC-001"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "OUT_OF_SCOPE",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "OUT_OF_SCOPE",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-005",
+      "review_id": "HR-EVAL-CR-005",
+      "source_hashes": [
+        "627e723daa099d1f402dd14144230e80900fe1770ee0966217ea44fada32cc9e"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-EXC-001"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [
+        "SOW-EXC-001"
+      ],
+      "findings": [],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "mobile"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "OUT_OF_SCOPE",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "SOW-EXC-001"
+      ],
+      "request_id": "CR-005",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-005",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "email"
+        ],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [],
+        "domain_terms": [
+          "ask",
+          "available",
+          "become",
+          "email",
+          "full",
+          "member",
+          "place",
+          "receive",
+          "session"
+        ],
+        "evidence_ids": [
+          "SOW-CON-001",
+          "SOW-CON-002"
+        ],
+        "facets": [
+          "capacity",
+          "notification"
+        ],
+        "heuristic": true,
+        "objects": [
+          "ask",
+          "available",
+          "become",
+          "full",
+          "place",
+          "receive",
+          "session"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-006"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "POTENTIAL_SCOPE_CHANGE",
+      "rationale": "The incoming request asks whether a member can ask to receive an email notification when a place becomes available in a full session (an availability subscription). Under SOW-CON-002, availability subscriptions and post-full-session behavior beyond displaying a session as unavailable are neither currently approved nor explicitly excluded. Because there is no specific approved decision rejecting this request, it is not underspecified, not currently supported by approved scope, and not explicitly excluded, it is classified as POTENTIAL_SCOPE_CHANGE per standard precedence.",
+      "request_id": "CR-006",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "SOW-CON-002",
+        "SOW-CON-001"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [
+        {
+          "criterion_id": "DRAFT-CR-006-001",
+          "evidence_ids": [
+            "DEC-006",
+            "SOW-CON-001",
+            "SOW-CON-002",
+            "SOW-QUE-005",
+            "SOW-SCP-007"
+          ],
+          "status": "DRAFT",
+          "text": "DRAFT: Verify the approved behavior described by: If a session is full, could a member ask to receive an email when a place becomes available?"
+        }
+      ],
+      "added_requirements": [
+        "A member may opt in to an email alert for a full session. The subscription is stored, and an availability-change event may trigger an email when that session changes from full to having capacity."
+      ],
+      "affected_actors": [
+        "member"
+      ],
+      "affected_components": [
+        "ask",
+        "available",
+        "become",
+        "full",
+        "place",
+        "receive",
+        "session"
+      ],
+      "affected_data_state": [
+        "capacity"
+      ],
+      "affected_integrations": [
+        "email"
+      ],
+      "agent_classification": "POTENTIAL_SCOPE_CHANGE",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "POTENTIAL_SCOPE_CHANGE",
+      "is_review_memo": false,
+      "non_goals": [
+        "No cost, legal, contract, schedule, or delivery commitment is generated."
+      ],
+      "open_questions": [],
+      "request_id": "CR-006",
+      "review_id": "HR-EVAL-CR-006",
+      "source_hashes": [
+        "28e423e957c576daa0b9064538c0a4d135f62481de1823f6b314b751f57b6509",
+        "56df5d412eda8ab98bd37bcb6616d987a0ec83883d4e97276f137ee2c2c3b7b1",
+        "579e7a9fd5b2eacf6f5075833c32bf7f60c93dbef4b72f3de9b52d222b31f737",
+        "ee07139b241f787a0ec4c849efa8c0bb503a4929512277ba896536b5a54fe6d6",
+        "ef03d9ed305a7907b1ac23376e603391bf6e8a73250d7fafb8782c778b63f510"
+      ],
+      "summary": "Human-approved scope change package. Acceptance criteria remain draft pending normal project governance.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-CON-002",
+        "SOW-CON-001"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": [
+        "Record the approved decision in the ledger.",
+        "Refine the evidence-linked draft acceptance criterion with the human reviewer."
+      ]
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "capacity",
+        "notification"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "SOW-CON-001",
+        "SOW-CON-002"
+      ],
+      "request_id": "CR-006",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-006",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-005"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "join"
+        ],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [
+          "005",
+          "dec"
+        ],
+        "domain_terms": [
+          "first",
+          "full",
+          "join",
+          "joined",
+          "member",
+          "notified",
+          "open",
+          "person",
+          "queue",
+          "session",
+          "space",
+          "who"
+        ],
+        "evidence_ids": [
+          "DEC-005"
+        ],
+        "facets": [
+          "capacity",
+          "ordering"
+        ],
+        "heuristic": true,
+        "objects": [
+          "first",
+          "full",
+          "joined",
+          "notified",
+          "open",
+          "person",
+          "queue",
+          "session",
+          "space",
+          "who"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-007"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [
+        "DEC-005"
+      ],
+      "model_recommendation": "POTENTIAL_SCOPE_CHANGE",
+      "rationale": "The request proposes first-in-first-out queue ordering for notifications when session space opens. Decision DEC-005 approves general opt-in email alerts for full sessions but explicitly notes that queue ordering and priority entitlement are neither approved nor rejected and require scope review. Because no current approved evidence covers ordered queue notifications and no active exclusion rejects it, this request is classified as a potential scope change.",
+      "request_id": "CR-007",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "DEC-005"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [
+        {
+          "criterion_id": "DRAFT-CR-007-001",
+          "evidence_ids": [
+            "DEC-005",
+            "SOW-CON-001",
+            "SOW-CON-002"
+          ],
+          "status": "DRAFT",
+          "text": "DRAFT: Verify the approved behavior described by: For full sessions, could members join a queue where the person who joined first is the first person notified when space opens?"
+        }
+      ],
+      "added_requirements": [
+        "A member may join or leave a persistent queue for a full session. Queue order is first-joined, and the first queued member is selected for the first availability notification when capacity becomes available."
+      ],
+      "affected_actors": [
+        "member"
+      ],
+      "affected_components": [
+        "first",
+        "full",
+        "joined",
+        "notified",
+        "open",
+        "person",
+        "queue",
+        "session",
+        "space",
+        "who"
+      ],
+      "affected_data_state": [
+        "capacity"
+      ],
+      "affected_integrations": [],
+      "agent_classification": "POTENTIAL_SCOPE_CHANGE",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [
+        "DEC-005"
+      ],
+      "drift_pattern": "6dcaeff04d6e85bb",
+      "drift_severity": "EMERGING",
+      "final_classification": "POTENTIAL_SCOPE_CHANGE",
+      "is_review_memo": false,
+      "non_goals": [
+        "No cost, legal, contract, schedule, or delivery commitment is generated."
+      ],
+      "open_questions": [],
+      "request_id": "CR-007",
+      "review_id": "HR-EVAL-CR-007",
+      "source_hashes": [
+        "579e7a9fd5b2eacf6f5075833c32bf7f60c93dbef4b72f3de9b52d222b31f737",
+        "751dcde4ab7713b751a451065f065d898b4bfa2c96a16f4700ef7d4c04023294",
+        "ee07139b241f787a0ec4c849efa8c0bb503a4929512277ba896536b5a54fe6d6"
+      ],
+      "summary": "Human-approved scope change package. Acceptance criteria remain draft pending normal project governance.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "DEC-005"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": [
+        "Record the approved decision in the ledger.",
+        "Refine the evidence-linked draft acceptance criterion with the human reviewer."
+      ]
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [
+        {
+          "active": true,
+          "description": "The current decision leaves this capability unapproved and unrejected.",
+          "evidence_id": "DEC-005",
+          "facet_terms": [
+            "automation",
+            "capacity",
+            "notification",
+            "ordering",
+            "performance",
+            "persistence",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "DOES_NOT_APPROVE_OR_REJECT",
+          "specific": true
+        }
+      ],
+      "neutral_boundary_evidence_ids": [
+        "DEC-005"
+      ],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 1,
+      "combined_facets": [
+        "capacity",
+        "notification",
+        "ordering",
+        "performance",
+        "persistence"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": "6dcaeff04d6e85bb",
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [
+        "DEC-005"
+      ],
+      "related_request_ids": [
+        "CR-006"
+      ],
+      "severity": "EMERGING"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "drift_severity": "EMERGING",
+      "evidence_ids": [
+        "DEC-005"
+      ],
+      "request_id": "CR-007",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-007",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-005"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "confirm"
+        ],
+        "actors": [],
+        "dependency_terms": [],
+        "domain_terms": [
+          "automatically",
+          "ceramic",
+          "confirm",
+          "coordinator",
+          "instead",
+          "kiln",
+          "like",
+          "make",
+          "other",
+          "reservation",
+          "sending",
+          "studio"
+        ],
+        "evidence_ids": [
+          "DEC-003"
+        ],
+        "facets": [
+          "automation",
+          "workflow"
+        ],
+        "heuristic": true,
+        "objects": [
+          "automatically",
+          "ceramic",
+          "coordinator",
+          "instead",
+          "kiln",
+          "like",
+          "make",
+          "other",
+          "reservation",
+          "sending",
+          "studio"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-008"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "CONTRADICTS_APPROVED_DECISION",
+      "conflicting_evidence_ids": [
+        "DEC-003"
+      ],
+      "dependencies": [],
+      "model_recommendation": "CONTRADICTS_APPROVED_DECISION",
+      "rationale": "The request asks to automatically confirm ceramic-kiln reservations rather than routing them to a coordinator for review. Current approved decision DEC-003 explicitly rejects automatic confirmation of ceramic-kiln reservations and mandates coordinator review.",
+      "request_id": "CR-008",
+      "requires_clarification": false,
+      "supporting_evidence_ids": []
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "CONTRADICTS_APPROVED_DECISION",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [
+        "DEC-003"
+      ],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "CONTRADICTS_APPROVED_DECISION",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-008",
+      "review_id": "HR-EVAL-CR-008",
+      "source_hashes": [
+        "2ed5976f3dd69ec1f6fe0f31e85b5b8addc7e19d0f27505344f995dd38dbf0a7"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [
+        "DEC-003"
+      ],
+      "exclusion_evidence_ids": [],
+      "findings": [
+        {
+          "active": true,
+          "description": "The identifiable request opposes a current specific rejection.",
+          "evidence_id": "DEC-003",
+          "facet_terms": [
+            "automation",
+            "notification",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "REJECTS",
+          "specific": true
+        },
+        {
+          "active": true,
+          "description": "The current decision leaves this capability unapproved and unrejected.",
+          "evidence_id": "DEC-006",
+          "facet_terms": [
+            "automation",
+            "capacity",
+            "notification",
+            "ordering",
+            "performance",
+            "persistence",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "DOES_NOT_APPROVE_OR_REJECT",
+          "specific": true
+        }
+      ],
+      "neutral_boundary_evidence_ids": [
+        "DEC-006"
+      ],
+      "proven_specific_contradiction": true,
+      "rationale": "A current specific approved rejection conflicts with the request."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "automation",
+        "workflow"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "CONTRADICTS_APPROVED_DECISION",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "DEC-003"
+      ],
+      "request_id": "CR-008",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-008",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-003"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-004"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [],
+        "domain_terms": [
+          "appear",
+          "calendar",
+          "confirmed",
+          "external",
+          "member",
+          "reservation",
+          "revisit",
+          "studiolane",
+          "sync"
+        ],
+        "evidence_ids": [
+          "DEC-002",
+          "SOW-EXC-003"
+        ],
+        "facets": [
+          "integration"
+        ],
+        "heuristic": true,
+        "objects": [
+          "appear",
+          "calendar",
+          "confirmed",
+          "external",
+          "reservation",
+          "revisit",
+          "studiolane",
+          "sync"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-009"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "CONTRADICTS_APPROVED_DECISION",
+      "conflicting_evidence_ids": [
+        "DEC-002"
+      ],
+      "dependencies": [],
+      "model_recommendation": "CONTRADICTS_APPROVED_DECISION",
+      "rationale": "The request asks to enable external calendar synchronization for StudioLane reservations. DEC-002 is a current approved rejection that explicitly rejects synchronization, event creation, or data exchange with any external calendar provider. Under precedence rule 1, the request contradicts a current specific approved decision.",
+      "request_id": "CR-009",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "SOW-EXC-003"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "CONTRADICTS_APPROVED_DECISION",
+      "approval_state": "APPROVE",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [
+        "DEC-002"
+      ],
+      "dependencies": [],
+      "drift_pattern": null,
+      "drift_severity": "NONE",
+      "final_classification": "CONTRADICTS_APPROVED_DECISION",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-009",
+      "review_id": "HR-EVAL-CR-009",
+      "source_hashes": [
+        "717715885f3c4057f0058db73fcd63659a09ce8cbf4ca3bc27dc457ec76e8edd",
+        "d7bf4abcd5873f14efec2cac1a68b58ab174e1108aca54e1283c7f29e60bd177"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "SOW-EXC-003"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [
+        "DEC-002"
+      ],
+      "exclusion_evidence_ids": [
+        "SOW-EXC-003"
+      ],
+      "findings": [
+        {
+          "active": true,
+          "description": "The identifiable request opposes a current specific rejection.",
+          "evidence_id": "DEC-002",
+          "facet_terms": [
+            "integration",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "REJECTS",
+          "specific": true
+        }
+      ],
+      "neutral_boundary_evidence_ids": [],
+      "proven_specific_contradiction": true,
+      "rationale": "A current specific approved rejection conflicts with the request."
+    },
+    "drift": {
+      "approved_change_count": 0,
+      "combined_facets": [
+        "integration"
+      ],
+      "cumulative_drift_detected": false,
+      "heuristic": true,
+      "pattern_key": null,
+      "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+      "related_decision_ids": [],
+      "related_request_ids": [],
+      "severity": "NONE"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "CONTRADICTS_APPROVED_DECISION",
+      "drift_severity": "NONE",
+      "evidence_ids": [
+        "DEC-002",
+        "SOW-EXC-003"
+      ],
+      "request_id": "CR-009",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-009",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-004"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  },
+  {
+    "assessment": {
+      "capability_signature": {
+        "actions": [
+          "cancel",
+          "email"
+        ],
+        "actors": [
+          "member"
+        ],
+        "dependency_terms": [],
+        "domain_terms": [
+          "automatically",
+          "cancel",
+          "confirmation",
+          "email",
+          "full",
+          "give",
+          "member",
+          "next",
+          "place",
+          "queue",
+          "session",
+          "somebody",
+          "studiolane"
+        ],
+        "evidence_ids": [
+          "DEC-005",
+          "DEC-006"
+        ],
+        "facets": [
+          "automation",
+          "capacity",
+          "notification",
+          "ordering"
+        ],
+        "heuristic": true,
+        "objects": [
+          "automatically",
+          "confirmation",
+          "full",
+          "give",
+          "next",
+          "place",
+          "queue",
+          "session",
+          "somebody",
+          "studiolane"
+        ],
+        "source_decision_ids": [],
+        "source_request_ids": [
+          "CR-010"
+        ]
+      },
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "model_recommendation": "POTENTIAL_SCOPE_CHANGE",
+      "rationale": "DEC-006 approved persistent ordered queues and availability notifications when capacity opens, but explicitly documented that automatically promoting a queued member or creating a reservation without member action was neither approved nor rejected and requires scope review. Consequently, automatically assigning a cancelled session place to the next queued member and emailing them confirmation is a potential scope change.",
+      "request_id": "CR-010",
+      "requires_clarification": false,
+      "supporting_evidence_ids": [
+        "DEC-006",
+        "DEC-005"
+      ]
+    },
+    "change_package": {
+      "acceptance_criteria": [],
+      "added_requirements": [],
+      "affected_actors": [],
+      "affected_components": [],
+      "affected_data_state": [],
+      "affected_integrations": [],
+      "agent_classification": "POTENTIAL_SCOPE_CHANGE",
+      "approval_state": "DEFER",
+      "changed_requirements": [],
+      "conflicting_evidence_ids": [],
+      "dependencies": [],
+      "drift_pattern": "9b75a22127b1a4d0",
+      "drift_severity": "SUBSYSTEM",
+      "final_classification": "POTENTIAL_SCOPE_CHANGE",
+      "is_review_memo": true,
+      "non_goals": [
+        "No implementation commitment, estimate, contract amendment, or client communication is implied."
+      ],
+      "open_questions": [],
+      "request_id": "CR-010",
+      "review_id": "HR-EVAL-CR-010",
+      "source_hashes": [
+        "751dcde4ab7713b751a451065f065d898b4bfa2c96a16f4700ef7d4c04023294",
+        "ef03d9ed305a7907b1ac23376e603391bf6e8a73250d7fafb8782c778b63f510"
+      ],
+      "summary": "Human review recorded without an approved scope-changing capability; no change package was authorized.",
+      "superseded_requirements": [],
+      "supporting_evidence_ids": [
+        "DEC-006",
+        "DEC-005"
+      ],
+      "unknowns": [],
+      "verification_hash": "46d708bc66137be7c90e7f6aa08041f28777bc0e5a6499fa8981e480d945a6a2",
+      "workflow_steps": []
+    },
+    "conflicts": {
+      "approved_evidence_ids": [],
+      "conflicting_evidence_ids": [],
+      "exclusion_evidence_ids": [],
+      "findings": [
+        {
+          "active": true,
+          "description": "The current decision leaves this capability unapproved and unrejected.",
+          "evidence_id": "DEC-005",
+          "facet_terms": [
+            "automation",
+            "capacity",
+            "notification",
+            "ordering",
+            "performance",
+            "persistence",
+            "workflow"
+          ],
+          "heuristic": false,
+          "polarity": "DOES_NOT_APPROVE_OR_REJECT",
+          "specific": true
+        }
+      ],
+      "neutral_boundary_evidence_ids": [
+        "DEC-005"
+      ],
+      "proven_specific_contradiction": false,
+      "rationale": "No current specific approved-decision contradiction was proven."
+    },
+    "drift": {
+      "approved_change_count": 2,
+      "combined_facets": [
+        "automation",
+        "capacity",
+        "notification",
+        "ordering",
+        "performance",
+        "persistence"
+      ],
+      "cumulative_drift_detected": true,
+      "heuristic": true,
+      "pattern_key": "9b75a22127b1a4d0",
+      "rationale": "At least two related approved changes and the current connected increment form a multi-facet subsystem.",
+      "related_decision_ids": [
+        "DEC-005",
+        "DEC-006"
+      ],
+      "related_request_ids": [
+        "CR-006",
+        "CR-007",
+        "CR-010"
+      ],
+      "severity": "SUBSYSTEM"
+    },
+    "recommendation": {
+      "action": "DEFER",
+      "clarification_questions": [],
+      "classification": "POTENTIAL_SCOPE_CHANGE",
+      "drift_severity": "SUBSYSTEM",
+      "evidence_ids": [
+        "DEC-005",
+        "DEC-006"
+      ],
+      "request_id": "CR-010",
+      "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+    },
+    "request_id": "CR-010",
+    "sufficiency": {
+      "clarification_questions": [],
+      "findings": [
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-001"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        },
+        {
+          "blocking": false,
+          "clarification_question": null,
+          "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+          "evidence_ids": [
+            "SOW-QUE-005"
+          ],
+          "heuristic": false,
+          "kind": "ACCEPTANCE_DETAIL"
+        }
+      ],
+      "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+      "sufficient_for_classification": true
+    },
+    "verification": {
+      "issues": [],
+      "passed": true,
+      "repair_attempted": false,
+      "repair_succeeded": false
+    }
+  }
+]

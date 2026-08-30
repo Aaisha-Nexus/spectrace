@@ -9,12 +9,12 @@ contradictions and cumulative scope drift, and keep a human reviewer in control.
 > frozen ground truth now exist. Dataset validation, strict schemas, an API-free
 > deterministic scorer, and the direct-prompt baseline runner are implemented.
 > Baseline V1 is curated from a completed ten-request Gemini run. The first
-> advanced-agent checkpoint now provides deterministic scope-anchor parsing,
-> cutoff-safe lexical retrieval, and a human-approval-gated SQLite ledger. The
-> second checkpoint adds offline advanced analysis, deterministic verification
-> and drift tools, a resumable human-gated state machine, and change-impact
-> packaging. No real advanced model run, benchmark result, or user interface
-> exists yet.
+> advanced system now provides deterministic scope-anchor parsing, cutoff-safe
+> lexical retrieval, approved-memory SQLite persistence, ambiguity and drift
+> analysis, deterministic verification, and a resumable human-gated state
+> machine. Baseline V1 and Advanced V1 are curated on the frozen StudioLane
+> benchmark, with a failure-informed comparison preserved. The Streamlit product
+> experience and workflow export are next and are not yet implemented.
 
 ## Development principles
 
@@ -183,7 +183,61 @@ commit `6d80f84af9bf003b06f54c64d6cc6a0c78e45611`.
 
 CR-004 and CR-007 are the two strict failures. The preserved
 `error_analysis.md` separates those model failures from scorer and engineering
-defects. No advanced-agent result or improvement comparison exists yet.
+defects.
+
+## Baseline V1 versus Advanced V1
+
+[Advanced V1](results/advanced_v1/) is the curated sequential advanced-agent
+candidate. The complete [comparison](results/comparison_v1/) uses the same
+frozen ten-request StudioLane benchmark and unchanged scorer as
+[Baseline V1](results/baseline_v1/).
+
+| Metric | Baseline V1 | Advanced V1 |
+|---|---:|---:|
+| Strict passes | 8/10 | 10/10 |
+| Classification accuracy | 0.90 | 1.00 |
+| Macro precision | 0.95 | 1.00 |
+| Macro recall | 0.90 | 1.00 |
+| Macro F1 | 0.9048 | 1.00 |
+| Citation validity | 1.00 | 1.00 |
+| Classification-appropriate evidence hit | 1.00 | 1.00 |
+| Clarification accuracy | 0.90 | 1.00 |
+| Clarification recall | 0.50 | 1.00 |
+| Contradiction recall | 1.00 | 1.00 |
+| Cumulative-drift accuracy | 0.90 | 1.00 |
+| Related request/decision ID accuracy | 1.00 / 1.00 | 1.00 / 1.00 |
+| Evidence-Grounded Scope Accuracy | 0.80 | 1.00 |
+
+Advanced V1 corrected the two observed baseline failures: CR-004's missed
+ambiguity and clarification need, and CR-007's cumulative-drift false positive.
+Citation validity, classification-appropriate evidence placement, and
+contradiction recall remained complete in both runs.
+
+### Advanced architecture
+
+For each request, the advanced pipeline builds the frozen scope anchor, retrieves
+only cutoff-available evidence, applies deterministic ambiguity and conflict
+gates, obtains one independent structured model assessment, reconciles the fixed
+taxonomy precedence, calculates drift from human-approved memory only, verifies
+the assessment, and pauses for human review. Only an explicit review transaction
+can update the SQLite decision ledger for later requests.
+
+### Tradeoffs and limitations
+
+Advanced V1 used 118,053 total tokens and 216.59 seconds, versus 50,566 tokens
+and 101.00 seconds for Baseline V1: about 2.33x the tokens and 2.14x the runtime.
+No cost is claimed because explicit pricing input is absent.
+
+This is one run per system on one ten-case synthetic project. It provides no
+statistical-significance or generalization evidence, and Advanced V1's perfect
+score does not imply general perfection. The improvement belongs to the combined
+retrieval, deterministic-gating, approved-memory, verification, and human-state
+pipeline; it must not be attributed to RAG alone. CR-007's first failed provider
+attempt diagnostic was not retained and is unrecoverable; the post-run repair
+affects future runs only.
+
+The next implementation phase is the Streamlit Product Experience and Workflow
+Export. It has not begun.
 
 ## Deterministic metric definitions
 

@@ -1,0 +1,76 @@
+{
+  "comparison_id": "comparison_v1",
+  "status": "CURATED_COMPARISON",
+  "benchmark": "StudioLane frozen ten-request synthetic project",
+  "baseline": {
+    "result_id": "baseline_v1",
+    "directory": "results/baseline_v1",
+    "provider": "google",
+    "model": "gemini-3.6-flash",
+    "generation_commit": "550997316c59f91d3ef11e1e6b429b17111dd16d",
+    "scoring_commit": "6d80f84af9bf003b06f54c64d6cc6a0c78e45611",
+    "prompt_hash": "369b16540e18ac3592867bdcde4a9d37e156ef8ee726371e1782380edb48a687",
+    "dataset_hash": "4e060fa08f08be87151735ada77f9a3bf7876d6832e425173d5776ecb77a3585"
+  },
+  "advanced": {
+    "result_id": "advanced_v1",
+    "directory": "results/advanced_v1",
+    "provider": "google",
+    "model": "gemini-3.6-flash",
+    "generation_commit": "1ed35e9ca4919985468e94d3b5b8cb3260b76210",
+    "scoring_commit": "1ed35e9ca4919985468e94d3b5b8cb3260b76210",
+    "post_run_retry_diagnostic_repair_commit": "970d18c1b431df14c3c2416da00a6588f04c7391",
+    "prompt_hash": "a8876f80458f64e300dee1a2b22bff248831c6ffe743506de6f9995553fc6a3a",
+    "dataset_hash": "4e060fa08f08be87151735ada77f9a3bf7876d6832e425173d5776ecb77a3585",
+    "generation_source_hash": "9e1b3a9bc316039ca223b2201e7363c247ece7962989e23749800ee6c52eacf2",
+    "anchor_hash": "112860902856f0a449ff29d45ddf1a7ca98d68283b2cc2d05e50377aec780884"
+  },
+  "aggregate_metrics": {
+    "strict_passed_cases": {"baseline": 8, "advanced": 10, "difference": 2},
+    "classification_accuracy": {"baseline": 0.9, "advanced": 1.0, "difference": 0.1},
+    "macro_precision": {"baseline": 0.95, "advanced": 1.0, "difference": 0.05},
+    "macro_recall": {"baseline": 0.9, "advanced": 1.0, "difference": 0.1},
+    "macro_f1": {"baseline": 0.9047619047619048, "advanced": 1.0, "difference": 0.0952380952380952},
+    "citation_reference_validity_rate": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "classification_appropriate_evidence_hit_rate": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "clarification_decision_accuracy": {"baseline": 0.9, "advanced": 1.0, "difference": 0.1},
+    "clarification_precision": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "clarification_recall": {"baseline": 0.5, "advanced": 1.0, "difference": 0.5},
+    "contradiction_detection_recall": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "cumulative_drift_detection_accuracy": {"baseline": 0.9, "advanced": 1.0, "difference": 0.1},
+    "cumulative_drift_detection_rate": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "cumulative_related_request_ids_accuracy": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "cumulative_related_decision_ids_accuracy": {"baseline": 1.0, "advanced": 1.0, "difference": 0.0},
+    "evidence_grounded_scope_accuracy": {"baseline": 0.8, "advanced": 1.0, "difference": 0.2}
+  },
+  "per_request": [
+    {"request_id": "CR-001", "expected": "IN_SCOPE", "baseline": "IN_SCOPE", "advanced": "IN_SCOPE", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged pass"},
+    {"request_id": "CR-002", "expected": "IN_SCOPE", "baseline": "IN_SCOPE", "advanced": "IN_SCOPE", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged pass"},
+    {"request_id": "CR-003", "expected": "AMBIGUOUS", "baseline": "AMBIGUOUS", "advanced": "AMBIGUOUS", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged pass"},
+    {"request_id": "CR-004", "expected": "AMBIGUOUS", "baseline": "POTENTIAL_SCOPE_CHANGE", "advanced": "AMBIGUOUS", "baseline_requires_clarification": false, "advanced_requires_clarification": true, "baseline_strict_pass": false, "advanced_strict_pass": true, "change": "advanced deterministic ambiguity gate corrected the classification and clarification miss"},
+    {"request_id": "CR-005", "expected": "OUT_OF_SCOPE", "baseline": "OUT_OF_SCOPE", "advanced": "OUT_OF_SCOPE", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged pass"},
+    {"request_id": "CR-006", "expected": "POTENTIAL_SCOPE_CHANGE", "baseline": "POTENTIAL_SCOPE_CHANGE", "advanced": "POTENTIAL_SCOPE_CHANGE", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged pass"},
+    {"request_id": "CR-007", "expected": "POTENTIAL_SCOPE_CHANGE", "baseline": "POTENTIAL_SCOPE_CHANGE", "advanced": "POTENTIAL_SCOPE_CHANGE", "expected_cumulative_drift": false, "baseline_cumulative_drift": true, "advanced_cumulative_drift": false, "baseline_strict_pass": false, "advanced_strict_pass": true, "change": "approved-memory drift analysis removed the baseline false positive"},
+    {"request_id": "CR-008", "expected": "CONTRADICTS_APPROVED_DECISION", "baseline": "CONTRADICTS_APPROVED_DECISION", "advanced": "CONTRADICTS_APPROVED_DECISION", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged contradiction pass"},
+    {"request_id": "CR-009", "expected": "CONTRADICTS_APPROVED_DECISION", "baseline": "CONTRADICTS_APPROVED_DECISION", "advanced": "CONTRADICTS_APPROVED_DECISION", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged contradiction pass"},
+    {"request_id": "CR-010", "expected": "POTENTIAL_SCOPE_CHANGE", "baseline": "POTENTIAL_SCOPE_CHANGE", "advanced": "POTENTIAL_SCOPE_CHANGE", "baseline_strict_pass": true, "advanced_strict_pass": true, "change": "unchanged cumulative-drift pass"}
+  ],
+  "runtime_and_tokens": {
+    "baseline": {"runtime_seconds": 100.99846979999711, "prompt_tokens": 38062, "candidate_tokens": 1793, "thought_tokens": 10711, "total_tokens": 50566},
+    "advanced": {"runtime_seconds": 216.58667619999324, "prompt_tokens": 103177, "candidate_tokens": 2782, "thought_tokens": 12094, "total_tokens": 118053, "cached_content_tokens": 22761},
+    "advanced_to_baseline_ratio": {"runtime": 2.144455026188916, "prompt_tokens": 2.710761389312175, "candidate_tokens": 1.5515895147796988, "thought_tokens": 1.1291195966763141, "total_tokens": 2.3346319661432582},
+    "estimated_cost": null,
+    "cost_note": "No cost claim is made because explicit pricing input is absent."
+  },
+  "interpretation": {
+    "fixed_baseline_failures": ["CR-004 ambiguity and clarification miss", "CR-007 cumulative-drift false positive"],
+    "unchanged_strengths": ["citation reference validity", "classification-appropriate evidence placement", "contradiction detection"],
+    "attribution": "The advanced result belongs to the combined pipeline: deterministic retrieval, ambiguity and taxonomy gates, approved decision memory, cumulative-drift analysis, verification, and human-state orchestration. It is not evidence that RAG alone caused the improvement.",
+    "limitations": [
+      "The comparison covers one frozen ten-case synthetic project and does not support a generalization claim.",
+      "One run per system provides no basis for a statistical-significance claim.",
+      "The Advanced V1 perfect score is not evidence of general perfection.",
+      "CR-007's first failed provider-attempt diagnostic is unrecoverable in the Advanced V1 generation artifact; the repair commit affects future runs only."
+    ]
+  }
+}

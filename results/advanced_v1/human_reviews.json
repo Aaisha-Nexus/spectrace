@@ -1,0 +1,268 @@
+[
+  {
+    "expected_human_action": "CONFIRM_IN_SCOPE",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "7c977c72053e1c0795f16adcff716f575474bf103577a341ea165e27c3a40373",
+      "before_snapshot_hash": "86710a65a6a6e40a020530e9c6f6568c98ba43a81875aa54fb7f8a9a17e3ca30",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-001"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-001",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: CONFIRM_IN_SCOPE",
+      "request_id": "CR-001",
+      "review_id": "HR-EVAL-CR-001",
+      "reviewed_at": "2026-05-15T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "CONFIRM_IN_SCOPE",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "1c2e9c5079e32a6ff53462c4a6376ba0b601a41bc454c4c1d7f06fdfc2232831",
+      "before_snapshot_hash": "19d773a90207aa8e7dfa6facdad288755253f9c7200bbab39445bfb6927bdf19",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-002"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-002",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: CONFIRM_IN_SCOPE",
+      "request_id": "CR-002",
+      "review_id": "HR-EVAL-CR-002",
+      "reviewed_at": "2026-05-16T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "REQUEST_CLARIFICATION",
+    "ledger_update": {
+      "action": "NEEDS_CLARIFICATION",
+      "after_snapshot_hash": "9117f6192fd7bc573ad21ac921b3331288581b440aee40cdb7addf51fc7269d6",
+      "before_snapshot_hash": "4d1c7f932e6e50a53aec9d9f8aa1e09a035f8f0e10bb468b70b0facf22997eee",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-003"
+    },
+    "review": {
+      "action": "NEEDS_CLARIFICATION",
+      "assessment_id": "ASMNT-CR-003",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: REQUEST_CLARIFICATION",
+      "request_id": "CR-003",
+      "review_id": "HR-EVAL-CR-003",
+      "reviewed_at": "2026-05-17T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "REQUEST_CLARIFICATION",
+    "ledger_update": {
+      "action": "NEEDS_CLARIFICATION",
+      "after_snapshot_hash": "d8e57e9886c752db353634e4c183f44258f3b9e45e626f41c834331a37dd84f8",
+      "before_snapshot_hash": "d958d159f7751d9b3fde10fc91cbc2c30ba4086e530d3de81b9bfb68a4910b98",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-004"
+    },
+    "review": {
+      "action": "NEEDS_CLARIFICATION",
+      "assessment_id": "ASMNT-CR-004",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: REQUEST_CLARIFICATION",
+      "request_id": "CR-004",
+      "review_id": "HR-EVAL-CR-004",
+      "reviewed_at": "2026-05-18T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "UPHOLD_EXPLICIT_EXCLUSION",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "0751117fb83a8ae62cf3461d566870fd322d9d16405e0ab02e111c1fbaf7a9f9",
+      "before_snapshot_hash": "dfd905bd7124297cd8667f88c865d27b340bdc2bb47dfc30506be62ac6bc36af",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-005"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-005",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: UPHOLD_EXPLICIT_EXCLUSION",
+      "request_id": "CR-005",
+      "review_id": "HR-EVAL-CR-005",
+      "reviewed_at": "2026-05-19T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "APPROVE_LIMITED_SCOPE_CHANGE",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "44096636dba84b14a4dae9275f99d10f2cb233b48d1f3bc1a4ccfda14db85cc8",
+      "before_snapshot_hash": "edd44f29db7bd588645195e70f34ca404b0dafe395244cf8f22e6a1055e94756",
+      "ledger_changed": true,
+      "ledger_entry_id": "HUMAN-DEC-005",
+      "review_id": "HR-EVAL-CR-006"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-006",
+      "decision_payload": {
+        "approves_requested_capability": true,
+        "changes_approved_scope": true,
+        "decision_id": "DEC-005",
+        "decision_text": "A member may opt in to an email alert for a full session. The subscription is stored, and an availability-change event may trigger an email when that session changes from full to having capacity.",
+        "effect": "APPROVE_CAPABILITY",
+        "effective_date": "2026-05-21",
+        "evidence_ids": [
+          "DEC-006",
+          "SOW-CON-001",
+          "SOW-CON-002",
+          "SOW-QUE-005",
+          "SOW-SCP-007"
+        ]
+      },
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: APPROVE_LIMITED_SCOPE_CHANGE",
+      "request_id": "CR-006",
+      "review_id": "HR-EVAL-CR-006",
+      "reviewed_at": "2026-05-20T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "APPROVE_LIMITED_SCOPE_CHANGE",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "e9011f30adf6fa6581ca79c4f5572bb41f8846a56bc67ff382c69dbb560d08cb",
+      "before_snapshot_hash": "8295432d70bc85ea3aa2d560b765632bfdf83e175c5669ae593bc105419a418e",
+      "ledger_changed": true,
+      "ledger_entry_id": "HUMAN-DEC-006",
+      "review_id": "HR-EVAL-CR-007"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-007",
+      "decision_payload": {
+        "approves_requested_capability": true,
+        "changes_approved_scope": true,
+        "decision_id": "DEC-006",
+        "decision_text": "A member may join or leave a persistent queue for a full session. Queue order is first-joined, and the first queued member is selected for the first availability notification when capacity becomes available.",
+        "effect": "APPROVE_CAPABILITY",
+        "effective_date": "2026-05-23",
+        "evidence_ids": [
+          "DEC-005",
+          "SOW-CON-001",
+          "SOW-CON-002"
+        ]
+      },
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: APPROVE_LIMITED_SCOPE_CHANGE",
+      "request_id": "CR-007",
+      "review_id": "HR-EVAL-CR-007",
+      "reviewed_at": "2026-05-22T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "UPHOLD_APPROVED_DECISION",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "829fa29a6dc396ce040e5b2d1c4de78d6d7ac08b9bd373532a18de37aadd5ffc",
+      "before_snapshot_hash": "26fc63a189aef08950d21f93160e1b3dcc88b92a02227adcaed95b2cddf6abb3",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-008"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-008",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: UPHOLD_APPROVED_DECISION",
+      "request_id": "CR-008",
+      "review_id": "HR-EVAL-CR-008",
+      "reviewed_at": "2026-05-24T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "UPHOLD_APPROVED_REJECTION",
+    "ledger_update": {
+      "action": "APPROVE",
+      "after_snapshot_hash": "acca3982d949f7a61c4e2f838c9f7e17606d3e4894f0e5755bb652b1fbf1ab72",
+      "before_snapshot_hash": "0c1f5b8a949f1957cb373e0ed62f0fc0d69d91f84005ec484269e77b30404250",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-009"
+    },
+    "review": {
+      "action": "APPROVE",
+      "assessment_id": "ASMNT-CR-009",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: UPHOLD_APPROVED_REJECTION",
+      "request_id": "CR-009",
+      "review_id": "HR-EVAL-CR-009",
+      "reviewed_at": "2026-05-25T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  },
+  {
+    "expected_human_action": "DEFER_FOR_FORMAL_SCOPE_REVIEW",
+    "ledger_update": {
+      "action": "DEFER",
+      "after_snapshot_hash": "ad4f7112fae282a33c69db928c559872dfdcf0d4b954d60a52864b05cd02825a",
+      "before_snapshot_hash": "610699aa7fe3607f8beee90188f972c92720dd2757b34e372d4699d0ed6980d4",
+      "ledger_changed": false,
+      "ledger_entry_id": null,
+      "review_id": "HR-EVAL-CR-010"
+    },
+    "review": {
+      "action": "DEFER",
+      "assessment_id": "ASMNT-CR-010",
+      "decision_payload": null,
+      "evidence_ids": [],
+      "final_classification": null,
+      "project_id": "studiolane",
+      "reason": "Frozen evaluator action: DEFER_FOR_FORMAL_SCOPE_REVIEW",
+      "request_id": "CR-010",
+      "review_id": "HR-EVAL-CR-010",
+      "reviewed_at": "2026-05-26T12:00:00Z",
+      "reviewer_id": "frozen-synthetic-evaluator"
+    }
+  }
+]

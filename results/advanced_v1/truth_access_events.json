@@ -1,0 +1,52 @@
+[
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-001",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-002",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-003",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-004",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-005",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-006",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-007",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-008",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-009",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  },
+  {
+    "last_trajectory_node": "AWAIT_HUMAN_REVIEW",
+    "request_id": "CR-010",
+    "status_at_access": "AWAITING_HUMAN_REVIEW"
+  }
+]

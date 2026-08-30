@@ -1,0 +1,1270 @@
+{
+  "anchor_hash": "112860902856f0a449ff29d45ddf1a7ca98d68283b2cc2d05e50377aec780884",
+  "assembled_prompt_hash": "c0511916c6293a95d47d82547faadd4e864b67d88747ddab8933f140a19b8ea9",
+  "assessment": {
+    "capability_signature": {
+      "actions": [],
+      "actors": [
+        "member"
+      ],
+      "dependency_terms": [],
+      "domain_terms": [
+        "also",
+        "android",
+        "apps",
+        "booking",
+        "either",
+        "iphone",
+        "like",
+        "make",
+        "member",
+        "native",
+        "phone",
+        "platform"
+      ],
+      "evidence_ids": [
+        "SOW-EXC-001"
+      ],
+      "facets": [
+        "mobile"
+      ],
+      "heuristic": true,
+      "objects": [
+        "also",
+        "android",
+        "apps",
+        "booking",
+        "either",
+        "iphone",
+        "like",
+        "make",
+        "native",
+        "phone",
+        "platform"
+      ],
+      "source_decision_ids": [],
+      "source_request_ids": [
+        "CR-005"
+      ]
+    },
+    "clarification_questions": [],
+    "classification": "OUT_OF_SCOPE",
+    "conflicting_evidence_ids": [],
+    "dependencies": [],
+    "model_recommendation": "OUT_OF_SCOPE",
+    "rationale": "The request asks for native iPhone and Android applications so members can make bookings. SOW-EXC-001 explicitly excludes native iOS and Android applications, making this request out of scope under current project exclusions.",
+    "request_id": "CR-005",
+    "requires_clarification": false,
+    "supporting_evidence_ids": [
+      "SOW-EXC-001"
+    ]
+  },
+  "change_package": null,
+  "conflicts": {
+    "approved_evidence_ids": [],
+    "conflicting_evidence_ids": [],
+    "exclusion_evidence_ids": [
+      "SOW-EXC-001"
+    ],
+    "findings": [],
+    "neutral_boundary_evidence_ids": [],
+    "proven_specific_contradiction": false,
+    "rationale": "No current specific approved-decision contradiction was proven."
+  },
+  "current_node": "AWAIT_HUMAN_REVIEW",
+  "drift": {
+    "approved_change_count": 0,
+    "combined_facets": [
+      "mobile"
+    ],
+    "cumulative_drift_detected": false,
+    "heuristic": true,
+    "pattern_key": null,
+    "rationale": "The approved change history does not meet the configurable subsystem threshold.",
+    "related_decision_ids": [],
+    "related_request_ids": [],
+    "severity": "NONE"
+  },
+  "human_review": null,
+  "ledger_update": null,
+  "pause_snapshot_hash": "dfd905bd7124297cd8667f88c865d27b340bdc2bb47dfc30506be62ac6bc36af",
+  "project_id": "studiolane",
+  "project_pack_path": "data\\synthetic\\demo_project",
+  "prompt_hash": "a8876f80458f64e300dee1a2b22bff248831c6ffe743506de6f9995553fc6a3a",
+  "raw_response_hash": "9c9c31475149da6e9ffd1fd1837eb6564efad019a2157a5830e782acc3f9380a",
+  "recommendation": {
+    "action": "DEFER",
+    "clarification_questions": [],
+    "classification": "OUT_OF_SCOPE",
+    "drift_severity": "NONE",
+    "evidence_ids": [
+      "SOW-EXC-001"
+    ],
+    "request_id": "CR-005",
+    "summary": "Review the evidence-grounded assessment; only an explicit human transaction may change approved memory."
+  },
+  "request": {
+    "chronological_order": 5,
+    "date": "2026-05-19",
+    "evidence_available_through": "CR-004",
+    "message": "We would also like native iPhone and Android apps so members can make their bookings from either phone platform.",
+    "request_id": "CR-005",
+    "source": "client_message"
+  },
+  "retrieval": {
+    "anchor_hash": "112860902856f0a449ff29d45ddf1a7ca98d68283b2cc2d05e50377aec780884",
+    "category_coverage": [
+      "APPROVED_SCOPE",
+      "ASSUMPTION",
+      "DECISION",
+      "EXCLUSION",
+      "UNRESOLVED_QUESTION"
+    ],
+    "evidence_cutoff": "CR-004",
+    "expanded": false,
+    "items": [
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [],
+          "category": "EXCLUSION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "001",
+            "android",
+            "applications",
+            "exc",
+            "excluded",
+            "ios",
+            "mobile",
+            "native",
+            "sow"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-EXC-001",
+          "facet_terms": [
+            "mobile"
+          ],
+          "object_terms": [
+            "001",
+            "android",
+            "applications",
+            "exc",
+            "excluded",
+            "ios",
+            "mobile",
+            "native",
+            "sow"
+          ],
+          "source_hash": "627e723daa099d1f402dd14144230e80900fe1770ee0966217ea44fada32cc9e",
+          "source_location": "sow.md:line-88",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-EXC-001 — Native mobile applications:** Native iOS and Android\n  applications are excluded.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 1,
+        "score": 9.63887795833288,
+        "score_components": {
+          "actor_metadata": 0.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 1.25,
+          "object_metadata": 0.5,
+          "unigram_idf": 7.8888779583328805
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [
+            "approve",
+            "confirm",
+            "email"
+          ],
+          "actor_terms": [
+            "member",
+            "system"
+          ],
+          "category": "DECISION",
+          "decision_polarity": "APPROVES",
+          "domain_terms": [
+            "001",
+            "004",
+            "008",
+            "012",
+            "05",
+            "12",
+            "2026",
+            "affected",
+            "after",
+            "approve",
+            "approved",
+            "approves",
+            "cancellation",
+            "clarification",
+            "clarifies",
+            "confirm",
+            "cutoff",
+            "date",
+            "dec",
+            "determined",
+            "effects",
+            "either",
+            "email",
+            "eventual",
+            "evidence",
+            "id",
+            "item",
+            "member",
+            "none",
+            "not",
+            "one",
+            "open",
+            "outside",
+            "place",
+            "pre",
+            "que",
+            "records",
+            "remaining",
+            "remains",
+            "replacing",
+            "request",
+            "restores",
+            "scp",
+            "sends",
+            "sequence",
+            "session",
+            "sow",
+            "status",
+            "supersession",
+            "system",
+            "transactional",
+            "triggering",
+            "unresolved",
+            "valid",
+            "without",
+            "workflow"
+          ],
+          "effective_date": "2026-05-12",
+          "evidence_id": "DEC-004",
+          "facet_terms": [
+            "capacity",
+            "notification",
+            "workflow"
+          ],
+          "object_terms": [
+            "001",
+            "004",
+            "008",
+            "012",
+            "05",
+            "12",
+            "2026",
+            "affected",
+            "after",
+            "approved",
+            "approves",
+            "cancellation",
+            "clarification",
+            "clarifies",
+            "cutoff",
+            "date",
+            "dec",
+            "determined",
+            "effects",
+            "either",
+            "eventual",
+            "evidence",
+            "id",
+            "item",
+            "none",
+            "not",
+            "one",
+            "open",
+            "outside",
+            "place",
+            "pre",
+            "que",
+            "records",
+            "remaining",
+            "remains",
+            "replacing",
+            "request",
+            "restores",
+            "scp",
+            "sends",
+            "sequence",
+            "session",
+            "sow",
+            "status",
+            "supersession",
+            "transactional",
+            "triggering",
+            "unresolved",
+            "valid",
+            "without",
+            "workflow"
+          ],
+          "source_hash": "5eb867f374b53a4761be5fa88fe365f268928296d46b27344b27034266405cd8",
+          "source_location": "decisions.md:line-54",
+          "source_path": "decisions.md",
+          "source_text": "## DEC-004 — Confirm valid-cancellation effects\n\n- **Date:** 2026-05-12\n- **Status:** APPROVED\n- **Triggering request ID:** None; pre-sequence workflow clarification\n- **Evidence affected:** SOW-SCP-008, SOW-SCP-012, and SOW-QUE-001\n- **Approves:** After a cancellation is determined to be valid, the system\n  records the cancellation, restores one place to the session, and sends a\n  transactional cancellation email to the member.\n- **Does not approve:** Cancellation outside the eventual approved cutoff.\n- **Supersession:** Clarifies the effects of SOW-SCP-008 and SOW-SCP-012 without\n  replacing either item.\n- **Remaining unresolved:** SOW-QUE-001, the cancellation cutoff, remains open.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 2,
+        "score": 9.347118489104826,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 1.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.25,
+          "unigram_idf": 6.097118489104826
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [],
+          "category": "EXCLUSION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "006",
+            "additional",
+            "channels",
+            "chat",
+            "exc",
+            "excluded",
+            "mobile",
+            "notification",
+            "notifications",
+            "platform",
+            "push",
+            "sms",
+            "sow"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-EXC-006",
+          "facet_terms": [
+            "mobile",
+            "notification"
+          ],
+          "object_terms": [
+            "006",
+            "additional",
+            "channels",
+            "chat",
+            "exc",
+            "excluded",
+            "mobile",
+            "notification",
+            "notifications",
+            "platform",
+            "push",
+            "sms",
+            "sow"
+          ],
+          "source_hash": "70f1570c284e2a3a113b36c25f5270ac746d70717740c88009d3505bf7918176",
+          "source_location": "sow.md:line-98",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-EXC-006 — Additional notification channels:** SMS, mobile push, and\n  chat-platform notifications are excluded.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 3,
+        "score": 5.44443897916644,
+        "score_components": {
+          "actor_metadata": 0.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 1.25,
+          "object_metadata": 0.25,
+          "unigram_idf": 3.9444389791664403
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [
+            "email",
+            "review"
+          ],
+          "actor_terms": [
+            "member",
+            "studio coordinator"
+          ],
+          "category": "DECISION",
+          "decision_polarity": "APPROVES",
+          "domain_terms": [
+            "003",
+            "006",
+            "009",
+            "05",
+            "10",
+            "2026",
+            "affected",
+            "after",
+            "applicable",
+            "approved",
+            "approves",
+            "automatic",
+            "ceramic",
+            "confirmation",
+            "coordinator",
+            "current",
+            "date",
+            "dec",
+            "decision",
+            "declines",
+            "each",
+            "email",
+            "enter",
+            "evidence",
+            "id",
+            "kiln",
+            "member",
+            "none",
+            "one",
+            "only",
+            "operational",
+            "ordinary",
+            "pending",
+            "pre",
+            "reason",
+            "receives",
+            "rejects",
+            "remaining",
+            "remains",
+            "request",
+            "require",
+            "reservations",
+            "review",
+            "routing",
+            "scp",
+            "sequence",
+            "sessions",
+            "short",
+            "sow",
+            "status",
+            "studio",
+            "studios",
+            "supersedes",
+            "supersession",
+            "transactional",
+            "triggering",
+            "unresolved",
+            "valid",
+            "which"
+          ],
+          "effective_date": "2026-05-10",
+          "evidence_id": "DEC-003",
+          "facet_terms": [
+            "automation",
+            "notification",
+            "workflow"
+          ],
+          "object_terms": [
+            "003",
+            "006",
+            "009",
+            "05",
+            "10",
+            "2026",
+            "affected",
+            "after",
+            "applicable",
+            "approved",
+            "approves",
+            "automatic",
+            "ceramic",
+            "confirmation",
+            "current",
+            "date",
+            "dec",
+            "decision",
+            "declines",
+            "each",
+            "enter",
+            "evidence",
+            "id",
+            "kiln",
+            "none",
+            "one",
+            "only",
+            "operational",
+            "ordinary",
+            "pending",
+            "pre",
+            "reason",
+            "receives",
+            "rejects",
+            "remaining",
+            "remains",
+            "request",
+            "require",
+            "reservations",
+            "routing",
+            "scp",
+            "sequence",
+            "sessions",
+            "short",
+            "sow",
+            "status",
+            "studios",
+            "supersedes",
+            "supersession",
+            "transactional",
+            "triggering",
+            "unresolved",
+            "valid",
+            "which"
+          ],
+          "source_hash": "2ed5976f3dd69ec1f6fe0f31e85b5b8addc7e19d0f27505344f995dd38dbf0a7",
+          "source_location": "decisions.md:line-40",
+          "source_path": "decisions.md",
+          "source_text": "## DEC-003 — Require review for ceramic-kiln reservations\n\n- **Date:** 2026-05-10\n- **Status:** APPROVED\n- **Triggering request ID:** None; pre-sequence operational review\n- **Evidence affected:** SOW-SCP-006 and SOW-SCP-009\n- **Approves:** Valid ceramic-kiln reservations enter PENDING_REVIEW. A studio\n  coordinator approves or declines each one with a short reason, after which the\n  member receives the applicable transactional email.\n- **Rejects:** Automatic confirmation of ceramic-kiln reservations.\n- **Supersession:** Supersedes SOW-SCP-006 only for ceramic-kiln sessions.\n  Automatic confirmation remains current for ordinary studios.\n- **Remaining unresolved:** None for the routing decision.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [
+            "SOW-SCP-006"
+          ],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 4,
+        "score": 5.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 1.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [],
+          "category": "EXCLUSION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "004",
+            "another",
+            "behalf",
+            "booking",
+            "exc",
+            "excluded",
+            "guest",
+            "person",
+            "reservations",
+            "sow"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-EXC-004",
+          "facet_terms": [],
+          "object_terms": [
+            "004",
+            "another",
+            "behalf",
+            "booking",
+            "exc",
+            "excluded",
+            "guest",
+            "person",
+            "reservations",
+            "sow"
+          ],
+          "source_hash": "9e6601bb0a5da43016dabb33c050ca7105bd1ebed36520c8465254b7dfee1d72",
+          "source_location": "sow.md:line-94",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-EXC-004 — Guest reservations:** Guest reservations and booking on behalf\n  of another person are excluded.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 5,
+        "score": 4.19443897916644,
+        "score_components": {
+          "actor_metadata": 0.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.25,
+          "unigram_idf": 3.9444389791664403
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [
+            "member",
+            "schedule administrator",
+            "studio coordinator"
+          ],
+          "category": "APPROVED_SCOPE",
+          "decision_polarity": null,
+          "domain_terms": [
+            "001",
+            "access",
+            "administrators",
+            "based",
+            "browser",
+            "coordinators",
+            "members",
+            "portal",
+            "pre",
+            "provisioned",
+            "schedule",
+            "scp",
+            "sow",
+            "studio",
+            "studiolane"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-SCP-001",
+          "facet_terms": [],
+          "object_terms": [
+            "001",
+            "access",
+            "administrators",
+            "based",
+            "browser",
+            "coordinators",
+            "members",
+            "portal",
+            "pre",
+            "provisioned",
+            "scp",
+            "sow",
+            "studiolane"
+          ],
+          "source_hash": "d4bb2f035099880f1e7ddc8c029c791635410fb14b7f7da39ef491b1e0f88d9d",
+          "source_location": "sow.md:line-40",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-SCP-001 — Browser access:** StudioLane is a browser-based portal for\n  pre-provisioned members, studio coordinators, and schedule administrators.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 6,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [
+            "view"
+          ],
+          "actor_terms": [
+            "member"
+          ],
+          "category": "APPROVED_SCOPE",
+          "decision_polarity": null,
+          "domain_terms": [
+            "003",
+            "accessibility",
+            "capacity",
+            "descriptions",
+            "listings",
+            "members",
+            "notes",
+            "remaining",
+            "scheduled",
+            "scp",
+            "sessions",
+            "sow",
+            "studio",
+            "view"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-SCP-003",
+          "facet_terms": [
+            "capacity"
+          ],
+          "object_terms": [
+            "003",
+            "accessibility",
+            "capacity",
+            "descriptions",
+            "listings",
+            "members",
+            "notes",
+            "remaining",
+            "scheduled",
+            "scp",
+            "sessions",
+            "sow",
+            "studio"
+          ],
+          "source_hash": "36d0047d475f901a2b080c7908402e533746bc78fb708f522a8168e77b99761c",
+          "source_location": "sow.md:line-44",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-SCP-003 — Studio listings:** Members can view studio descriptions,\n  accessibility notes, scheduled sessions, and remaining capacity.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 7,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [
+            "submit"
+          ],
+          "actor_terms": [
+            "member"
+          ],
+          "category": "APPROVED_SCOPE",
+          "decision_polarity": null,
+          "domain_terms": [
+            "004",
+            "listed",
+            "member",
+            "one",
+            "reservation",
+            "scp",
+            "session",
+            "signed",
+            "sow",
+            "studio",
+            "submission",
+            "submit",
+            "themselves"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-SCP-004",
+          "facet_terms": [],
+          "object_terms": [
+            "004",
+            "listed",
+            "one",
+            "reservation",
+            "scp",
+            "session",
+            "signed",
+            "sow",
+            "studio",
+            "submission",
+            "themselves"
+          ],
+          "source_hash": "be5f13c194a86311b8e675569921d37b22f50b468e5e4a876d8f8771895093aa",
+          "source_location": "sow.md:line-46",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-SCP-004 — Reservation submission:** A signed-in member can submit a\n  reservation for one listed studio session for themselves.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 8,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [
+            "member",
+            "system"
+          ],
+          "category": "APPROVED_SCOPE",
+          "decision_polarity": null,
+          "domain_terms": [
+            "005",
+            "accepting",
+            "before",
+            "capacity",
+            "checks",
+            "closure",
+            "conflicts",
+            "exhausted",
+            "existing",
+            "member",
+            "other",
+            "reservation",
+            "reservations",
+            "s",
+            "same",
+            "scp",
+            "session",
+            "sow",
+            "state",
+            "system",
+            "validation"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-SCP-005",
+          "facet_terms": [
+            "capacity"
+          ],
+          "object_terms": [
+            "005",
+            "accepting",
+            "before",
+            "capacity",
+            "checks",
+            "closure",
+            "conflicts",
+            "exhausted",
+            "existing",
+            "other",
+            "reservation",
+            "reservations",
+            "s",
+            "same",
+            "scp",
+            "session",
+            "sow",
+            "state",
+            "validation"
+          ],
+          "source_hash": "60fcd16349543419359bf7bd84a5b22730d1bb3daac88e5b5704aaef3470c27b",
+          "source_location": "sow.md:line-48",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-SCP-005 — Reservation validation:** Before accepting a reservation, the\n  system checks closure state, exhausted capacity, an existing reservation by\n  the same member for the session, and conflicts with that member's other\n  reservations.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 9,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [
+            "member"
+          ],
+          "category": "ASSUMPTION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "001",
+            "account",
+            "accounts",
+            "asm",
+            "member",
+            "outside",
+            "provisioned",
+            "provisioning",
+            "sow",
+            "staff",
+            "studiolane"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-ASM-001",
+          "facet_terms": [
+            "authorization"
+          ],
+          "object_terms": [
+            "001",
+            "account",
+            "accounts",
+            "asm",
+            "outside",
+            "provisioned",
+            "provisioning",
+            "sow",
+            "staff",
+            "studiolane"
+          ],
+          "source_hash": "27e82b9bf982341f7040d5088cf2bb23292c66b2b347d2335ed2eb85bcafe17c",
+          "source_location": "sow.md:line-104",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-ASM-001 — Account provisioning:** Member and staff accounts are\n  provisioned outside StudioLane.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 10,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [],
+          "actor_terms": [
+            "member"
+          ],
+          "category": "ASSUMPTION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "005",
+            "additional",
+            "approved",
+            "asm",
+            "assumptions",
+            "behavior",
+            "concerns",
+            "converted",
+            "each",
+            "evidence",
+            "into",
+            "listed",
+            "member",
+            "must",
+            "not",
+            "one",
+            "ownership",
+            "requirements",
+            "reservation",
+            "session",
+            "sow",
+            "studio",
+            "supporting",
+            "these",
+            "without",
+            "workflow"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-ASM-005",
+          "facet_terms": [],
+          "object_terms": [
+            "005",
+            "additional",
+            "approved",
+            "asm",
+            "assumptions",
+            "behavior",
+            "concerns",
+            "converted",
+            "each",
+            "evidence",
+            "into",
+            "listed",
+            "must",
+            "not",
+            "one",
+            "ownership",
+            "requirements",
+            "reservation",
+            "session",
+            "sow",
+            "studio",
+            "supporting",
+            "these",
+            "without",
+            "workflow"
+          ],
+          "source_hash": "71892588746bb96ae144f97c7bd013bef721bd6c7ea1357072f06aa22535b622",
+          "source_location": "sow.md:line-112",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-ASM-005 — Reservation ownership:** Each reservation concerns one member\n  and one listed studio session.\n\nThese assumptions are not additional requirements and must not be converted\ninto workflow behavior without supporting approved evidence.",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 11,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      },
+      {
+        "evidence": {
+          "action_terms": [
+            "cancel"
+          ],
+          "actor_terms": [
+            "member"
+          ],
+          "category": "UNRESOLVED_QUESTION",
+          "decision_polarity": null,
+          "domain_terms": [
+            "001",
+            "before",
+            "begins",
+            "cancel",
+            "cancellation",
+            "cutoff",
+            "how",
+            "long",
+            "member",
+            "que",
+            "session",
+            "sow"
+          ],
+          "effective_date": null,
+          "evidence_id": "SOW-QUE-001",
+          "facet_terms": [],
+          "object_terms": [
+            "001",
+            "before",
+            "begins",
+            "cancellation",
+            "cutoff",
+            "how",
+            "long",
+            "que",
+            "session",
+            "sow"
+          ],
+          "source_hash": "b89ee9e3ee428e66996083e498c57438fd7e9549975277a3afc8045d7d373c83",
+          "source_location": "sow.md:line-120",
+          "source_path": "sow.md",
+          "source_text": "- **SOW-QUE-001 — Cancellation cutoff:** How long before a session begins may a\n  member cancel it?",
+          "superseded_by_ids": [],
+          "supersedes_ids": [],
+          "temporal_status": "CURRENT",
+          "triggering_request_id": null
+        },
+        "rank": 12,
+        "score": 4.152679509938386,
+        "score_components": {
+          "actor_metadata": 2.0,
+          "bigram_overlap": 0.0,
+          "effective_decision_priority": 0.0,
+          "facet_metadata": 0.0,
+          "object_metadata": 0.0,
+          "unigram_idf": 2.1526795099383853
+        }
+      }
+    ],
+    "query_text": "We would also like native iPhone and Android apps so members can make their bookings from either phone platform."
+  },
+  "run_id": "advanced-20260830T145353.739126Z-CR-005",
+  "status": "AWAITING_HUMAN_REVIEW",
+  "sufficiency": {
+    "clarification_questions": [],
+    "findings": [
+      {
+        "blocking": false,
+        "clarification_question": null,
+        "description": "A related unresolved question affects later acceptance details but does not by itself prevent scope classification.",
+        "evidence_ids": [
+          "SOW-QUE-001"
+        ],
+        "heuristic": false,
+        "kind": "ACCEPTANCE_DETAIL"
+      }
+    ],
+    "rationale": "The requested capability is identifiable; remaining questions are acceptance details.",
+    "sufficient_for_classification": true
+  },
+  "token_usage": {
+    "candidates_token_count": 191,
+    "prompt_token_count": 9205,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 9205
+      }
+    ],
+    "thoughts_token_count": 1819,
+    "total_token_count": 11215
+  },
+  "trajectory": [
+    {
+      "duration_ms": 10,
+      "error": null,
+      "human_state": null,
+      "input_hash": "0f48119ffbf064638c7ecb5d916b9341c6429b9e3939688d5fd8280067ed6f50",
+      "input_ids": [
+        "studiolane"
+      ],
+      "node": "LOAD_SCOPE_ANCHOR",
+      "result_summary": "Loaded 39 evidence items.",
+      "sequence": 1,
+      "tool": "build_scope_anchor",
+      "verification": null
+    },
+    {
+      "duration_ms": 3,
+      "error": null,
+      "human_state": null,
+      "input_hash": "6ff00d67b41431554459bc636fdbcfcf5c0a5b873f8c87b0df81c048b9da266a",
+      "input_ids": [
+        "CR-005",
+        "SOW-EXC-001",
+        "DEC-004",
+        "SOW-EXC-006",
+        "DEC-003",
+        "SOW-EXC-004",
+        "SOW-SCP-001",
+        "SOW-SCP-003",
+        "SOW-SCP-004",
+        "SOW-SCP-005",
+        "SOW-ASM-001",
+        "SOW-ASM-005",
+        "SOW-QUE-001"
+      ],
+      "node": "RETRIEVE_EVIDENCE",
+      "result_summary": "Retrieved 12 cutoff-safe evidence items.",
+      "sequence": 2,
+      "tool": "retrieve_evidence",
+      "verification": null
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": null,
+      "input_hash": "0d5e8b97ec075dc182ea60f6c1e60f6c07e0f2c63f9d85e7a860de97346c6ca2",
+      "input_ids": [
+        "CR-005"
+      ],
+      "node": "ASSESS_SUFFICIENCY",
+      "result_summary": "Classification sufficiency assessed.",
+      "sequence": 3,
+      "tool": "assess_sufficiency",
+      "verification": null
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": null,
+      "input_hash": "bc9b90ce7d1319a7e73723fc8761a4e88edd93056126f02561cbb41a7fdf7676",
+      "input_ids": [
+        "CR-005"
+      ],
+      "node": "CHECK_CONTRADICTIONS",
+      "result_summary": "Current effective conflicts and boundaries checked.",
+      "sequence": 4,
+      "tool": "find_effective_conflicts",
+      "verification": null
+    },
+    {
+      "duration_ms": 13469,
+      "error": null,
+      "human_state": null,
+      "input_hash": "1e5755e487d24819699dbdefb67f6ec6a8ce2dd5ccc03c429841b327c6709a79",
+      "input_ids": [
+        "CR-005",
+        "SOW-EXC-001",
+        "DEC-004",
+        "SOW-EXC-006",
+        "DEC-003",
+        "SOW-EXC-004",
+        "SOW-SCP-001",
+        "SOW-SCP-003",
+        "SOW-SCP-004",
+        "SOW-SCP-005",
+        "SOW-ASM-001",
+        "SOW-ASM-005",
+        "SOW-QUE-001"
+      ],
+      "node": "CLASSIFY_REQUEST",
+      "result_summary": "Recommended OUT_OF_SCOPE; reconciled OUT_OF_SCOPE.",
+      "sequence": 5,
+      "tool": "structured_generation+reconcile_classification",
+      "verification": null
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": null,
+      "input_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "input_ids": [
+        "CR-005"
+      ],
+      "node": "CALCULATE_CUMULATIVE_DRIFT",
+      "result_summary": "Drift severity: NONE.",
+      "sequence": 6,
+      "tool": "calculate_cumulative_drift",
+      "verification": null
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": null,
+      "input_hash": "bbd7d7aa744abe86febdd738fcd50a4553b05b41273945a6b6473efe404807ac",
+      "input_ids": [
+        "CR-005",
+        "SOW-EXC-001"
+      ],
+      "node": "VERIFY_ASSESSMENT",
+      "result_summary": "Assessment verification passed.",
+      "sequence": 7,
+      "tool": "verify_assessment",
+      "verification": "PASS"
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": null,
+      "input_hash": "65d87aed61c805f3a26ffde322cfdbaca96409897cd4fd4b10f40c698c9fdd14",
+      "input_ids": [
+        "CR-005"
+      ],
+      "node": "PREPARE_RECOMMENDATION",
+      "result_summary": "Prepared DEFER recommendation.",
+      "sequence": 8,
+      "tool": "prepare_human_recommendation",
+      "verification": null
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "human_state": "AWAITING_HUMAN_REVIEW",
+      "input_hash": "47dfc77d8a27549c060b7112306bb43d501399d8d4b945e3200c7063962966a9",
+      "input_ids": [
+        "CR-005",
+        "ASMNT-CR-005"
+      ],
+      "node": "AWAIT_HUMAN_REVIEW",
+      "result_summary": "Paused before consequential ledger mutation.",
+      "sequence": 9,
+      "tool": null,
+      "verification": null
+    }
+  ],
+  "verification": {
+    "issues": [],
+    "passed": true,
+    "repair_attempted": false,
+    "repair_succeeded": false
+  }
+}

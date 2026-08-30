@@ -1,0 +1,199 @@
+[
+  {
+    "duration_ms": 134,
+    "error": null,
+    "human_state": null,
+    "input_hash": "0f48119ffbf064638c7ecb5d916b9341c6429b9e3939688d5fd8280067ed6f50",
+    "input_ids": [
+      "studiolane"
+    ],
+    "node": "LOAD_SCOPE_ANCHOR",
+    "result_summary": "Loaded 39 evidence items.",
+    "sequence": 1,
+    "tool": "build_scope_anchor",
+    "verification": null
+  },
+  {
+    "duration_ms": 8,
+    "error": null,
+    "human_state": null,
+    "input_hash": "bc1d54477d10d33ad0779b9b7386871050fe17cf499c375cebc046c490ae1ff9",
+    "input_ids": [
+      "CR-006",
+      "DEC-004",
+      "DEC-003",
+      "SOW-SCP-012",
+      "SOW-CON-002",
+      "DEC-001",
+      "SOW-ASM-003",
+      "SOW-SCP-005",
+      "SOW-CON-001",
+      "SOW-ASM-005",
+      "SOW-QUE-001",
+      "SOW-QUE-005",
+      "SOW-EXC-006"
+    ],
+    "node": "RETRIEVE_EVIDENCE",
+    "result_summary": "Retrieved 12 cutoff-safe evidence items.",
+    "sequence": 2,
+    "tool": "retrieve_evidence",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": null,
+    "input_hash": "34d2987671f96d41f961e43295b7e7182b2aab118576b5ca355b1e6959792bf5",
+    "input_ids": [
+      "CR-006"
+    ],
+    "node": "ASSESS_SUFFICIENCY",
+    "result_summary": "Classification sufficiency assessed.",
+    "sequence": 3,
+    "tool": "assess_sufficiency",
+    "verification": null
+  },
+  {
+    "duration_ms": 1,
+    "error": null,
+    "human_state": null,
+    "input_hash": "a52c5524db040b92fb8452ab15600121f4d707f8d013693e8cadbc0cfbf0cdc9",
+    "input_ids": [
+      "CR-006"
+    ],
+    "node": "CHECK_CONTRADICTIONS",
+    "result_summary": "Current effective conflicts and boundaries checked.",
+    "sequence": 4,
+    "tool": "find_effective_conflicts",
+    "verification": null
+  },
+  {
+    "duration_ms": 48308,
+    "error": null,
+    "human_state": null,
+    "input_hash": "41ac6a71875a72194f908d25c7b587fb858ce81a176c39385394c2f49ac91dcc",
+    "input_ids": [
+      "CR-006",
+      "DEC-004",
+      "DEC-003",
+      "SOW-SCP-012",
+      "SOW-CON-002",
+      "DEC-001",
+      "SOW-ASM-003",
+      "SOW-SCP-005",
+      "SOW-CON-001",
+      "SOW-ASM-005",
+      "SOW-QUE-001",
+      "SOW-QUE-005",
+      "SOW-EXC-006"
+    ],
+    "node": "CLASSIFY_REQUEST",
+    "result_summary": "Recommended POTENTIAL_SCOPE_CHANGE; reconciled POTENTIAL_SCOPE_CHANGE.",
+    "sequence": 5,
+    "tool": "structured_generation+reconcile_classification",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": null,
+    "input_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "input_ids": [
+      "CR-006"
+    ],
+    "node": "CALCULATE_CUMULATIVE_DRIFT",
+    "result_summary": "Drift severity: NONE.",
+    "sequence": 6,
+    "tool": "calculate_cumulative_drift",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": null,
+    "input_hash": "025364e28a0986f66860c407467e6317b7f9d6f18f72ed44540a688fbe940628",
+    "input_ids": [
+      "CR-006",
+      "SOW-CON-002",
+      "SOW-CON-001"
+    ],
+    "node": "VERIFY_ASSESSMENT",
+    "result_summary": "Assessment verification passed.",
+    "sequence": 7,
+    "tool": "verify_assessment",
+    "verification": "PASS"
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": null,
+    "input_hash": "c1dd5ef3bbc1e6e871a3836b90f58685180b201cc17e5dff19cf69cec84df4c4",
+    "input_ids": [
+      "CR-006"
+    ],
+    "node": "PREPARE_RECOMMENDATION",
+    "result_summary": "Prepared DEFER recommendation.",
+    "sequence": 8,
+    "tool": "prepare_human_recommendation",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": "AWAITING_HUMAN_REVIEW",
+    "input_hash": "7b6d92a7bf28174aa4148d78952f307800b79473e7c0224bb50420f5b43d5d01",
+    "input_ids": [
+      "CR-006",
+      "ASMNT-CR-006"
+    ],
+    "node": "AWAIT_HUMAN_REVIEW",
+    "result_summary": "Paused before consequential ledger mutation.",
+    "sequence": 9,
+    "tool": null,
+    "verification": null
+  },
+  {
+    "duration_ms": 2,
+    "error": null,
+    "human_state": "APPROVE",
+    "input_hash": "0ca679eb4c49bc39889be82a9cba58dac60d4214ecca8b47ab8fb154343cd8ca",
+    "input_ids": [
+      "HR-EVAL-CR-006",
+      "CR-006"
+    ],
+    "node": "APPLY_HUMAN_DECISION",
+    "result_summary": "Applied explicit human review transaction.",
+    "sequence": 10,
+    "tool": "apply_human_review",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": null,
+    "input_hash": "8ccaffb820faa28e79a0287a9fa28c9277731f9ec6ec482b00c3cd613a3c8bd6",
+    "input_ids": [
+      "HR-EVAL-CR-006",
+      "CR-006"
+    ],
+    "node": "BUILD_CHANGE_IMPACT_PACKAGE",
+    "result_summary": "Built full change package.",
+    "sequence": 11,
+    "tool": "build_change_impact_package",
+    "verification": null
+  },
+  {
+    "duration_ms": 0,
+    "error": null,
+    "human_state": "COMPLETE",
+    "input_hash": "d14693c4708bb1627f6223358eae29cff87dcf9880458060c05d475202356fec",
+    "input_ids": [
+      "CR-006"
+    ],
+    "node": "COMPLETE",
+    "result_summary": "Advanced run completed after human review.",
+    "sequence": 12,
+    "tool": null,
+    "verification": null
+  }
+]
