@@ -172,3 +172,40 @@ configuration, or scorer repairs as model-quality improvements.
   without request-ID or expected-label rules.
 - **Retained lesson:** Lexical overlap is evidence of related language, not by
   itself proof that two capability boundaries are the same.
+
+## Mixed decision sections broadened approved drift memory
+
+- **Observed failure:** The first complete Checkpoint 3 replay stored the entire
+  DEC-005 and DEC-006 source sections as approved ledger decision text. Those
+  sections also contain neutral and explicitly unapproved capability facets, so
+  later cumulative-drift analysis could treat more scope as approved than the
+  human transaction authorized.
+- **Evidence:** The initial offline ten-request replay stopped at CR-008 after
+  unrelated facets from the mixed decision sections entered approved-memory
+  capability signatures.
+- **Correction:** The evaluator now extracts and stores only the explicit
+  `Approves:` clause in each mandated human decision payload.
+- **Model output changed:** No. The defect was found with the deterministic fake
+  client before any advanced provider call or result existed.
+- **Result:** The complete fake replay preserves only approved facets in ledger
+  memory and processes all ten requests successfully.
+- **Retained lesson:** Human approval payloads must encode the exact approved
+  capability clause rather than copying a mixed source section wholesale.
+
+## Current proposal was absent from subsystem verification eligibility
+
+- **Observed failure:** Drift analysis correctly related a current proposal to
+  an accumulated subsystem, but verification permitted only request IDs already
+  present in approved ledger records. The current request therefore failed
+  verification of its own otherwise valid subsystem relationship.
+- **Evidence:** The initial offline replay reached the current proposal with a
+  valid subsystem result but rejected its related-request IDs during
+  deterministic verification.
+- **Correction:** Verification eligibility now includes the current request ID
+  alongside the IDs of prior human-approved drift records.
+- **Model output changed:** No. The integration failure occurred during the
+  offline fake-client replay and no failed prediction was replaced.
+- **Result:** The current proposal can be verified against prior approved scope
+  while unrelated or future request IDs remain ineligible.
+- **Retained lesson:** Verification of a cumulative relationship must include
+  both the approved history and the proposal currently being assessed.

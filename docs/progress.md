@@ -2,7 +2,7 @@
 
 - **Date:** 2026-08-30
 - **Milestone 5/6:** Failure-Informed Advanced Agent
-- **Status:** Advanced Agent Checkpoint 2 complete; verified offline state machine
+- **Status:** Advanced Evaluation Runner checkpoint complete; verified offline replay
 
 ## Completed
 
@@ -128,6 +128,21 @@
   subsystem drift without network access or advanced result artifacts
 - Final Checkpoint 2 verification passed 131 tests on Python 3.13; dataset,
   scope-anchor, retrieval, baseline-hash, diff, secret, and privacy checks passed
+- Advanced Evaluation Runner checkpoint completed with a fresh temporary SQLite
+  ledger, independent structured assessment calls, and approved-memory-only state
+  carried sequentially across CR-001 through CR-010
+- The complete offline ten-request fake-client replay produced ten verified
+  predictions while preserving raw responses, trajectories, human-review events,
+  ledger snapshots and hashes, prompt/tool/schema hashes, scores, errors, runtime,
+  and token-usage metadata in deterministic uncurated artifacts
+- Evaluator-only human-outcome fixtures are inaccessible to generation,
+  retrieval, ambiguity, contradiction, drift, and verification; ground truth is
+  read only after the agent reaches AWAIT_HUMAN_REVIEW for the current request
+- DEC-005 after CR-006 and DEC-006 after CR-007 are applied through normal human
+  review transactions, and approved ledger state persists into later requests
+- Final Checkpoint 3 verification passed 144 tests on Python 3.13, including
+  explicit ground-truth isolation, complete replay, ordering, fresh-database,
+  incomplete-run, no-network, and frozen-baseline regressions
 
 ## Milestone 2 benchmark files
 
@@ -158,6 +173,6 @@ remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Next step
 
-Review and authorize the first controlled advanced-agent benchmark run and
-comparison checkpoint. No advanced-agent prediction or comparison result exists
-yet, and no provider call should occur before that authorization.
+Run the Advanced V1 real smoke test and evaluation only after explicit review and
+authorization. The complete fake replay validates orchestration but is not
+measured model performance, and no advanced provider result exists yet.

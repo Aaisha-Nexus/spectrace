@@ -61,3 +61,11 @@
   it must not be converted into a guessed or silently repaired final answer.
 - A serialized run is safe to resume only when both its scope-anchor hash and
   paused ledger snapshot still match the current project state.
+- Human decisions must store only explicitly approved capability clauses, not
+  entire mixed decision sections containing neutral or unapproved facets.
+- The current proposal must be included when verifying its own cumulative
+  relationship to an emerging subsystem.
+- Evaluator access to frozen human-outcome fixtures must occur only after the
+  agent pauses for human review.
+- A complete fake replay validates orchestration, isolation, and artifact
+  handling; it is not measured model performance.

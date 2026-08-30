@@ -280,7 +280,10 @@ def run_until_human_review(
     _append_event(state, ledger, AgentNode.CALCULATE_CUMULATIVE_DRIFT, tool="calculate_cumulative_drift", input_ids=(state.request.request_id, *drift.related_decision_ids), input_value=[record["entry_hash"] for record in records], summary=f"Drift severity: {drift.severity.value}.", started=started)
 
     started = time.perf_counter()
-    eligible_requests = tuple(record["request_id"] for record in records)
+    eligible_requests = (
+        *(record["request_id"] for record in records),
+        state.request.request_id,
+    )
     eligible_decisions = tuple(record["decision_id"] for record in records)
     verifier = lambda candidate: verify_assessment(candidate, retrieval, anchor, sufficiency, conflicts, drift, eligible_drift_request_ids=eligible_requests, eligible_drift_decision_ids=eligible_decisions)
     assessment, verification = verify_with_optional_repair(
