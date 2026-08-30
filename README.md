@@ -8,8 +8,11 @@ contradictions and cumulative scope drift, and keep a human reviewer in control.
 > Project status: the wholly synthetic StudioLane benchmark and its predetermined,
 > frozen ground truth now exist. Dataset validation, strict schemas, an API-free
 > deterministic scorer, and the direct-prompt baseline runner are implemented.
-> Baseline V1 is curated from a completed ten-request Gemini run. The advanced
-> agent and user interface remain unimplemented.
+> Baseline V1 is curated from a completed ten-request Gemini run. The first
+> advanced-agent checkpoint now provides deterministic scope-anchor parsing,
+> cutoff-safe lexical retrieval, and a human-approval-gated SQLite ledger. The
+> classifier, full state machine, model-backed advanced run, and user interface
+> remain unimplemented.
 
 ## Development principles
 
@@ -71,6 +74,33 @@ pytest
 Validation failures return a nonzero process status and identify the violated
 schema or benchmark invariant. Scoring is available through
 `spectrace.scoring.score_predictions`; it performs no API calls.
+
+## Deterministic evidence and memory foundation
+
+Build and inspect the scope anchor without making a model call:
+
+```powershell
+python -m spectrace.scope_anchor data/synthetic/demo_project --cutoff DEC-006
+```
+
+Run one production retrieval without ground-truth access:
+
+```powershell
+python -m spectrace.retrieval data/synthetic/demo_project --request-id CR-004
+```
+
+The parser currently targets the documented StudioLane Markdown convention; it
+is not a universal document parser. Retrieval uses dependency-free lexical and
+metadata scoring, and production modules never read `ground_truth.json`.
+Frozen-project retrieval metrics are calculated only by the offline test and
+evaluation boundary. Raw requests and assessments cannot update approved ledger
+memory; only an explicit human `APPROVE` or valid `OVERRIDE` payload can do so.
+
+Run the evaluator-only frozen-project summary with development dependencies:
+
+```powershell
+python tests/test_retrieval.py
+```
 
 ## Direct-prompt baseline
 

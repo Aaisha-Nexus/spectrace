@@ -44,3 +44,12 @@
   classification-appropriate evidence placement.
 - Scorer defects must be separated from model failures before comparison claims
   are made.
+- Partial supersession must deactivate only the affected capability facet; the
+  unaffected behavior in the older evidence remains current.
+- Retrieval quality must include temporal leakage and category coverage, not
+  only Recall@k.
+- Raw requests and model assessments are not approved project memory.
+- Classification-critical recall can remain complete even when secondary
+  evidence recall is imperfect.
+- The benchmark parser is deliberately convention-based rather than a universal
+  document parser.

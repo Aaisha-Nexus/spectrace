@@ -99,3 +99,40 @@ configuration, or scorer repairs as model-quality improvements.
   pending.
 - **Retained lesson:** Scorer defects must be resolved separately from model
   failures before comparison claims are made.
+
+## Retrieval evaluator crossed the production evidence boundary
+
+- **Observed failure:** The first Checkpoint 1 implementation placed the frozen
+  retrieval evaluator in `spectrace.retrieval`. Runtime retrieval did not call
+  it, but the production module could still import validated ground truth and
+  access expected labels when evaluation was requested.
+- **Evidence:** The pre-commit focused audit found direct `pack.ground_truth`
+  and `expected_classification` references in the production retrieval module.
+- **Correction:** Ground-truth-dependent metrics were moved into
+  `tests/test_retrieval.py`. Production retrieval now accepts only a scope
+  anchor, request text, explicit cutoff, and retrieval limits.
+- **Model output changed:** No. No model call or advanced prediction exists.
+- **Result:** Production-module scans find no ground-truth or expected-label
+  dependency; the evaluator-only summary retains the same frozen metrics.
+- **Retained lesson:** Evaluation-only access controls should be structural, not
+  merely a runtime convention.
+
+## Initial decisions bypassed the ledger review invariant
+
+- **Observed failure:** Initial approved decisions were represented as seeded
+  `ledger_entries` with nullable review references. They were valid preapproved
+  source evidence, but this meant not every ledger entry was created by an
+  explicit human review transaction.
+- **Evidence:** The pre-commit audit inspected the SQLite schema and seeding path
+  before any persistent advanced run existed.
+- **Correction:** Initial approvals are now marked on immutable anchor evidence.
+  `ledger_entries.review_id` and `request_id` are non-null, and only
+  `apply_human_review` can create a ledger entry. Duplicate attempts to re-add
+  initial approved decisions roll back the complete review transaction.
+- **Model output changed:** No. The correction affects only local deterministic
+  memory semantics.
+- **Result:** Tests confirm the seeded ledger has zero entries, initial approved
+  evidence remains in snapshots, and every later ledger entry is linked to a
+  human review and request.
+- **Retained lesson:** Preapproved source state and post-request decision memory
+  need distinct persistence representations.

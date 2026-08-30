@@ -1,8 +1,8 @@
 # Project Progress
 
-- **Date:** 2026-08-29
-- **Milestone 4:** Direct-Prompt Baseline
-- **Status:** Complete; Baseline V1 curated
+- **Date:** 2026-08-30
+- **Milestone 5/6:** Failure-Informed Advanced Agent
+- **Status:** Checkpoint 1 complete; deterministic evidence and memory foundation
 
 ## Completed
 
@@ -73,6 +73,28 @@
 - The curated result preserves the original generation manifest, raw responses,
   predictions, pre-audit scores, corrected scores, rescore provenance, and error
   analysis
+- Advanced Agent Checkpoint 1 completed with strict Pydantic contracts for
+  source evidence, retrieval, temporal status, human review, and ledger snapshots
+- Deterministic convention-based parsing produces a 39-item StudioLane scope
+  anchor with stable source hashes and a deterministic anchor hash
+- Scope, constraints, exclusions, assumptions, unresolved questions, and
+  decisions remain distinct in the scope anchor
+- Four facet-specific supersession edges preserve unaffected behavior; partial
+  supersession does not deactivate an entire evidence item
+- Deterministic Unicode-normalized lexical and metadata retrieval implements
+  category-balanced quotas, effective-decision priority, cutoff filtering,
+  deterministic tie-breaking, score explanations, and one bounded expansion
+- Frozen-project retrieval evaluation at k=12 measured evidence Recall@k of
+  0.9091, contradiction-decision recall of 1.00, unresolved-question recall of
+  1.00, classification-appropriate evidence recall of 1.00, mean category
+  coverage of 0.95, and zero temporal leakage
+- Built-in SQLite persistence now separates original approved anchor evidence
+  from human-reviewed ledger entries, enables foreign keys and file-backed WAL,
+  and exposes deterministic immutable snapshots
+- Raw requests and assessments are recorded without changing approved memory;
+  new ledger entries require an explicit human review transaction
+- The final Checkpoint 1 audit moved all ground-truth-dependent retrieval metrics
+  out of production modules and into the offline test/evaluation boundary
 
 ## Milestone 2 benchmark files
 
@@ -96,11 +118,15 @@ remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Deliberately not implemented
 
-- Advanced agent
+- Advanced classification and ambiguity analysis
+- Full explicit state machine and cumulative-drift calculation
+- Model-backed advanced-agent run or advanced result artifacts
 - Streamlit interface
-- Retrieval, persistent ledger, verification pass, or agent tooling in the baseline
+- Verification pass, change-impact package, or workflow generation
+- Any retrieval, persistent ledger, verification pass, or agent tooling in the baseline
 
 ## Next step
 
-Begin Failure-Informed Advanced Agent Design using the preserved Baseline V1
-failures and limitations. No advanced-agent result exists yet.
+Begin **Advanced Analysis and State Machine**, retaining the frozen taxonomy and
+classification precedence. No advanced-agent prediction or comparison result
+exists yet.
