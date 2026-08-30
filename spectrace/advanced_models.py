@@ -18,6 +18,7 @@ from spectrace.models import (
     DECISION_ID_PATTERN,
     EVIDENCE_ID_PATTERN,
     REQUEST_ID_PATTERN,
+    IncomingRequest,
     StrictModel,
 )
 
@@ -44,6 +45,7 @@ class DecisionPolarity(str, Enum):
     APPROVES = "APPROVES"
     REJECTS = "REJECTS"
     APPROVES_WITH_OPEN_DETAILS = "APPROVES_WITH_OPEN_DETAILS"
+    DOES_NOT_APPROVE_OR_REJECT = "DOES_NOT_APPROVE_OR_REJECT"
 
 
 class TemporalStatus(str, Enum):
@@ -367,6 +369,412 @@ class LedgerUpdateResult(StrictModel):
     ledger_entry_id: str | None = None
     before_snapshot_hash: Sha256
     after_snapshot_hash: Sha256
+
+
+class AmbiguityKind(str, Enum):
+    UNDEFINED_ACTOR = "UNDEFINED_ACTOR"
+    VAGUE_QUALITATIVE_TARGET = "VAGUE_QUALITATIVE_TARGET"
+    MISSING_BEHAVIOR = "MISSING_BEHAVIOR"
+    ACCEPTANCE_DETAIL = "ACCEPTANCE_DETAIL"
+
+
+class AmbiguityFinding(StrictModel):
+    kind: AmbiguityKind
+    description: NonEmptyText
+    evidence_ids: tuple[str, ...] = ()
+    blocking: bool
+    heuristic: bool
+    clarification_question: str | None = None
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, "evidence ID")
+
+    @model_validator(mode="after")
+    def validate_blocking_question(self) -> AmbiguityFinding:
+        if self.blocking and not self.clarification_question:
+            raise ValueError("blocking ambiguity requires a clarification question")
+        if not self.evidence_ids and not self.heuristic:
+            raise ValueError("an unevidenced finding must be marked heuristic")
+        return self
+
+
+class SufficiencyAssessment(StrictModel):
+    sufficient_for_classification: bool
+    findings: tuple[AmbiguityFinding, ...] = ()
+    clarification_questions: tuple[NonEmptyText, ...] = ()
+    rationale: NonEmptyText
+
+    @model_validator(mode="after")
+    def validate_consistency(self) -> SufficiencyAssessment:
+        blocking = any(finding.blocking for finding in self.findings)
+        if self.sufficient_for_classification == blocking:
+            raise ValueError("sufficiency must be false exactly when ambiguity is blocking")
+        if blocking and not self.clarification_questions:
+            raise ValueError("blocking ambiguity requires clarification questions")
+        return self
+
+
+class ConflictFinding(StrictModel):
+    evidence_id: str
+    polarity: DecisionPolarity
+    description: NonEmptyText
+    facet_terms: tuple[str, ...] = ()
+    specific: bool
+    active: bool
+    heuristic: bool = False
+
+    @field_validator("evidence_id")
+    @classmethod
+    def validate_evidence_id(cls, value: str) -> str:
+        if not EVIDENCE_ID_PATTERN.fullmatch(value):
+            raise ValueError(f"invalid evidence ID: {value!r}")
+        return value
+
+
+class ConflictAssessment(StrictModel):
+    findings: tuple[ConflictFinding, ...] = ()
+    proven_specific_contradiction: bool
+    conflicting_evidence_ids: tuple[str, ...] = ()
+    approved_evidence_ids: tuple[str, ...] = ()
+    exclusion_evidence_ids: tuple[str, ...] = ()
+    neutral_boundary_evidence_ids: tuple[str, ...] = ()
+    rationale: NonEmptyText
+
+    @field_validator(
+        "conflicting_evidence_ids",
+        "approved_evidence_ids",
+        "exclusion_evidence_ids",
+        "neutral_boundary_evidence_ids",
+    )
+    @classmethod
+    def validate_evidence_ids(
+        cls, values: tuple[str, ...], info: object
+    ) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, info.field_name)
+
+
+class CapabilitySignature(StrictModel):
+    domain_terms: tuple[str, ...] = ()
+    actors: tuple[str, ...] = ()
+    actions: tuple[str, ...] = ()
+    objects: tuple[str, ...] = ()
+    facets: tuple[str, ...] = ()
+    dependency_terms: tuple[str, ...] = ()
+    evidence_ids: tuple[str, ...] = ()
+    source_request_ids: tuple[str, ...] = ()
+    source_decision_ids: tuple[str, ...] = ()
+    heuristic: bool = True
+
+    @field_validator(
+        "domain_terms", "actors", "actions", "objects", "facets", "dependency_terms"
+    )
+    @classmethod
+    def validate_terms(cls, values: tuple[str, ...], info: object) -> tuple[str, ...]:
+        normalized = tuple(sorted(set(value.strip().lower() for value in values)))
+        if any(not value for value in normalized):
+            raise ValueError(f"{info.field_name} cannot contain empty terms")
+        return normalized
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, "evidence ID")
+
+    @field_validator("source_request_ids")
+    @classmethod
+    def validate_request_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, REQUEST_ID_PATTERN, "request ID")
+
+    @field_validator("source_decision_ids")
+    @classmethod
+    def validate_decision_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, DECISION_ID_PATTERN, "decision ID")
+
+
+class DriftSeverity(str, Enum):
+    NONE = "NONE"
+    RELATED = "RELATED"
+    EMERGING = "EMERGING"
+    SUBSYSTEM = "SUBSYSTEM"
+
+
+class DriftThresholds(StrictModel):
+    subsystem_prior_approved_changes: Annotated[int, Field(ge=1)] = 2
+    subsystem_total_increments: Annotated[int, Field(ge=2)] = 3
+    subsystem_minimum_facets: Annotated[int, Field(ge=1)] = 3
+    require_dependency_or_lifecycle_connection: bool = True
+
+
+class DriftAssessment(StrictModel):
+    severity: DriftSeverity
+    cumulative_drift_detected: bool
+    related_request_ids: tuple[str, ...] = ()
+    related_decision_ids: tuple[str, ...] = ()
+    combined_facets: tuple[str, ...] = ()
+    approved_change_count: Annotated[int, Field(ge=0)]
+    pattern_key: str | None = None
+    rationale: NonEmptyText
+    heuristic: bool = True
+
+    @field_validator("related_request_ids")
+    @classmethod
+    def validate_request_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, REQUEST_ID_PATTERN, "request ID")
+
+    @field_validator("related_decision_ids")
+    @classmethod
+    def validate_decision_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, DECISION_ID_PATTERN, "decision ID")
+
+    @model_validator(mode="after")
+    def validate_drift_boolean(self) -> DriftAssessment:
+        if self.cumulative_drift_detected != (self.severity == DriftSeverity.SUBSYSTEM):
+            raise ValueError("drift boolean is true only for SUBSYSTEM severity")
+        return self
+
+
+class AdvancedModelOutput(StrictModel):
+    """Bounded model recommendation; deterministic tools own final precedence and drift."""
+
+    request_id: str
+    recommended_classification: Classification
+    supporting_evidence_ids: tuple[str, ...] = ()
+    conflicting_evidence_ids: tuple[str, ...] = ()
+    requires_clarification: bool
+    clarification_questions: tuple[NonEmptyText, ...] = ()
+    dependencies: tuple[NonEmptyText, ...] = ()
+    rationale: Annotated[str, Field(min_length=1, max_length=2000)]
+    capability_signature: CapabilitySignature
+
+    @field_validator("request_id")
+    @classmethod
+    def validate_request_id(cls, value: str) -> str:
+        if not REQUEST_ID_PATTERN.fullmatch(value):
+            raise ValueError(f"invalid request ID: {value!r}")
+        return value
+
+    @field_validator("supporting_evidence_ids", "conflicting_evidence_ids")
+    @classmethod
+    def validate_evidence_ids(
+        cls, values: tuple[str, ...], info: object
+    ) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, info.field_name)
+
+    @model_validator(mode="after")
+    def validate_clarification(self) -> AdvancedModelOutput:
+        if self.requires_clarification != bool(self.clarification_questions):
+            raise ValueError("clarification boolean must match presence of questions")
+        return self
+
+
+class AdvancedAssessment(StrictModel):
+    request_id: str
+    model_recommendation: Classification
+    classification: Classification
+    supporting_evidence_ids: tuple[str, ...] = ()
+    conflicting_evidence_ids: tuple[str, ...] = ()
+    requires_clarification: bool
+    clarification_questions: tuple[NonEmptyText, ...] = ()
+    dependencies: tuple[NonEmptyText, ...] = ()
+    rationale: Annotated[str, Field(min_length=1, max_length=2000)]
+    capability_signature: CapabilitySignature
+
+    @field_validator("request_id")
+    @classmethod
+    def validate_request_id(cls, value: str) -> str:
+        if not REQUEST_ID_PATTERN.fullmatch(value):
+            raise ValueError(f"invalid request ID: {value!r}")
+        return value
+
+    @field_validator("supporting_evidence_ids", "conflicting_evidence_ids")
+    @classmethod
+    def validate_evidence_ids(
+        cls, values: tuple[str, ...], info: object
+    ) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, info.field_name)
+
+    @model_validator(mode="after")
+    def validate_clarification(self) -> AdvancedAssessment:
+        if self.requires_clarification and not self.clarification_questions:
+            raise ValueError("clarification requires at least one question")
+        if not self.requires_clarification and self.clarification_questions:
+            raise ValueError("questions require requires_clarification=true")
+        return self
+
+
+class VerificationIssue(StrictModel):
+    code: NonEmptyText
+    message: NonEmptyText
+    evidence_ids: tuple[str, ...] = ()
+    repairable: bool
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, "evidence ID")
+
+
+class VerificationResult(StrictModel):
+    passed: bool
+    issues: tuple[VerificationIssue, ...] = ()
+    repair_attempted: bool = False
+    repair_succeeded: bool = False
+
+    @model_validator(mode="after")
+    def validate_result(self) -> VerificationResult:
+        if self.passed == bool(self.issues):
+            raise ValueError("passed must be true exactly when there are no issues")
+        if self.repair_succeeded and not self.repair_attempted:
+            raise ValueError("successful repair requires a repair attempt")
+        return self
+
+
+class HumanReviewRecommendation(StrictModel):
+    request_id: str
+    action: HumanAction
+    classification: Classification
+    summary: NonEmptyText
+    evidence_ids: tuple[str, ...] = ()
+    clarification_questions: tuple[NonEmptyText, ...] = ()
+    drift_severity: DriftSeverity
+
+    @field_validator("request_id")
+    @classmethod
+    def validate_request_id(cls, value: str) -> str:
+        if not REQUEST_ID_PATTERN.fullmatch(value):
+            raise ValueError(f"invalid request ID: {value!r}")
+        return value
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, "evidence ID")
+
+
+class AgentNode(str, Enum):
+    LOAD_SCOPE_ANCHOR = "LOAD_SCOPE_ANCHOR"
+    RETRIEVE_EVIDENCE = "RETRIEVE_EVIDENCE"
+    ASSESS_SUFFICIENCY = "ASSESS_SUFFICIENCY"
+    CHECK_CONTRADICTIONS = "CHECK_CONTRADICTIONS"
+    CLASSIFY_REQUEST = "CLASSIFY_REQUEST"
+    CALCULATE_CUMULATIVE_DRIFT = "CALCULATE_CUMULATIVE_DRIFT"
+    VERIFY_ASSESSMENT = "VERIFY_ASSESSMENT"
+    PREPARE_RECOMMENDATION = "PREPARE_RECOMMENDATION"
+    AWAIT_HUMAN_REVIEW = "AWAIT_HUMAN_REVIEW"
+    APPLY_HUMAN_DECISION = "APPLY_HUMAN_DECISION"
+    BUILD_CHANGE_IMPACT_PACKAGE = "BUILD_CHANGE_IMPACT_PACKAGE"
+    COMPLETE = "COMPLETE"
+
+
+class AgentStatus(str, Enum):
+    NEW = "NEW"
+    RUNNING = "RUNNING"
+    AWAITING_HUMAN_REVIEW = "AWAITING_HUMAN_REVIEW"
+    REVIEWED = "REVIEWED"
+    COMPLETE = "COMPLETE"
+    FAILED = "FAILED"
+
+
+class TrajectoryEvent(StrictModel):
+    sequence: Annotated[int, Field(ge=1)]
+    node: AgentNode
+    tool: str | None = None
+    input_ids: tuple[str, ...] = ()
+    input_hash: Sha256
+    result_summary: NonEmptyText
+    verification: str | None = None
+    duration_ms: Annotated[int, Field(ge=0)]
+    human_state: str | None = None
+    error: str | None = None
+
+
+class DraftAcceptanceCriterion(StrictModel):
+    criterion_id: NonEmptyText
+    text: NonEmptyText
+    evidence_ids: tuple[str, ...]
+    status: str = "DRAFT"
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        if not values:
+            raise ValueError("draft acceptance criterion requires evidence")
+        return _validated_unique_ids(values, EVIDENCE_ID_PATTERN, "evidence ID")
+
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, value: str) -> str:
+        if value != "DRAFT":
+            raise ValueError("acceptance criteria must remain DRAFT")
+        return value
+
+
+class ChangeImpactPackage(StrictModel):
+    request_id: str
+    review_id: str
+    is_review_memo: bool
+    approval_state: HumanAction
+    agent_classification: Classification
+    final_classification: Classification
+    summary: NonEmptyText
+    supporting_evidence_ids: tuple[str, ...] = ()
+    conflicting_evidence_ids: tuple[str, ...] = ()
+    added_requirements: tuple[NonEmptyText, ...] = ()
+    changed_requirements: tuple[NonEmptyText, ...] = ()
+    superseded_requirements: tuple[NonEmptyText, ...] = ()
+    affected_actors: tuple[NonEmptyText, ...] = ()
+    affected_components: tuple[NonEmptyText, ...] = ()
+    affected_data_state: tuple[NonEmptyText, ...] = ()
+    affected_integrations: tuple[NonEmptyText, ...] = ()
+    dependencies: tuple[NonEmptyText, ...] = ()
+    workflow_steps: tuple[NonEmptyText, ...] = ()
+    open_questions: tuple[NonEmptyText, ...] = ()
+    acceptance_criteria: tuple[DraftAcceptanceCriterion, ...] = ()
+    drift_severity: DriftSeverity
+    drift_pattern: str | None = None
+    non_goals: tuple[NonEmptyText, ...] = ()
+    unknowns: tuple[NonEmptyText, ...] = ()
+    verification_hash: Sha256
+    source_hashes: tuple[Sha256, ...]
+
+
+class AdvancedRunState(StrictModel):
+    run_id: NonEmptyText
+    project_pack_path: NonEmptyText
+    project_id: NonEmptyText
+    request: IncomingRequest
+    status: AgentStatus = AgentStatus.NEW
+    current_node: AgentNode | None = None
+    anchor_hash: Sha256 | None = None
+    pause_snapshot_hash: Sha256 | None = None
+    retrieval: RetrievalBundle | None = None
+    sufficiency: SufficiencyAssessment | None = None
+    conflicts: ConflictAssessment | None = None
+    assessment: AdvancedAssessment | None = None
+    drift: DriftAssessment | None = None
+    verification: VerificationResult | None = None
+    recommendation: HumanReviewRecommendation | None = None
+    human_review: HumanReview | None = None
+    ledger_update: LedgerUpdateResult | None = None
+    change_package: ChangeImpactPackage | None = None
+    trajectory: tuple[TrajectoryEvent, ...] = ()
+    prompt_hash: Sha256 | None = None
+    assembled_prompt_hash: Sha256 | None = None
+    raw_response_hash: Sha256 | None = None
+    token_usage: dict[str, Any] | None = None
+
+
+def _validated_unique_ids(
+    values: tuple[str, ...], pattern: re.Pattern[str], kind: str
+) -> tuple[str, ...]:
+    if len(values) != len(set(values)):
+        raise ValueError(f"{kind}s must be unique")
+    for value in values:
+        if not pattern.fullmatch(value):
+            raise ValueError(f"invalid {kind}: {value!r}")
+    return values
 
 
 def stable_json_value(value: Any) -> Any:

@@ -11,8 +11,10 @@ contradictions and cumulative scope drift, and keep a human reviewer in control.
 > Baseline V1 is curated from a completed ten-request Gemini run. The first
 > advanced-agent checkpoint now provides deterministic scope-anchor parsing,
 > cutoff-safe lexical retrieval, and a human-approval-gated SQLite ledger. The
-> classifier, full state machine, model-backed advanced run, and user interface
-> remain unimplemented.
+> second checkpoint adds offline advanced analysis, deterministic verification
+> and drift tools, a resumable human-gated state machine, and change-impact
+> packaging. No real advanced model run, benchmark result, or user interface
+> exists yet.
 
 ## Development principles
 
@@ -101,6 +103,32 @@ Run the evaluator-only frozen-project summary with development dependencies:
 ```powershell
 python tests/test_retrieval.py
 ```
+
+## Offline advanced analysis and state machine
+
+The advanced prompt is fixed in `prompts/advanced.md`. Its structured provider
+boundary accepts a caller-supplied strict Pydantic model, while the existing
+baseline wrapper and prompt remain unchanged. Deterministic tools separately
+assess blocking ambiguity, effective decision conflicts, exact classification
+precedence, and cumulative drift from human-approved scope-changing ledger
+entries only.
+
+The explicit state machine retrieves cutoff-safe evidence, runs an injectable
+structured client, verifies the result, and always pauses at
+`AWAIT_HUMAN_REVIEW`. Raw requests, assessments, and fake model outputs do not
+change approved memory. Resume validates the anchor and ledger snapshot before
+applying one explicit human review transaction. Only an approved scope-changing
+payload produces a full change-impact package; `NEEDS_CLARIFICATION`, `DEFER`,
+and decisions that uphold an exclusion or contradiction produce review memos.
+
+Run the offline fake-client and deterministic-tool harnesses without any API:
+
+```powershell
+pytest tests/test_analysis_tools.py tests/test_verification.py
+pytest tests/test_advanced.py tests/test_change_package.py
+```
+
+These tests demonstrate behavior only; they are not advanced benchmark results.
 
 ## Direct-prompt baseline
 

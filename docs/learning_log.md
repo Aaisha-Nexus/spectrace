@@ -53,3 +53,11 @@
   evidence recall is imperfect.
 - The benchmark parser is deliberately convention-based rather than a universal
   document parser.
+- Ambiguity must gate classification only when the requested capability cannot
+  be identified; unresolved acceptance details alone must not force AMBIGUOUS.
+- Cumulative drift is a property of approved-memory evolution, so raw requests
+  and unapproved assessments must never count as scope-expansion increments.
+- Verification failure should preserve the evidence and pause for human review;
+  it must not be converted into a guessed or silently repaired final answer.
+- A serialized run is safe to resume only when both its scope-anchor hash and
+  paused ledger snapshot still match the current project state.

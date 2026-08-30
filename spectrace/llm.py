@@ -5,9 +5,9 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field, replace
 from enum import Enum
-from typing import Any, Protocol
+from typing import Any, Generic, Protocol, TypeVar
 
-from pydantic import ValidationError
+from pydantic import BaseModel, ValidationError
 
 from spectrace.config import LLMSettings
 from spectrace.models import ModelPrediction
@@ -73,10 +73,16 @@ def sanitize_gemini_json_schema(schema: dict[str, Any]) -> dict[str, Any]:
     return sanitized
 
 
+def gemini_schema_for_model(output_model: type[BaseModel]) -> dict[str, Any]:
+    """Build a provider schema from any strict local output contract."""
+
+    return sanitize_gemini_json_schema(output_model.model_json_schema())
+
+
 def gemini_model_prediction_schema() -> dict[str, Any]:
     """Build the explicit provider schema from the strict local model."""
 
-    return sanitize_gemini_json_schema(ModelPrediction.model_json_schema())
+    return gemini_schema_for_model(ModelPrediction)
 
 
 @dataclass(frozen=True)
@@ -168,6 +174,20 @@ class StructuredOutputError(LLMError):
 @dataclass(frozen=True)
 class PredictionAttempt:
     prediction: ModelPrediction
+    raw_response: str
+    raw_responses: tuple[str, ...]
+    attempt_errors: tuple[str, ...]
+    provider_errors: tuple[ProviderErrorDiagnostic, ...]
+    usage: dict[str, Any] | None
+    attempt_count: int
+
+
+OutputModelT = TypeVar("OutputModelT", bound=BaseModel)
+
+
+@dataclass(frozen=True)
+class StructuredAttempt(Generic[OutputModelT]):
+    output: OutputModelT
     raw_response: str
     raw_responses: tuple[str, ...]
     attempt_errors: tuple[str, ...]
@@ -313,6 +333,7 @@ class GoogleGenAIClient:
         temperature: float = 0.0,
         seed: int | None = None,
         max_output_tokens: int = 2048,
+        output_model: type[BaseModel] = ModelPrediction,
     ) -> None:
         from google import genai
         from google.genai import types
@@ -328,6 +349,7 @@ class GoogleGenAIClient:
         self._temperature = temperature
         self._seed = seed
         self._max_output_tokens = max_output_tokens
+        self._output_model = output_model
 
     def generate(self, prompt: str) -> RawGeneration:
         config = self._types.GenerateContentConfig(
@@ -335,7 +357,9 @@ class GoogleGenAIClient:
             seed=self._seed,
             max_output_tokens=self._max_output_tokens,
             response_mime_type="application/json",
-            response_json_schema=gemini_model_prediction_schema(),
+            response_json_schema=gemini_schema_for_model(
+                getattr(self, "_output_model", ModelPrediction)
+            ),
         )
         try:
             response = self._client.models.generate_content(
@@ -367,13 +391,14 @@ class GoogleGenAIClient:
         return RawGeneration(text=text, usage=_usage_dict(response))
 
 
-def generate_prediction_with_retry(
+def generate_structured_with_retry(
     client: StructuredGenerationClient,
     prompt: str,
+    output_model: type[OutputModelT],
     *,
     max_attempts: int = 3,
     expected_request_id: str | None = None,
-) -> PredictionAttempt:
+) -> StructuredAttempt[OutputModelT]:
     """Retry only transient and structured-output failures, never indefinitely."""
 
     if max_attempts < 1:
@@ -386,22 +411,22 @@ def generate_prediction_with_retry(
             raw = client.generate(prompt)
             raw_responses.append(raw.text)
             try:
-                prediction = ModelPrediction.model_validate_json(raw.text)
+                output = output_model.model_validate_json(raw.text)
             except ValidationError as exc:
                 raise StructuredOutputError(
-                    f"ModelPrediction validation failed: {exc}",
+                    f"{output_model.__name__} validation failed: {exc}",
                     raw_response=raw.text,
                 ) from exc
             if (
                 expected_request_id is not None
-                and prediction.request_id != expected_request_id
+                and getattr(output, "request_id", None) != expected_request_id
             ):
                 raise StructuredOutputError(
-                    "ModelPrediction request_id does not match the current request",
+                    f"{output_model.__name__} request_id does not match the current request",
                     raw_response=raw.text,
                 )
-            return PredictionAttempt(
-                prediction=prediction,
+            return StructuredAttempt(
+                output=output,
                 raw_response=raw.text,
                 raw_responses=tuple(raw_responses),
                 attempt_errors=tuple(errors),
@@ -436,4 +461,31 @@ def generate_prediction_with_retry(
         provider_errors=provider_errors,
         attempt_count=max_attempts,
         retry_exhausted=True,
+    )
+
+
+def generate_prediction_with_retry(
+    client: StructuredGenerationClient,
+    prompt: str,
+    *,
+    max_attempts: int = 3,
+    expected_request_id: str | None = None,
+) -> PredictionAttempt:
+    """Backward-compatible baseline wrapper around generic structured output."""
+
+    attempt = generate_structured_with_retry(
+        client,
+        prompt,
+        ModelPrediction,
+        max_attempts=max_attempts,
+        expected_request_id=expected_request_id,
+    )
+    return PredictionAttempt(
+        prediction=attempt.output,
+        raw_response=attempt.raw_response,
+        raw_responses=attempt.raw_responses,
+        attempt_errors=attempt.attempt_errors,
+        provider_errors=attempt.provider_errors,
+        usage=attempt.usage,
+        attempt_count=attempt.attempt_count,
     )

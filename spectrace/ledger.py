@@ -17,6 +17,7 @@ from spectrace.advanced_models import (
     LedgerSnapshot,
     LedgerUpdateResult,
     ScopeAnchor,
+    TrajectoryEvent,
 )
 from spectrace.models import Classification, IncomingRequest
 from spectrace.scope_anchor import resolve_anchor_at_cutoff
@@ -445,6 +446,64 @@ class LedgerStore:
             before_snapshot_hash=before.snapshot_hash,
             after_snapshot_hash=after.snapshot_hash,
         )
+
+    def approved_scope_change_records(self, project_id: str) -> tuple[dict[str, Any], ...]:
+        """Return only human-approved capability additions eligible for drift."""
+
+        rows = self.connection.execute(
+            """SELECT decision_id, request_id, decision_text, evidence_ids_json,
+                      effective_date, entry_hash
+               FROM ledger_entries
+               WHERE project_id = ? AND changes_approved_scope = 1
+                 AND approves_requested_capability = 1
+               ORDER BY effective_date, ledger_entry_id""",
+            (project_id,),
+        ).fetchall()
+        return tuple(
+            {
+                "decision_id": row["decision_id"],
+                "request_id": row["request_id"],
+                "decision_text": row["decision_text"],
+                "evidence_ids": tuple(json.loads(row["evidence_ids_json"])),
+                "effective_date": row["effective_date"],
+                "entry_hash": row["entry_hash"],
+            }
+            for row in rows
+        )
+
+    def record_trajectory_event(
+        self,
+        project_id: str,
+        request_id: str,
+        event: TrajectoryEvent,
+    ) -> None:
+        """Persist one append-only, non-reasoning execution event."""
+
+        event_id = f"{request_id}-{event.sequence:03d}"
+        with self.connection:
+            self.connection.execute(
+                """INSERT INTO trajectory_events
+                   (project_id, event_id, request_id, sequence, node, tool,
+                    input_ids_json, input_hash, result_summary, verification,
+                    duration_ms, human_state, error, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    project_id,
+                    event_id,
+                    request_id,
+                    event.sequence,
+                    event.node.value,
+                    event.tool,
+                    _json(event.input_ids),
+                    event.input_hash,
+                    event.result_summary,
+                    event.verification,
+                    event.duration_ms,
+                    event.human_state,
+                    event.error,
+                    _now(),
+                ),
+            )
 
     def snapshot(self, project_id: str) -> LedgerSnapshot:
         project = self.connection.execute(

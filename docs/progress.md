@@ -2,7 +2,7 @@
 
 - **Date:** 2026-08-30
 - **Milestone 5/6:** Failure-Informed Advanced Agent
-- **Status:** Checkpoint 1 complete; deterministic evidence and memory foundation
+- **Status:** Advanced Agent Checkpoint 2 complete; verified offline state machine
 
 ## Completed
 
@@ -95,6 +95,39 @@
   new ledger entries require an explicit human review transaction
 - The final Checkpoint 1 audit moved all ground-truth-dependent retrieval metrics
   out of production modules and into the offline test/evaluation boundary
+- Advanced Agent Checkpoint 2 completed with strict contracts for ambiguity,
+  conflicts, capability signatures, drift, verification, human recommendations,
+  resumable state, trajectories, and change-impact packages
+- Deterministic sufficiency analysis distinguishes classification-blocking
+  undefined roles and vague unmeasured targets from non-blocking acceptance detail
+- Effective-conflict analysis distinguishes current approvals, specific
+  rejections, neutral boundaries, exclusions, and facet-specific partial
+  supersession without request-specific rules
+- The advanced classifier enforces the frozen precedence: contradiction,
+  ambiguity, in scope, out of scope, then potential scope change
+- Cumulative drift uses only human-approved scope-changing ledger entries;
+  raw requests and unapproved assessments do not count toward thresholds
+- Configurable drift severity now distinguishes NONE, RELATED, EMERGING, and
+  SUBSYSTEM, with the benchmark drift boolean true only for SUBSYSTEM
+- A fixed advanced prompt and caller-supplied strict output schema preserve the
+  provider-compatible sanitation boundary without changing baseline behavior
+- Deterministic verification checks citation existence, cutoff availability,
+  retrieval membership, semantic placement, precedence, ambiguity consistency,
+  approval claims, and drift eligibility
+- One bounded repair is permitted for repairable verification issues; unresolved
+  or non-repairable failures pause safely for human review instead of producing
+  an invented result
+- The explicit state machine records concise append-only trajectory events and
+  always pauses at AWAIT_HUMAN_REVIEW before any approved-memory mutation
+- Resume validates both the scope-anchor hash and paused ledger snapshot before
+  applying an explicit APPROVE, OVERRIDE, NEEDS_CLARIFICATION, or DEFER review
+- Approved scope-changing reviews produce evidence-linked change-impact packages
+  with DRAFT acceptance criteria; other reviews produce non-approving memos
+- Offline fake-client demonstrations cover ambiguity, contradiction, all four
+  human actions, failed verification, serialization/resume, and approved-history
+  subsystem drift without network access or advanced result artifacts
+- Final Checkpoint 2 verification passed 131 tests on Python 3.13; dataset,
+  scope-anchor, retrieval, baseline-hash, diff, secret, and privacy checks passed
 
 ## Milestone 2 benchmark files
 
@@ -118,15 +151,13 @@ remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Deliberately not implemented
 
-- Advanced classification and ambiguity analysis
-- Full explicit state machine and cumulative-drift calculation
 - Model-backed advanced-agent run or advanced result artifacts
 - Streamlit interface
-- Verification pass, change-impact package, or workflow generation
+- Workflow generation beyond the reviewed change-impact package
 - Any retrieval, persistent ledger, verification pass, or agent tooling in the baseline
 
 ## Next step
 
-Begin **Advanced Analysis and State Machine**, retaining the frozen taxonomy and
-classification precedence. No advanced-agent prediction or comparison result
-exists yet.
+Review and authorize the first controlled advanced-agent benchmark run and
+comparison checkpoint. No advanced-agent prediction or comparison result exists
+yet, and no provider call should occur before that authorization.

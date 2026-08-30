@@ -136,3 +136,39 @@ configuration, or scorer repairs as model-quality improvements.
   human review and request.
 - **Retained lesson:** Preapproved source state and post-request decision memory
   need distinct persistence representations.
+
+## Decision-clause alternation produced an empty capture
+
+- **Observed failure:** The first Checkpoint 2 decision-clause matcher embedded
+  an ungrouped alternation in the labeled-clause regular expression. A matching
+  neutral decision label could therefore satisfy the alternate branch without
+  populating the clause capture and raise an exception during offline analysis.
+- **Evidence:** The initial focused advanced-analysis tests failed while parsing
+  neutral `Does not approve and does not reject` decision text.
+- **Correction:** The supplied label expression is now wrapped in a non-capturing
+  group, so every successful alternative populates the same clause capture.
+- **Model output changed:** No. The defect was found with fake-client and
+  deterministic tests before any advanced model call or result existed.
+- **Result:** Approved, rejected, and neutral clauses parse deterministically;
+  the focused and full offline suites pass.
+- **Retained lesson:** A regular-expression alternative embedded in a larger
+  capture must be grouped at its semantic boundary.
+
+## Generic lexical overlap created false capability matches
+
+- **Observed failure:** The first Checkpoint 2 conflict matcher treated generic
+  shared words such as session, email, confirmation, or automatic as sufficient
+  capability overlap. This could incorrectly attach unrelated approvals or
+  rejections to a request.
+- **Evidence:** The ten-request offline diagnostic sweep exposed false matches
+  between otherwise distinct capability facets before the checkpoint review.
+- **Correction:** Matching now removes a small documented set of generic terms,
+  requires substantive overlap for approvals, rejections, and exclusions, and
+  permits the narrower single-overlap facet rule only for neutral boundaries.
+- **Model output changed:** No. No advanced provider call or benchmark artifact
+  existed; only deterministic matching logic and its tests changed.
+- **Result:** The offline sweep respects specific contradictions, neutral
+  unapproved boundaries, exclusions, and unaffected partially superseded facets
+  without request-ID or expected-label rules.
+- **Retained lesson:** Lexical overlap is evidence of related language, not by
+  itself proof that two capability boundaries are the same.
