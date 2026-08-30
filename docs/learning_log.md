@@ -69,3 +69,6 @@
   agent pauses for human review.
 - A complete fake replay validates orchestration, isolation, and artifact
   handling; it is not measured model performance.
+- A retry that ultimately succeeds must still preserve the failed attempt's
+  timestamped, secret-safe diagnostic; call counts alone cannot recover why the
+  earlier attempt failed.

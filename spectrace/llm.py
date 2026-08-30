@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field, replace
+from datetime import UTC, datetime
 from enum import Enum
 from typing import Any, Generic, Protocol, TypeVar
 
@@ -171,6 +172,38 @@ class StructuredOutputError(LLMError):
         self.raw_response = raw_response
 
 
+class AttemptDisposition(str, Enum):
+    """Final handling of one bounded provider attempt."""
+
+    SUCCEEDED = "SUCCEEDED"
+    RETRY_SCHEDULED = "RETRY_SCHEDULED"
+    FAILED_FINAL = "FAILED_FINAL"
+
+
+@dataclass(frozen=True)
+class GenerationAttemptRecord:
+    """Secret-safe, append-only diagnostic for one provider attempt."""
+
+    request_id: str | None
+    attempt_number: int
+    timestamp: str
+    safe_categorized_diagnostic: dict[str, Any]
+    retryable: bool
+    raw_response_existed: bool
+    final_disposition: AttemptDisposition
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "request_id": self.request_id,
+            "attempt_number": self.attempt_number,
+            "timestamp": self.timestamp,
+            "safe_categorized_diagnostic": self.safe_categorized_diagnostic,
+            "retryable": self.retryable,
+            "raw_response_existed": self.raw_response_existed,
+            "final_disposition": self.final_disposition.value,
+        }
+
+
 @dataclass(frozen=True)
 class PredictionAttempt:
     prediction: ModelPrediction
@@ -180,6 +213,7 @@ class PredictionAttempt:
     provider_errors: tuple[ProviderErrorDiagnostic, ...]
     usage: dict[str, Any] | None
     attempt_count: int
+    attempt_records: tuple[GenerationAttemptRecord, ...]
 
 
 OutputModelT = TypeVar("OutputModelT", bound=BaseModel)
@@ -194,6 +228,7 @@ class StructuredAttempt(Generic[OutputModelT]):
     provider_errors: tuple[ProviderErrorDiagnostic, ...]
     usage: dict[str, Any] | None
     attempt_count: int
+    attempt_records: tuple[GenerationAttemptRecord, ...]
 
 
 @dataclass
@@ -205,6 +240,7 @@ class RetryExhaustedError(LLMError):
     provider_errors: list[ProviderErrorDiagnostic] = field(default_factory=list)
     attempt_count: int = 0
     retry_exhausted: bool = True
+    attempt_records: list[GenerationAttemptRecord] = field(default_factory=list)
 
     def __str__(self) -> str:
         disposition = "exhausted retries" if self.retry_exhausted else "stopped"
@@ -406,7 +442,9 @@ def generate_structured_with_retry(
     errors: list[str] = []
     raw_responses: list[str] = []
     provider_errors: list[ProviderErrorDiagnostic] = []
+    attempt_records: list[GenerationAttemptRecord] = []
     for attempt in range(1, max_attempts + 1):
+        attempted_at = datetime.now(UTC).isoformat()
         try:
             raw = client.generate(prompt)
             raw_responses.append(raw.text)
@@ -433,6 +471,24 @@ def generate_structured_with_retry(
                 provider_errors=tuple(provider_errors),
                 usage=raw.usage,
                 attempt_count=attempt,
+                attempt_records=tuple(
+                    [
+                        *attempt_records,
+                        GenerationAttemptRecord(
+                            request_id=expected_request_id,
+                            attempt_number=attempt,
+                            timestamp=attempted_at,
+                            safe_categorized_diagnostic={
+                                "category": "SUCCESS",
+                                "exception_type": None,
+                                "sanitized_provider_message": "validated structured response",
+                            },
+                            retryable=False,
+                            raw_response_existed=True,
+                            final_disposition=AttemptDisposition.SUCCEEDED,
+                        ),
+                    ]
+                ),
             )
         except ProviderLLMError as exc:
             diagnostic = exc.diagnostic.with_attempt(
@@ -441,13 +497,30 @@ def generate_structured_with_retry(
             )
             provider_errors.append(diagnostic)
             errors.append(str(exc))
-            if not diagnostic.retryable:
+            will_retry = diagnostic.retryable and attempt < max_attempts
+            attempt_records.append(
+                GenerationAttemptRecord(
+                    request_id=expected_request_id,
+                    attempt_number=attempt,
+                    timestamp=attempted_at,
+                    safe_categorized_diagnostic=diagnostic.as_dict(),
+                    retryable=diagnostic.retryable,
+                    raw_response_existed=False,
+                    final_disposition=(
+                        AttemptDisposition.RETRY_SCHEDULED
+                        if will_retry
+                        else AttemptDisposition.FAILED_FINAL
+                    ),
+                )
+            )
+            if not will_retry:
                 raise RetryExhaustedError(
                     errors=errors,
                     raw_responses=raw_responses,
                     provider_errors=provider_errors,
                     attempt_count=attempt,
-                    retry_exhausted=False,
+                    retry_exhausted=diagnostic.retryable,
+                    attempt_records=attempt_records,
                 ) from exc
         except StructuredOutputError as exc:
             errors.append(str(exc))
@@ -455,12 +528,42 @@ def generate_structured_with_retry(
                 not raw_responses or raw_responses[-1] != exc.raw_response
             ):
                 raw_responses.append(exc.raw_response)
+            will_retry = attempt < max_attempts
+            attempt_records.append(
+                GenerationAttemptRecord(
+                    request_id=expected_request_id,
+                    attempt_number=attempt,
+                    timestamp=attempted_at,
+                    safe_categorized_diagnostic={
+                        "category": "STRUCTURED_OUTPUT_INVALID",
+                        "exception_type": type(exc).__name__,
+                        "sanitized_provider_message": sanitize_provider_message(str(exc)),
+                    },
+                    retryable=True,
+                    raw_response_existed=bool(exc.raw_response),
+                    final_disposition=(
+                        AttemptDisposition.RETRY_SCHEDULED
+                        if will_retry
+                        else AttemptDisposition.FAILED_FINAL
+                    ),
+                )
+            )
+            if not will_retry:
+                raise RetryExhaustedError(
+                    errors=errors,
+                    raw_responses=raw_responses,
+                    provider_errors=provider_errors,
+                    attempt_count=attempt,
+                    retry_exhausted=True,
+                    attempt_records=attempt_records,
+                ) from exc
     raise RetryExhaustedError(
         errors=errors,
         raw_responses=raw_responses,
         provider_errors=provider_errors,
         attempt_count=max_attempts,
         retry_exhausted=True,
+        attempt_records=attempt_records,
     )
 
 
@@ -488,4 +591,5 @@ def generate_prediction_with_retry(
         provider_errors=attempt.provider_errors,
         usage=attempt.usage,
         attempt_count=attempt.attempt_count,
+        attempt_records=attempt.attempt_records,
     )

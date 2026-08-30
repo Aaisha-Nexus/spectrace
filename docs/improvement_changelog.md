@@ -209,3 +209,27 @@ configuration, or scorer repairs as model-quality improvements.
   while unrelated or future request IDs remain ineligible.
 - **Retained lesson:** Verification of a cumulative relationship must include
   both the approved history and the proposal currently being assessed.
+
+## Successful retry discarded the failed provider diagnostic
+
+- **Observed failure:** The completed Advanced V1 candidate records two API
+  calls for CR-007 but preserves only the successful returned response. The
+  first call failed before returning raw content, and its already-safe provider
+  diagnostic was discarded when the bounded retry succeeded.
+- **Evidence:** The immutable source candidate at
+  `results/advanced-20260830T145353.739126Z` has `call_count=2` and one
+  generation for CR-007, with an empty run-level error file and no attempt-level
+  diagnostic artifact.
+- **Correction:** Future structured-generation runs create one timestamped
+  attempt record per call with request ID, attempt number, safe categorized
+  diagnostic, retryability, raw-response existence, and final disposition.
+  Advanced evaluation writes the complete sequence to `attempts.jsonl` for both
+  recovered and terminal failures.
+- **Model output changed:** No. The Advanced V1 candidate was not rerun, edited,
+  repaired, or rescored. Its missing first-attempt diagnostic is unrecoverable
+  and was not reconstructed.
+- **Result:** Offline tests prove transient recovery retains both attempts and
+  the final raw response, while non-retryable failures retain their diagnostic
+  without inventing a raw response.
+- **Retained lesson:** Successful recovery is part of the audit trail; retry
+  diagnostics must be append-only rather than retained only on terminal error.

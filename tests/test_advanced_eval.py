@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,12 @@ from spectrace.advanced_models import (
     CapabilitySignature,
 )
 from spectrace.baseline import prompt_hash
+from spectrace.llm import (
+    ProviderErrorCategory,
+    ProviderErrorDiagnostic,
+    ProviderLLMError,
+    TransientLLMError,
+)
 from spectrace.models import Classification, ModelPrediction
 
 
@@ -342,3 +349,107 @@ def test_fake_cli_never_constructs_network_client(
 
 def test_baseline_prompt_regression_remains_frozen() -> None:
     assert prompt_hash() == BASELINE_HASH
+
+
+def test_transient_retry_preserves_every_attempt_and_final_raw_response(
+    tmp_path: Path,
+) -> None:
+    secret = "unit-test-secret-value"
+
+    class TransientThenSuccess:
+        def __init__(self, request_id: str) -> None:
+            self.request_id = request_id
+            self.calls = 0
+            self.success = advanced_eval.OfflineFakeClient(request_id)
+
+        def generate(self, prompt: str):
+            self.calls += 1
+            if self.calls == 1:
+                raise TransientLLMError(
+                    ProviderErrorDiagnostic(
+                        provider="fake-provider",
+                        exception_type="FakeTransientError",
+                        status_code=503,
+                        provider_status="UNAVAILABLE",
+                        category=ProviderErrorCategory.TRANSIENT_PROVIDER_ERROR,
+                        sanitized_provider_message="temporary failure; api_key=[REDACTED]",
+                        retryable=True,
+                    )
+                )
+            return self.success.generate(prompt)
+
+    run = advanced_eval.run_advanced_evaluation(
+        PACK,
+        ("CR-001",),
+        mode=advanced_eval.EvaluationMode.REAL_SMOKE,
+        client_factory=lambda request: TransientThenSuccess(request.request_id),
+        provider="fake-provider",
+        model="fake-model",
+        results_root=tmp_path,
+        max_attempts=2,
+    )
+
+    attempts = _read_jsonl(run, "attempts.jsonl")
+    raw = _read_jsonl(run, "raw_responses.jsonl")[0]
+    manifest = _read_json(run, "manifest.json")
+    assert len(attempts) == manifest["provider_attempt_count"] == 2
+    assert [item["attempt_number"] for item in attempts] == [1, 2]
+    assert all(item["request_id"] == "CR-001" for item in attempts)
+    assert all(datetime.fromisoformat(item["timestamp"]) for item in attempts)
+    assert attempts[0]["safe_categorized_diagnostic"]["category"] == "TRANSIENT_PROVIDER_ERROR"
+    assert attempts[0]["retryable"] is True
+    assert attempts[0]["raw_response_existed"] is False
+    assert attempts[0]["final_disposition"] == "RETRY_SCHEDULED"
+    assert attempts[1]["safe_categorized_diagnostic"]["category"] == "SUCCESS"
+    assert attempts[1]["retryable"] is False
+    assert attempts[1]["raw_response_existed"] is True
+    assert attempts[1]["final_disposition"] == "SUCCEEDED"
+    assert len(raw["generations"]) == 1
+    assert raw["generations"][0]["text"]
+    assert raw["attempts"] == attempts
+    assert manifest["provider_retry_count"] == 1
+    assert secret not in (run / "attempts.jsonl").read_text(encoding="utf-8")
+
+
+def test_nonretryable_failure_preserves_diagnostic_without_inventing_response(
+    tmp_path: Path,
+) -> None:
+    class NonRetryableFailure:
+        def generate(self, _prompt: str):
+            raise ProviderLLMError(
+                ProviderErrorDiagnostic(
+                    provider="fake-provider",
+                    exception_type="FakeAuthenticationError",
+                    status_code=401,
+                    provider_status="UNAUTHENTICATED",
+                    category=ProviderErrorCategory.AUTHENTICATION,
+                    sanitized_provider_message="invalid credential [REDACTED]",
+                    retryable=False,
+                )
+            )
+
+    run = advanced_eval.run_advanced_evaluation(
+        PACK,
+        ("CR-001",),
+        mode=advanced_eval.EvaluationMode.REAL_SMOKE,
+        client_factory=lambda _request: NonRetryableFailure(),
+        provider="fake-provider",
+        model="fake-model",
+        results_root=tmp_path,
+        max_attempts=2,
+    )
+
+    attempts = _read_jsonl(run, "attempts.jsonl")
+    errors = _read_jsonl(run, "errors.jsonl")
+    raw = _read_jsonl(run, "raw_responses.jsonl")
+    assert len(attempts) == 1
+    assert attempts[0]["attempt_number"] == 1
+    assert attempts[0]["safe_categorized_diagnostic"]["category"] == "AUTHENTICATION"
+    assert attempts[0]["retryable"] is False
+    assert attempts[0]["raw_response_existed"] is False
+    assert attempts[0]["final_disposition"] == "FAILED_FINAL"
+    assert errors[0]["attempts"] == attempts
+    assert errors[0]["raw_responses"] == []
+    assert raw[0]["generations"] == []
+    assert raw[0]["call_count"] == 1
+    assert advanced_eval.run_exit_code(run) == 1

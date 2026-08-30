@@ -764,6 +764,7 @@ class AdvancedRunState(StrictModel):
     assembled_prompt_hash: Sha256 | None = None
     raw_response_hash: Sha256 | None = None
     token_usage: dict[str, Any] | None = None
+    generation_attempts: tuple[dict[str, Any], ...] = ()
 
 
 def _validated_unique_ids(

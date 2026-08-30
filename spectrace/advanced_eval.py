@@ -66,6 +66,7 @@ DEFAULT_MAX_ATTEMPTS = 2
 ARTIFACT_NAMES = frozenset(
     {
         "assessments.json",
+        "attempts.jsonl",
         "errors.jsonl",
         "human_reviews.json",
         "ledger.sqlite",
@@ -397,6 +398,7 @@ def _raw_record(request_id: str, client: RecordingClient, state: Any) -> dict[st
         "assembled_prompt_hash": state.assembled_prompt_hash,
         "raw_response_hash": state.raw_response_hash,
         "generations": generations,
+        "attempts": list(state.generation_attempts),
     }
 
 
@@ -416,6 +418,7 @@ def _error_record(request_id: str, exc: Exception, client: RecordingClient) -> d
                 "provider_errors": [item.as_dict() for item in exc.provider_errors],
                 "raw_responses": list(exc.raw_responses),
                 "retry_exhausted": exc.retry_exhausted,
+                "attempts": [item.as_dict() for item in exc.attempt_records],
             }
         )
     return record
@@ -480,6 +483,7 @@ def run_advanced_evaluation(
     request_runtime: dict[str, float] = {}
     total_usage: dict[str, int] = {}
     assembled_prompt_hashes: dict[str, str] = {}
+    attempt_records: list[dict[str, Any]] = []
     final_snapshot_hash: str | None = None
 
     with LedgerStore(database_path) as ledger:
@@ -526,6 +530,7 @@ def run_advanced_evaluation(
                     recording,
                     max_attempts=max_attempts,
                 )
+                attempt_records.extend(state.generation_attempts)
                 if state.status != AgentStatus.AWAITING_HUMAN_REVIEW:
                     raise AdvancedEvaluationError(
                         f"{request.request_id} did not reach the human-review isolation boundary"
@@ -583,6 +588,8 @@ def run_advanced_evaluation(
                         if isinstance(value, int):
                             total_usage[key] = total_usage.get(key, 0) + value
             except Exception as exc:
+                if isinstance(exc, RetryExhaustedError):
+                    attempt_records.extend(item.as_dict() for item in exc.attempt_records)
                 if not raw_records or raw_records[-1].get("request_id") != request.request_id:
                     raw_records.append(
                         {
@@ -657,6 +664,7 @@ def run_advanced_evaluation(
     _write_json(run_directory / "ledger_snapshots.json", snapshot_records)
     _write_jsonl(run_directory / "raw_responses.jsonl", raw_records)
     _write_jsonl(run_directory / "errors.jsonl", error_records)
+    _write_jsonl(run_directory / "attempts.jsonl", attempt_records)
     _write_json(run_directory / "scores.json", score_payload)
 
     scoring_commit = _git_commit()
@@ -681,6 +689,10 @@ def run_advanced_evaluation(
         "seed": seed,
         "max_output_tokens": max_output_tokens,
         "max_attempts": max_attempts,
+        "provider_attempt_count": len(attempt_records),
+        "provider_retry_count": sum(
+            item["final_disposition"] == "RETRY_SCHEDULED" for item in attempt_records
+        ),
         "independent_assessment_per_request": True,
         "conversation_history_used": False,
         "sequential_context_complete": tuple(request_ids) == EXPECTED_REQUEST_IDS,

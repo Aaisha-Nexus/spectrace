@@ -240,6 +240,7 @@ def run_until_human_review(
     attempt = generate_structured_with_retry(client, rendered, AdvancedModelOutput, max_attempts=max_attempts, expected_request_id=state.request.request_id)
     state.raw_response_hash = _hash(attempt.raw_response)
     state.token_usage = attempt.usage
+    state.generation_attempts = tuple(record.as_dict() for record in attempt.attempt_records)
     model_output = attempt.output
     signature = build_capability_signature(
         state.request.message,
