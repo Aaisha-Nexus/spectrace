@@ -9,6 +9,8 @@
 
 > **Project status:** The guided StudioLane project is wholly synthetic, while uploaded-project mode is experimental/Beta. Baseline V1 and Advanced V1 outputs are preserved and reproducible. No private client or internship data is included. Consequential actions require human review, and a human remains the final authority for scope decisions and approved memory updates.
 
+**Hackathon provenance (before vs. added):** SpecTrace was built during the hackathon window. The project progress record tracks the repository foundation, synthetic StudioLane benchmark, Baseline V1, Advanced V1, and Streamlit product experience as milestones completed in this project; no pre-existing external implementation or reused codebase is identified.
+
 ## Why SpecTrace exists
 
 SpecTrace is intended for Business Analysts, Project Managers, product and project teams, freelancers, and small agencies managing evolving software scope. Requirements arrive through changing conversations and messages; decisions become scattered; and individually reasonable requests can accumulate into substantial unpriced work. Basic classifiers may forget earlier decisions or confidently classify a vague request, while manual traceability is slow and inconsistent.
@@ -151,10 +153,26 @@ These are preserved benchmark results, not estimates or newly regenerated claims
 | Total tokens | 50,566 | 118,053 |
 | Provider cost | Unavailable | Unavailable |
 
+Provider execution runtime is measured for the complete ten-case runs, not as human time per task:
+
+| Additional judging measure | Recorded value |
+| --- | --- |
+| Human time per task | Not measured |
+| Monetary cost per task | Unavailable — no explicit pricing input was recorded |
+
 The baseline's two strict failures are preserved:
 
 - **CR-004:** incorrect classification and missed required clarification.
 - **CR-007:** false cumulative-drift detection.
+
+## Hot Take / Lessons Learned
+
+The useful result was not the perfect Advanced V1 score by itself; it was what the two preserved Baseline V1 failures exposed:
+
+- **CR-004 — uncertainty needs a gate, not a confident guess.** The baseline turned an ambiguity case into `POTENTIAL_SCOPE_CHANGE` and failed to request clarification. The lesson was that ambiguity should block classification when the requested capability cannot be identified, while unresolved acceptance detail alone should not. Advanced V1 therefore added a deterministic ambiguity gate and a human-review pause; on the frozen comparison this corrected both the label and clarification behavior.
+- **CR-007 — scope drift must follow approved memory, not conversational volume.** The baseline produced a false-positive drift result. The lesson was that false positives must be penalized and that raw requests or unapproved assessments cannot count as scope-expansion increments. Advanced V1 therefore computes cumulative drift from human-approved, scope-changing ledger entries; on the frozen comparison this removed the false positive.
+
+These are engineering lessons from one synthetic ten-case benchmark, not claims that the same mechanisms will generalize without further evaluation.
 
 ## Primary metric
 
@@ -221,11 +239,9 @@ It reveals preserved evidence, classifications, verification, trajectories, paus
 
 Provider failures are categorized and sanitized. Failed calls do not approve or save scope, and quota failures are not automatically retried. Google/Gemini quota is separate from SpecTrace correctness and its local offline evaluation.
 
-## Screenshots
+## Reproduction guide
 
-<!-- Add final welcome, clarification, contradiction, drift and workflow screenshots before submission if time permits. -->
-
-## Quick start
+### Quick start
 
 Requirements are Git and Python `>=3.13,<3.14`. A Google Gemini API key is optional and needed only for live generation.
 
@@ -268,7 +284,7 @@ LLM_BASE_URL=
 
 Provider and model settings are adapters at the boundary; core domain logic does not hard-code a provider SDK, endpoint, or credential.
 
-## Offline validation and inspection
+### Offline validation and inspection
 
 These commands make no provider call:
 
@@ -298,10 +314,14 @@ Ground truth was fixed before provider runs. Curated results include manifests a
 - Synthetic source pack: `data/synthetic/demo_project/`
 - Frozen prompts: `prompts/`
 - Baseline outputs: `results/baseline_v1/`
-- Advanced outputs, retrieval bundles, trajectories, pauses, reviews, ledgers, and available workflow artifacts: `results/advanced_v1/`
+- Advanced outputs, retrieval bundles, pauses, reviews, ledgers, and available workflow artifacts: `results/advanced_v1/`
 - Side-by-side comparison: `results/comparison_v1/`
 - Evaluation code: `spectrace/evaluation.py`, `spectrace/baseline_eval.py`, and `spectrace/advanced_eval.py`
 - Product and replay tests: `tests/`
+
+### Agent trajectories
+
+Agent trajectories are a distinct preserved deliverable in [`results/advanced_v1/trajectories/`](results/advanced_v1/trajectories/). The directory contains one append-only event record for each request from CR-001 through CR-010, and each file has a recorded SHA-256 hash in the Advanced V1 curation manifest.
 
 Temporary runs belong outside curated result directories. The application uses `.spectrace_ui/` for ignored local UI state, keeping the committed benchmark immutable.
 
@@ -319,6 +339,21 @@ spectrace/
 ├── pyproject.toml             # Python 3.13 package and dependency configuration
 └── .env.example               # Credential-name template with no secrets
 ```
+
+## Improvement Changelog
+
+The detailed changelog remains preserved in [`docs/improvement_changelog.md`](docs/improvement_changelog.md). This condensed view surfaces the actual failure-informed stages and retained decisions directly:
+
+| Stage | What was tried and why | Evidence | Decision / learning retained |
+| --- | --- | --- | --- |
+| Provider diagnostics | Replaced an over-sanitized generic `ClientError` with secret-safe structured failure fields so failures could be distinguished without exposing credentials. | The original unrecoverable diagnostic is preserved under `results/20260829T161418.508124Z`; later failure handling records safe category and status context. | Privacy-preserving sanitization must retain useful, non-secret diagnostic context. |
+| CLI failure semantics | Changed the runner to return success only when every requested case succeeds, preventing failed or partial runs from appearing official. | The first smoke artifact records zero successes and one failure; offline CLI regression tests cover the behavior. | Process completion is not the same as successful execution. |
+| Provider schema compatibility | Removed unsupported outbound Pydantic schema metadata after Gemini rejected `additional_properties`, while preserving strict local validation. | The HTTP 400 structured failure remains under `results/20260829T173335.738423Z`. | Provider-compatible schemas and local validation are separate boundaries. |
+| Evidence-placement scoring | Corrected contradiction scoring to inspect `conflicting_evidence_ids` instead of requiring duplicate supporting citations. | The unchanged candidate predictions and original `scores.json` preserve the discrepancy. | Scorer defects must be separated from model failures before comparison claims are made. |
+| Evaluation boundary | Moved ground-truth-dependent retrieval metrics out of the production retrieval module and into offline tests. | The focused audit found direct ground-truth references; subsequent production scans found no expected-label dependency. | Evaluator-only access controls should be structural, not conventional. |
+| Approved-memory invariant | Separated immutable initial approvals from post-request ledger entries and required every new entry to come through `apply_human_review`. | SQLite schema/path inspection and tests verify an empty seeded ledger and review-linked later entries. | Preapproved source state and human-approved decision memory need distinct representations. |
+| Drift memory content | Stopped copying mixed decision sections into approved memory and stored only their explicit `Approves:` clauses. | The first complete fake replay stopped after neutral and unapproved facets entered capability signatures; the corrected replay completed all ten requests. | Human approval payloads must encode only the capability actually approved. |
+| Retry audit trail | Added append-only attempt records after a successful CR-007 retry discarded its first safe failure diagnostic. | Advanced V1 records two calls but only one response for CR-007; the missing diagnostic remains explicitly unrecoverable. | Successful recovery is part of the audit trail and must not erase earlier attempts. |
 
 ## Limitations
 
