@@ -154,6 +154,85 @@ def test_trajectory_uses_the_declared_node_order() -> None:
         ]
 
 
+def test_optional_event_callback_reports_real_running_completion_and_pause_states() -> None:
+    request = validate_project_pack(PACK).requests[4]
+    updates: list[tuple[AgentNode, str, AgentNode | None]] = []
+
+    def observe(node: AgentNode, status: str, event) -> None:
+        updates.append((node, status, event.node if event else None))
+
+    with LedgerStore() as ledger:
+        state = run_until_human_review(
+            new_run_state(PACK, "studiolane", request),
+            ledger,
+            FakeClient(request.request_id, Classification.OUT_OF_SCOPE),
+            event_callback=observe,
+        )
+
+    assert updates[0] == (AgentNode.LOAD_SCOPE_ANCHOR, "RUNNING", None)
+    assert (AgentNode.CLASSIFY_REQUEST, "RUNNING", None) in updates
+    assert (AgentNode.CLASSIFY_REQUEST, "COMPLETED", AgentNode.CLASSIFY_REQUEST) in updates
+    assert updates[-1] == (
+        AgentNode.AWAIT_HUMAN_REVIEW,
+        "PAUSED",
+        AgentNode.AWAIT_HUMAN_REVIEW,
+    )
+    assert state.status == AgentStatus.AWAITING_HUMAN_REVIEW
+
+
+def test_optional_event_callback_reports_failed_active_node() -> None:
+    request = validate_project_pack(PACK).requests[0]
+    updates: list[tuple[AgentNode, str]] = []
+
+    class FailedClient:
+        def generate(self, prompt: str) -> RawGeneration:
+            raise RuntimeError("synthetic provider failure")
+
+    with LedgerStore() as ledger:
+        with pytest.raises(RuntimeError, match="synthetic provider failure"):
+            run_until_human_review(
+                new_run_state(PACK, "studiolane", request),
+                ledger,
+                FailedClient(),
+                event_callback=lambda node, status, event: updates.append((node, status)),
+            )
+    assert updates[-2:] == [
+        (AgentNode.CLASSIFY_REQUEST, "RUNNING"),
+        (AgentNode.CLASSIFY_REQUEST, "FAILED"),
+    ]
+
+
+def test_event_callback_does_not_change_headless_agent_outputs() -> None:
+    request = validate_project_pack(PACK).requests[4]
+    with LedgerStore() as plain_ledger:
+        plain = run_until_human_review(
+            new_run_state(PACK, "studiolane", request, run_id="same-run"),
+            plain_ledger,
+            FakeClient(request.request_id, Classification.OUT_OF_SCOPE),
+        )
+    with LedgerStore() as observed_ledger:
+        observed = run_until_human_review(
+            new_run_state(PACK, "studiolane", request, run_id="same-run"),
+            observed_ledger,
+            FakeClient(request.request_id, Classification.OUT_OF_SCOPE),
+            event_callback=lambda node, status, event: None,
+        )
+    for field in (
+        "retrieval",
+        "sufficiency",
+        "conflicts",
+        "assessment",
+        "drift",
+        "verification",
+        "recommendation",
+        "pause_snapshot_hash",
+    ):
+        assert getattr(observed, field) == getattr(plain, field)
+    assert [(event.node, event.result_summary) for event in observed.trajectory] == [
+        (event.node, event.result_summary) for event in plain.trajectory
+    ]
+
+
 def test_failed_verification_still_fails_closed_at_human_review() -> None:
     request = validate_project_pack(PACK).requests[5]
 

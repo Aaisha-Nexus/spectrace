@@ -1,0 +1,76 @@
+{
+  "actors": [
+    {"actor_id": "ACTOR-MEMBER", "label": "Member"},
+    {"actor_id": "ACTOR-SYSTEM", "label": "System"},
+    {"actor_id": "ACTOR-COORDINATOR", "label": "Coordinator"},
+    {"actor_id": "ACTOR-ADMINISTRATOR", "label": "Administrator"}
+  ],
+  "original_nodes": [
+    {"node_id":"NODE-START","label":"Reservation journey begins","actor_id":"ACTOR-MEMBER","node_type":"START","supporting_evidence_ids":[]},
+    {"node_id":"NODE-SIGN-IN","label":"Sign in with a provisioned account","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-002"]},
+    {"node_id":"NODE-BROWSE","label":"Browse studios and available sessions","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-003"]},
+    {"node_id":"NODE-SELECT","label":"Select a listed session","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-004"]},
+    {"node_id":"NODE-SUBMIT","label":"Submit reservation","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-004"]},
+    {"node_id":"NODE-CLOSURE","label":"Is the studio open?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-CLOSED","label":"Reject because the studio is closed","actor_id":"ACTOR-SYSTEM","node_type":"ERROR","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-CAPACITY","label":"Is capacity available?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["SOW-SCP-005","SOW-CON-001"]},
+    {"node_id":"NODE-FULL","label":"Show session as unavailable","actor_id":"ACTOR-SYSTEM","node_type":"ERROR","supporting_evidence_ids":["SOW-CON-001"]},
+    {"node_id":"NODE-DUPLICATE","label":"Does this member already hold a reservation?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-DUPLICATE-ERROR","label":"Reject duplicate reservation","actor_id":"ACTOR-SYSTEM","node_type":"ERROR","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-CONFLICT","label":"Does the session conflict with another reservation?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-CONFLICT-ERROR","label":"Reject schedule conflict","actor_id":"ACTOR-SYSTEM","node_type":"ERROR","supporting_evidence_ids":["SOW-SCP-005"]},
+    {"node_id":"NODE-STUDIO-TYPE","label":"Which studio path applies?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-AUTO-CONFIRM","label":"Confirm ordinary-studio reservation","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-PENDING-REVIEW","label":"Set kiln reservation to pending review","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-COORDINATOR-REVIEW","label":"Review kiln reservation","actor_id":"ACTOR-COORDINATOR","node_type":"ACTION","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-COORDINATOR-DECISION","label":"Approve the kiln reservation?","actor_id":"ACTOR-COORDINATOR","node_type":"DECISION","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-RECORD-APPROVAL","label":"Record approval and reason","actor_id":"ACTOR-COORDINATOR","node_type":"ACTION","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-RECORD-DECLINE","label":"Record decline and reason","actor_id":"ACTOR-COORDINATOR","node_type":"ACTION","supporting_evidence_ids":["DEC-003"]},
+    {"node_id":"NODE-SEND-STATUS","label":"Send the applicable status email","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["SOW-SCP-007"]},
+    {"node_id":"NODE-VIEW-STATUS","label":"View reservation status","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-011"]},
+    {"node_id":"NODE-REQUEST-CANCEL","label":"Request eligible cancellation","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-008"]},
+    {"node_id":"NODE-CANCEL-VALID","label":"Is the approved cancellation rule satisfied?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["SOW-SCP-008","DEC-004"]},
+    {"node_id":"NODE-CANCEL-DENIED","label":"Keep reservation and explain cancellation is unavailable","actor_id":"ACTOR-SYSTEM","node_type":"ERROR","supporting_evidence_ids":["SOW-SCP-008"]},
+    {"node_id":"NODE-RECORD-CANCEL","label":"Record cancellation","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-004"]},
+    {"node_id":"NODE-RESTORE","label":"Restore one place to available capacity","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-004"]},
+    {"node_id":"NODE-SEND-CANCEL","label":"Send cancellation confirmation","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-004"]},
+    {"node_id":"NODE-ADMIN-STUDIO","label":"Maintain studio descriptions and accessibility notes","actor_id":"ACTOR-ADMINISTRATOR","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-010"]},
+    {"node_id":"NODE-ADMIN-SESSIONS","label":"Configure sessions, capacity and availability","actor_id":"ACTOR-ADMINISTRATOR","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-010"]},
+    {"node_id":"NODE-ADMIN-CLOSURES","label":"Configure temporary closures","actor_id":"ACTOR-ADMINISTRATOR","node_type":"ACTION","supporting_evidence_ids":["SOW-SCP-010"]},
+    {"node_id":"NODE-END","label":"Journey complete","actor_id":"ACTOR-MEMBER","node_type":"END","supporting_evidence_ids":[]}
+  ],
+  "original_edges": [
+    ["NODE-START","NODE-SIGN-IN",null],["NODE-SIGN-IN","NODE-BROWSE",null],["NODE-BROWSE","NODE-SELECT",null],["NODE-SELECT","NODE-SUBMIT",null],
+    ["NODE-SUBMIT","NODE-CLOSURE",null],["NODE-CLOSURE","NODE-CLOSED","No"],["NODE-CLOSED","NODE-END",null],["NODE-CLOSURE","NODE-CAPACITY","Yes"],
+    ["NODE-CAPACITY","NODE-FULL","No"],["NODE-FULL","NODE-END",null],["NODE-CAPACITY","NODE-DUPLICATE","Yes"],["NODE-DUPLICATE","NODE-DUPLICATE-ERROR","Yes"],
+    ["NODE-DUPLICATE-ERROR","NODE-END",null],["NODE-DUPLICATE","NODE-CONFLICT","No"],["NODE-CONFLICT","NODE-CONFLICT-ERROR","Yes"],["NODE-CONFLICT-ERROR","NODE-END",null],
+    ["NODE-CONFLICT","NODE-STUDIO-TYPE","No"],["NODE-STUDIO-TYPE","NODE-AUTO-CONFIRM","Ordinary studio"],["NODE-STUDIO-TYPE","NODE-PENDING-REVIEW","Kiln studio"],
+    ["NODE-PENDING-REVIEW","NODE-COORDINATOR-REVIEW",null],["NODE-COORDINATOR-REVIEW","NODE-COORDINATOR-DECISION",null],
+    ["NODE-COORDINATOR-DECISION","NODE-RECORD-APPROVAL","Approve"],["NODE-COORDINATOR-DECISION","NODE-RECORD-DECLINE","Decline"],
+    ["NODE-AUTO-CONFIRM","NODE-SEND-STATUS",null],["NODE-RECORD-APPROVAL","NODE-SEND-STATUS",null],["NODE-RECORD-DECLINE","NODE-SEND-STATUS",null],
+    ["NODE-SEND-STATUS","NODE-VIEW-STATUS",null],["NODE-VIEW-STATUS","NODE-REQUEST-CANCEL","Cancel"],["NODE-VIEW-STATUS","NODE-END","Keep reservation"],
+    ["NODE-REQUEST-CANCEL","NODE-CANCEL-VALID",null],["NODE-CANCEL-VALID","NODE-CANCEL-DENIED","No"],["NODE-CANCEL-DENIED","NODE-END",null],
+    ["NODE-CANCEL-VALID","NODE-RECORD-CANCEL","Yes"],["NODE-RECORD-CANCEL","NODE-RESTORE",null],["NODE-RESTORE","NODE-SEND-CANCEL",null],["NODE-SEND-CANCEL","NODE-END",null],
+    ["NODE-ADMIN-STUDIO","NODE-ADMIN-SESSIONS","Maintain schedule"],["NODE-ADMIN-SESSIONS","NODE-ADMIN-CLOSURES","Maintain availability"]
+  ],
+  "updated_nodes": [
+    {"node_id":"NODE-JOIN-QUEUE","label":"Join the ordered queue","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-SAVE-QUEUE","label":"Save queue membership and first-joined position","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-VIEW-QUEUE","label":"View queued status and position","actor_id":"ACTOR-MEMBER","node_type":"ACTION","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-QUEUE-WAITING","label":"Is an ordered queue waiting?","actor_id":"ACTOR-SYSTEM","node_type":"DECISION","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-SELECT-FIRST","label":"Select the first queued member for notification","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-QUEUE-EMAIL","label":"Send availability email to the first queued member","actor_id":"ACTOR-SYSTEM","node_type":"SYSTEM","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED"},
+    {"node_id":"NODE-NO-AUTO-ALLOCATION","label":"Member must submit a reservation; no automatic allocation","actor_id":"ACTOR-MEMBER","node_type":"CLARIFICATION","supporting_evidence_ids":["DEC-006"],"change_type":"ADDED","requires_clarification":true,"uncertainty":"Automatic allocation and promotion are not approved."}
+  ],
+  "updated_remove_edges": [
+    ["NODE-FULL","NODE-END"],["NODE-RESTORE","NODE-SEND-CANCEL"]
+  ],
+  "updated_edges": [
+    ["NODE-FULL","NODE-JOIN-QUEUE","Join queue"],["NODE-FULL","NODE-END","Leave"],["NODE-JOIN-QUEUE","NODE-SAVE-QUEUE",null],
+    ["NODE-SAVE-QUEUE","NODE-VIEW-QUEUE",null],["NODE-VIEW-QUEUE","NODE-END","Wait for availability"],
+    ["NODE-RESTORE","NODE-SEND-CANCEL",null],["NODE-RESTORE","NODE-QUEUE-WAITING","Capacity opened"],
+    ["NODE-QUEUE-WAITING","NODE-END","No"],["NODE-QUEUE-WAITING","NODE-SELECT-FIRST","Yes"],
+    ["NODE-SELECT-FIRST","NODE-QUEUE-EMAIL",null],["NODE-QUEUE-EMAIL","NODE-NO-AUTO-ALLOCATION",null],
+    ["NODE-NO-AUTO-ALLOCATION","NODE-SUBMIT","Member acts"]
+  ]
+}

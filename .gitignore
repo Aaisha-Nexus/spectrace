@@ -39,6 +39,7 @@ outputs/
 generated/
 reports/
 artifacts/
+.spectrace_ui/
 logs/
 *.log
 

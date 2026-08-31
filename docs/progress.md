@@ -1,8 +1,8 @@
 # Project Progress
 
-- **Date:** 2026-08-30
-- **Milestone 5/6:** Failure-Informed Advanced Agent
-- **Status:** Advanced V1 curated; failure-informed comparison complete
+- **Date:** 2026-08-31
+- **Milestone 6/6:** Streamlit Experience and Workflow Export
+- **Status:** Product implementation and verification complete; awaiting review
 
 ## Completed
 
@@ -187,12 +187,35 @@ remain preserved; the reviewed Baseline V1 result is now curated and official.
 
 ## Deliberately not implemented
 
-- Streamlit interface
-- Workflow export beyond the reviewed change-impact package
+- Direct Lucidchart OAuth/API integration
+- Scanned-image PDF OCR
+- Workflow inference from arbitrary prose without explicit approved process evidence
+- Benchmark claims for New Project Beta
 - Any retrieval, persistent ledger, verification pass, or agent tooling in the baseline
 
-## Next step
+## Current product phase
 
-Begin the Streamlit Product Experience and Workflow Export phase. Preserve the
-curated Baseline V1, Advanced V1, and comparison artifacts unchanged while the
-interface and export workflow are developed.
+- Streamlit Guided Demo over the real advanced state-machine contracts
+- Offline display of committed curated example data
+- Explicit click boundary for live provider analysis
+- Human review with scope-change confirmation and BA-facing evidence trails
+- Separate ignored local UI database
+- Strict evidence-gated workflow contracts and verification
+- Horizontal verified StudioLane Mermaid and two-page editable Draw.io exports
+- Readable Overview and horizontally scrollable Full-detail workflow presentations
+- Guided Demo original/updated comparison and change highlighting available from a fresh session
+- Native editable Draw.io and XML downloads with Lucidchart import guidance
+- Upload-first, human-approved New Project Beta for PDF, DOCX, Markdown and text
+- Deterministic parsing and separate human approval for explicit numbered Actor/action workflows
+- Collapsed audit details with short business-facing scope and ledger fingerprints
+- Project-isolated Guided, synthetic-example and uploaded-project session contracts
+- Atomic CampusFlow replacement and complete New Project reset behavior
+- Categorized, sanitized extraction and agent-run diagnostics with blocked downstream nodes
+- Premium first-entry screen with explicit Guided Demo and Create Project routes
+- Quota-safe extraction outcome messaging with manual retry, fictional-example and setup recovery actions; no automatic quota retry
+- Targeted welcome and Guided Demo transitions that clear stale active state without deleting a switched-out New Project
+- Default Guided Demo replay for hash-verified Advanced V1 cases CR-004, CR-008 and CR-010, visibly separated from quota-dependent live analysis
+- Recorded replay stops at the preserved human-review pause, reads curated artifacts only, and never replaces failed live state or writes approved memory
+- Full suite passed with 207 tests on Python 3.13
+- Frozen dataset, anchor, retrieval, curated-run, and artifact-diff checks passed
+- Headless Streamlit health endpoint returned HTTP 200 without a model call

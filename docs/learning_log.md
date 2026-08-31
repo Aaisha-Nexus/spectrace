@@ -79,3 +79,8 @@
   general perfection.
 - Improvement attribution belongs to the combined retrieval, deterministic
   gates, approved memory, verification, and human-state pipeline, not RAG alone.
+- A product demo can remain honest and available during provider outages by
+  replaying hash-verified recorded events, provided the UI clearly distinguishes
+  replay from fresh execution and never writes replay data into live run state.
+- A recorded human-review outcome must be shown exactly as preserved; replaying
+  a paused trajectory does not authorize a new decision or ledger mutation.

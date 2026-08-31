@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">SpecTrace ST monogram</title>
+  <desc id="desc">An S-shaped evidence trail crossing a T-shaped decision boundary.</desc>
+  <rect width="64" height="64" rx="12" fill="#1B1E27"/>
+  <path d="M44 15H28c-8 0-13 4-13 10s5 9 13 9h7c7 0 11 3 11 8s-5 8-12 8H18" fill="none" stroke="#C98A3E" stroke-width="6" stroke-linecap="round"/>
+  <path d="M39 14v36M30 14h18" fill="none" stroke="#E8E6DE" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="15" cy="25" r="3" fill="#5C8768"/>
+  <circle cx="47" cy="42" r="3" fill="#5C8768"/>
+</svg>
